@@ -42,5 +42,3 @@ npm run dev
 npm run build
 ```
 
----
-*Creado por Antigravity para FedesConsultora.*

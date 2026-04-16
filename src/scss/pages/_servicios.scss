@@ -1,0 +1,102 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.bg-dark {
+  background: $deep-carbon;
+  color: $pure-white;
+  
+  h1 { color: $pure-white; }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  
+  @include respond-to('tablet') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include respond-to('desktop') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.service-card {
+  background: $pure-white;
+  padding: 40px;
+  border-radius: 15px;
+  border: 1px solid rgba($deep-carbon, 0.05);
+  transition: $transition-smooth;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+    border-color: rgba($primary-red, 0.2);
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: $primary-red;
+    text-transform: uppercase;
+  }
+  
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+}
+
+.detailed-block {
+  max-width: 900px;
+  margin: 0 auto;
+  
+  h2 {
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+}
+
+.steps-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 40px;
+  
+  @include respond-to('tablet') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    
+    span {
+      width: 35px;
+      height: 35px;
+      background: $primary-red;
+      color: $pure-white;
+      border-radius: 50%;
+      @include flex-center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.info-box {
+  background: rgba($primary-red, 0.05);
+  padding: 40px;
+  border-left: 5px solid $primary-red;
+  border-radius: 0 15px 15px 0;
+  margin-top: 30px;
+  
+  p {
+    margin-bottom: 15px;
+    &:last-child { margin-bottom: 0; }
+  }
+}

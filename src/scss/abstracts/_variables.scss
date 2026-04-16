@@ -1,0 +1,32 @@
+@use "sass:color";
+
+// Colors
+$primary-red: #da251c; // WeChina Red based on logo
+$deep-carbon: #1a1a1a;
+$soft-white: #f8f8f8;
+$pure-white: #ffffff;
+$medium-gray: #666666;
+
+// Typography
+$font-headings: 'Outfit', sans-serif;
+$font-body: 'Inter', sans-serif;
+
+// Transitions
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Breakpoints
+$breakpoints: (
+  'mobile': 480px,
+  'tablet': 768px,
+  'desktop': 1024px,
+  'large': 1440px
+);
+
+// Helper functions using modern Sass color module
+@function lighten-color($color, $amount) {
+  @return color.adjust($color, $lightness: $amount);
+}
+
+@function darken-color($color, $amount) {
+  @return color.adjust($color, $lightness: -$amount);
+}

@@ -1,0 +1,96 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.page-header {
+  position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  color: $pure-white;
+  overflow: hidden;
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba($deep-carbon, 0.7), rgba($deep-carbon, 0.4));
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  h1 {
+    color: $pure-white;
+    max-width: 900px;
+    margin: 0;
+  }
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 60px;
+  align-items: center;
+
+  @include respond-to('desktop') {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
+.about-text {
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+}
+
+.about-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+
+  .feature-card {
+    background: $soft-white;
+    padding: 40px;
+    border-radius: 20px;
+    transition: $transition-smooth;
+    border: 1px solid rgba($deep-carbon, 0.05);
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+  }
+}

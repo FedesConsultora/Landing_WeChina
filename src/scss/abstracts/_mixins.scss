@@ -1,0 +1,31 @@
+@use "sass:map";
+@use "./variables" as *;
+
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Invalid breakpoint: #{$breakpoint}.";
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin section-padding {
+  padding: 80px 5%;
+  
+  @include respond-to('tablet') {
+    padding: 120px 10%;
+  }
+}
+
+@mixin container {
+  max-width: 1400px;
+  margin: 0 auto;
+}

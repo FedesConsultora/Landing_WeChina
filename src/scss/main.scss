@@ -1,0 +1,58 @@
+// Abstracts
+@use "abstracts/variables";
+@use "abstracts/mixins";
+
+// Base
+@use "base/reset";
+@use "base/typography";
+
+// Layout
+@use "layout/header";
+@use "layout/footer";
+
+// Pages
+@use "pages/home";
+@use "pages/nosotros";
+@use "pages/servicios";
+
+// Global Classes
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.section {
+  padding: 100px 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 35px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &-primary {
+    background: #da251c;
+    color: #ffffff;
+    border: 2px solid #da251c;
+    
+    &:hover {
+      background: transparent;
+      color: #da251c;
+    }
+  }
+  
+  &-outline {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    
+    &:hover {
+      background: #ffffff;
+      color: #da251c;
+    }
+  }
+}

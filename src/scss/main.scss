@@ -1,58 +1,55 @@
-// Abstracts
-@use "abstracts/variables";
-@use "abstracts/mixins";
+// ── Abstracts ─────────────────────────────────────────────────
+@use "abstracts/variables" as vars;
+@use "abstracts/mixins" as mix;
 
-// Base
+// ── Base ──────────────────────────────────────────────────────
 @use "base/reset";
 @use "base/typography";
 
-// Layout
+// ── Layout ────────────────────────────────────────────────────
 @use "layout/header";
 @use "layout/footer";
 
-// Pages
-@use "pages/home";
-@use "pages/nosotros";
-@use "pages/servicios";
+// ── Components ────────────────────────────────────────────────
+@use "components/home";
 
-// Global Classes
+// ── Global helpers ────────────────────────────────────────────
 .container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 5%;
-}
-
-.section {
-  padding: 100px 0;
+  @include mix.container;
 }
 
 .btn {
   display: inline-block;
-  padding: 15px 35px;
+  padding: 12px 28px;
   border-radius: 50px;
+  font-family: vars.$font-body;
   font-weight: 600;
-  transition: all 0.3s ease;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   cursor: pointer;
-  
+  transition: vars.$transition-smooth;
+  border: 2px solid transparent;
+
   &-primary {
-    background: #da251c;
-    color: #ffffff;
-    border: 2px solid #da251c;
-    
+    background: vars.$primary-red;
+    color: vars.$pure-white;
+    border-color: vars.$primary-red;
+
     &:hover {
       background: transparent;
-      color: #da251c;
+      color: vars.$primary-red;
     }
   }
-  
+
   &-outline {
     background: transparent;
-    color: #ffffff;
-    border: 2px solid #ffffff;
-    
+    color: vars.$pure-white;
+    border-color: vars.$pure-white;
+
     &:hover {
-      background: #ffffff;
-      color: #da251c;
+      background: vars.$pure-white;
+      color: vars.$primary-red;
     }
   }
 }

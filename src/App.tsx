@@ -1,0 +1,28 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLayout from './layouts/MainLayout';
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Categories from './pages/Categories';
+import Clients from './pages/Clients';
+import Contact from './pages/Contact';
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="nosotros" element={<About />} />
+          <Route path="servicios" element={<Services />} />
+          <Route path="rubros" element={<Categories />} />
+          <Route path="clientes" element={<Clients />} />
+          <Route path="contacto" element={<Contact />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;

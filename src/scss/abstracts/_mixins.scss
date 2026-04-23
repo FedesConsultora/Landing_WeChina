@@ -1,13 +1,34 @@
 @use "sass:map";
 @use "./variables" as *;
 
-@mixin respond-to($breakpoint) {
-  @if map.has-key($breakpoints, $breakpoint) {
-    @media (min-width: map.get($breakpoints, $breakpoint)) {
+@mixin respond-to($bp) {
+  @if map.has-key($breakpoints, $bp) {
+    @media (min-width: map.get($breakpoints, $bp)) {
       @content;
     }
-  } @else {
-    @warn "Invalid breakpoint: #{$breakpoint}.";
+  }
+}
+
+@mixin respond-below($bp) {
+  @if map.has-key($breakpoints, $bp) {
+    @media (max-width: calc(map.get($breakpoints, $bp) - 1px)) {
+      @content;
+    }
+  }
+}
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @include respond-to('tablet') {
+    padding: 0 40px;
+  }
+
+  @include respond-to('desktop') {
+    padding: 0 60px;
   }
 }
 
@@ -17,15 +38,12 @@
   justify-content: center;
 }
 
-@mixin section-padding {
-  padding: 80px 5%;
-  
-  @include respond-to('tablet') {
-    padding: 120px 10%;
-  }
-}
+@mixin section-v-pad {
+  padding-top: 64px;
+  padding-bottom: 64px;
 
-@mixin container {
-  max-width: 1400px;
-  margin: 0 auto;
+  @include respond-to('desktop') {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
 }

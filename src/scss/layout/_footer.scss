@@ -1,1 +1,161 @@
-// Footer styles are in components/_home.scss
+// ============================================================
+//  FOOTER – _footer.scss
+// ============================================================
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.footer {
+  &__main {
+    background: $primary-red;
+    padding: 50px 0 40px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+
+    @include respond-to('tablet') {
+      grid-template-columns: 180px 1fr 220px;
+      gap: 30px;
+      align-items: start;
+    }
+  }
+
+  // Brand column
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  &__logo {
+    height: 60px;
+    width: auto;
+    // Invert to white since footer is red
+    filter: brightness(0) invert(1);
+  }
+
+  &__socials {
+    display: flex;
+    gap: 14px;
+  }
+
+  &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba($pure-white, 0.4);
+    transition: $transition-smooth;
+
+    &:hover {
+      background: rgba($pure-white, 0.15);
+      border-color: $pure-white;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  // Map column
+  &__map {
+    border-radius: 8px;
+    overflow: hidden;
+    height: 200px;
+
+    @include respond-to('tablet') {
+      height: 220px;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: hue-rotate(0deg) saturate(1);
+    }
+  }
+
+  // Contact column
+  &__contact {
+    color: $pure-white;
+  }
+
+  &__contact-title {
+    font-family: $font-headings;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: $pure-white;
+    margin-bottom: 18px;
+  }
+
+  &__contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    p {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: $font-body;
+      font-size: 0.88rem;
+      color: rgba($pure-white, 0.9);
+      line-height: 1.4;
+
+      svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  // Bottom bar (darker)
+  &__bottom {
+    background: $primary-red-dark;
+    padding: 16px 0;
+  }
+
+  &__bottom-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+
+    @include respond-to('tablet') {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__copy {
+    font-family: $font-body;
+    font-size: 0.78rem;
+    color: rgba($pure-white, 0.6);
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+
+    a {
+      font-family: $font-body;
+      font-size: 0.78rem;
+      color: rgba($pure-white, 0.65);
+      text-decoration: none;
+      transition: $transition-smooth;
+
+      &:hover {
+        color: $pure-white;
+      }
+    }
+  }
+}

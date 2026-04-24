@@ -1,0 +1,56 @@
+// ============================================================
+//  HIGHLIGHTS – _highlights.scss
+// ============================================================
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.highlights {
+  @include section-v-pad;
+  background: $pure-white;
+
+  // Layout: en mobile stacked, en desktop el h2 ocupa todo
+  // el ancho centrado arriba y el párrafo va al lado derecho
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    @include respond-to('desktop') {
+      // h2 ocupa 2/3, párrafo 1/3 — alineados al centro vertical
+      grid-template-columns: 2fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+  }
+
+  &__main {
+    h2 {
+      font-family: $font-headings;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      color: $dark-carbon;
+    }
+  }
+
+  &__percent {
+    color: $dark-carbon;
+  }
+
+  &__emphasis {
+    color: $primary-red;
+  }
+
+  &__sub {
+    p {
+      font-family: $font-body;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: $medium-gray;
+
+      @include respond-to('desktop') {
+        font-size: 1.05rem;
+      }
+    }
+  }
+}

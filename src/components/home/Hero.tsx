@@ -32,6 +32,9 @@ const Hero: React.FC = () => {
             Eliminá el miedo a importar,<br />
             <span className="hero__highlight">con nosotros tu carga no queda varada</span>
           </h1>
+          <div className='hero__subtitle'>
+            <h3>Expertos allá, socios acá. 20 años eliminando los riesgos de tu inversión en Asia.</h3>
+          </div>
         </motion.div>
       </div>
 

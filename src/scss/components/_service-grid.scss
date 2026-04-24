@@ -1,0 +1,172 @@
+// ============================================================
+//  SERVICE GRID – _service-grid.scss
+// ============================================================
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.service-grid {
+  @include section-v-pad;
+  background: $soft-white;
+
+  // ── Header: eyebrow + title alineados horizontalmente ──────
+  &__header {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    @include respond-to('desktop') {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 16px;
+    }
+  }
+
+  &__eyebrow {
+    font-family: $font-body;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: $primary-red;
+  }
+
+  &__title {
+    font-family: $font-headings;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: $dark-carbon;
+    letter-spacing: -0.01em;
+  }
+
+  // ── Grid: 2 cols en tablet/desktop ─────────────────────────
+  // Diseño: fila 1 → 2 cards grandes (50/50)
+  //         fila 2 → 3 cards menores (33/33/33)
+  // Usamos 6 columnas para poder hacer ambas distribuciones
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+
+    @include respond-to('tablet') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('desktop') {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+}
+
+// ─── Service cards (scard) ────────────────────────────────────
+.scard {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+  // Fila 1: las 2 primeras cards (índice 0 y 1) — altas
+  &:nth-child(1),
+  &:nth-child(2) {
+    min-height: 320px;
+
+    @include respond-to('desktop') {
+      grid-column: span 3; // 3/6 = 50% cada una
+      min-height: 380px;
+    }
+  }
+
+  // Fila 2: las últimas 3 cards (índice 3, 4 y 5) — más bajas
+  &:nth-child(3),
+  &:nth-child(4),
+  &:nth-child(5) {
+    min-height: 260px;
+
+    @include respond-to('desktop') {
+      grid-column: span 2; // 2/6 = 33% cada una
+      min-height: 300px;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+
+    .scard__img {
+      transform: scale(1.05);
+    }
+  }
+
+  &__img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+    z-index: 0;
+  }
+
+  // Gradient overlay so text is readable
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.20) 55%,
+      rgba(0, 0, 0, 0.05) 100%
+    );
+    z-index: 1;
+  }
+
+  &__body {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding: 20px 22px;
+    background: rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  &__title {
+    font-family: $font-headings;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: $pure-white;
+    margin-bottom: 6px;
+  }
+
+  &__desc {
+    font-family: $font-body;
+    font-size: 0.84rem;
+    color: rgba($pure-white, 0.88);
+    line-height: 1.5;
+  }
+
+  // ── "Conoce más" card — roja ──────────────────────────────
+  &--conoce {
+    background: $primary-red;
+
+    .scard__img {
+      opacity: 0.18;
+    }
+
+    &::after {
+      background: linear-gradient(
+        to top,
+        rgba($primary-red, 0.85) 0%,
+        rgba($primary-red, 0.3) 100%
+      );
+    }
+
+    .scard__title {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+  }
+}

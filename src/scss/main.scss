@@ -11,7 +11,11 @@
 @use "layout/footer";
 
 // ── Components ────────────────────────────────────────────────
-@use "components/home";
+@use "components/hero";
+@use "components/highlights";
+@use "components/service-grid";
+@use "components/logistics-cta";
+@use "components/sector-bridge";
 
 // ── Global helpers ────────────────────────────────────────────
 .container {
@@ -25,7 +29,6 @@
   font-family: vars.$font-body;
   font-weight: 600;
   font-size: 0.88rem;
-  text-transform: uppercase;
   letter-spacing: 0.06em;
   cursor: pointer;
   transition: vars.$transition-smooth;

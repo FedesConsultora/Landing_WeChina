@@ -41,8 +41,15 @@ const ServiceGrid: React.FC = () => {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
-          <p className="service-grid__eyebrow">Protegemos tu inversión</p>
-          <h2 className="service-grid__title">EN CHINA</h2>
+          <div className='service-grid__header__container'>
+            <h2 className="service-grid__title">PROTGEGEMOS TU INVERSIÓN <br /> EN CHINA</h2>
+          </div>
+
+          <p className="service-grid__subtitle">
+            Convertimos la incertidumbre de importar en un sistema de pasos
+            controlados. Desde la validación legal de la fábrica hasta la
+            inspección final antes del despacho.
+          </p>
         </motion.div>
 
         <div className="service-grid__grid">
@@ -73,7 +80,7 @@ const ServiceGrid: React.FC = () => {
           >
             <div className="scard__img" style={{ backgroundImage: `url(${conoceMas})` }} />
             <div className="scard__body">
-              <h3 className="scard__title">Conoce más</h3>
+
             </div>
           </motion.div>
         </div>

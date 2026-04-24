@@ -11,29 +11,24 @@ const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-80px' },
-  transition: transition(delay),
+  transition: { duration: 0.7, delay, ease: 'easeOut' },
 });
 
 const Highlights: React.FC = () => {
   return (
     <section className="highlights">
       <div className="container">
-        <div className="highlights__layout">
+        <div className="highlights__layout"  {...fadeUp(0)}>
           <motion.div className="highlights__main">
             <h2>
-              EL <span className="highlights__percent">90%</span> DE LOS PROBLEMAS
-              DE IMPORTACIÓN OCURREN POR{' '}
-              <span className="highlights__emphasis">FALTA DE PRESENCIA FÍSICA</span>
-            </h2>
+              EL 90% DE LOS PROBLEMAS
+              DE IMPORTACIÓN <br />OCURREN POR
+              FALTA DE PRESENCIA FÍSICA            </h2>
+
+            <p className="highlights__text">Nosotros estamos ahí.</p>
           </motion.div>
 
-          {/* <motion.div className="highlights__sub" {...fadeUp(0.2)}>
-            <p>
-              Convertimos la incertidumbre de importar en un sistema de pasos
-              controlados. Desde la validación legal de la fábrica hasta la
-              inspección final antes del despacho.
-            </p>
-          </motion.div> */}
+
         </div>
       </div>
     </section>

@@ -10,10 +10,10 @@
 
   // ── Header: eyebrow + title alineados horizontalmente ──────
   &__header {
-    margin-bottom: 40px;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
 
     @include respond-to('desktop') {
       flex-direction: row;
@@ -22,20 +22,29 @@
     }
   }
 
-  &__eyebrow {
-    font-family: $font-body;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    color: $primary-red;
+  &__header__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-top: auto;
+
   }
+
 
   &__title {
     font-family: $font-headings;
     font-weight: 800;
     font-size: clamp(1.8rem, 3vw, 2.8rem);
-    color: $dark-carbon;
+    color: $neutral-gray;
     letter-spacing: -0.01em;
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: clamp(0.6rem, 1.2vw, 1rem);
+    color: $medium-gray;
+    max-width: 300px;
+    text-align: right;
   }
 
   // ── Grid: 2 cols en tablet/desktop ─────────────────────────
@@ -83,11 +92,12 @@
   &:nth-child(3),
   &:nth-child(4),
   &:nth-child(5) {
-    min-height: 260px;
+    min-height: 400px;
+    width: 320px;
 
     @include respond-to('desktop') {
       grid-column: span 2; // 2/6 = 33% cada una
-      min-height: 300px;
+      min-height: 450x;
     }
   }
 
@@ -114,12 +124,10 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.75) 0%,
-      rgba(0, 0, 0, 0.20) 55%,
-      rgba(0, 0, 0, 0.05) 100%
-    );
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.20) 55%,
+        rgba(0, 0, 0, 0.05) 100%);
     z-index: 1;
   }
 
@@ -148,20 +156,17 @@
     line-height: 1.5;
   }
 
-  // ── "Conoce más" card — roja ──────────────────────────────
   &--conoce {
     background: $primary-red;
 
     .scard__img {
-      opacity: 0.18;
+      width: 100%
     }
 
     &::after {
-      background: linear-gradient(
-        to top,
-        rgba($primary-red, 0.85) 0%,
-        rgba($primary-red, 0.3) 100%
-      );
+      background: linear-gradient(to top,
+          rgba($primary-red, 0.85) 0%,
+          rgba($primary-red, 0.3) 100%);
     }
 
     .scard__title {

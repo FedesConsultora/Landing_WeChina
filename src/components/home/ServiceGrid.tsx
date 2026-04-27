@@ -42,7 +42,7 @@ const ServiceGrid: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <div className='service-grid__header__container'>
-            <h2 className="service-grid__title">PROTGEGEMOS TU INVERSIÓN <br /> EN CHINA</h2>
+            <h2 className="service-grid__title">PROTEGEMOS TU INVERSIÓN <br /> EN CHINA</h2>
           </div>
 
           <p className="service-grid__subtitle">
@@ -79,9 +79,7 @@ const ServiceGrid: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div className="scard__img" style={{ backgroundImage: `url(${conoceMas})` }} />
-            <div className="scard__body">
 
-            </div>
           </motion.div>
         </div>
       </div>

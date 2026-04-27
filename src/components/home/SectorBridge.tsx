@@ -6,11 +6,16 @@ import rubro2 from '../../assets/img/rubros/rubro-2.webp';
 import rubro3 from '../../assets/img/rubros/rubro-3.webp';
 import rubro4 from '../../assets/img/rubros/rubro-4.webp';
 
+import iconCar from '../../assets/img/rubros/car.png';
+import iconSafety from '../../assets/img/rubros/Safety Hat.png';
+import iconBoots from '../../assets/img/rubros/Winter Boots.png';
+import iconDress from '../../assets/img/rubros/Little Black Dress.png';
+
 const sectors = [
-  { img: rubro1, label: 'Repuestos de autos' },
-  { img: rubro2, label: 'Seguridad industrial' },
-  { img: rubro3, label: 'Tus expertos en logística' },
-  { img: rubro4, label: 'Moda' },
+  { img: rubro1, icon: iconCar, label: 'Repuestos de autos' },
+  { img: rubro2, icon: iconSafety, label: 'Seguridad industrial' },
+  { img: rubro3, icon: iconBoots, label: 'Tus expertos en logística' },
+  { img: rubro4, icon: iconDress, label: 'Moda' },
 ];
 
 const SectorBridge: React.FC = () => {
@@ -25,8 +30,7 @@ const SectorBridge: React.FC = () => {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6 }}
           >
-            <p className="sector-bridge__eyebrow">Tu puente directo a fabricantes</p>
-            <h2 className="sector-bridge__title">LÍDERES DE CADA SECTOR</h2>
+            <h2 className="sector-bridge__title">TU PUENTE DIRECTO A FABRICANTES <br /> LÍDERES DE CADA SECTOR</h2>
           </motion.div>
           <motion.p
             className="sector-bridge__desc"
@@ -56,8 +60,9 @@ const SectorBridge: React.FC = () => {
                 style={{ backgroundImage: `url(${sector.img})` }}
               />
               <div className="sector-card__icon-wrap">
-                {/* Placeholder icon — white circle */}
-                <div className="sector-card__icon" />
+                <div className="sector-card__icon">
+                  <img src={sector.icon} alt={sector.label} className="sector-card__icon-img" />
+                </div>
               </div>
               <div className="sector-card__overlay">
                 <span className="sector-card__label">{sector.label}</span>
@@ -74,7 +79,7 @@ const SectorBridge: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <a href="/rubros" className="sector-bridge__link">
-            Ver todos los rubros →
+            Ver todos los rubros
           </a>
         </motion.div>
       </div>

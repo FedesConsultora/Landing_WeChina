@@ -5,7 +5,14 @@
 @use "../abstracts/mixins" as *;
 
 .service-grid {
-  @include section-v-pad;
+  padding-top: 64px;
+  padding-bottom: 64px;
+
+  @media (min-width: 1024px) {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
   background: $soft-white;
 
   // ── Header: eyebrow + title alineados horizontalmente ──────
@@ -15,7 +22,7 @@
     flex-direction: column;
     justify-content: space-between;
 
-    @include respond-to('desktop') {
+    @media (min-width: 1024px) {
       flex-direction: row;
       align-items: baseline;
       gap: 16px;
@@ -56,12 +63,12 @@
     grid-template-columns: 1fr;
     gap: 16px;
 
-    @include respond-to('tablet') {
+    @media (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @include respond-to('desktop') {
-      grid-template-columns: repeat(6, 1fr);
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 }
@@ -77,27 +84,26 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 
-  // Fila 1: las 2 primeras cards (índice 0 y 1) — altas
+  // Fila 1 y primera de fila 2: las 3 primeras cards — grandes
   &:nth-child(1),
-  &:nth-child(2) {
-    min-height: 320px;
+  &:nth-child(2),
+  &:nth-child(3) {
+    min-height: 300px;
 
-    @include respond-to('desktop') {
-      grid-column: span 3; // 3/6 = 50% cada una
-      min-height: 380px;
+    @media (min-width: 1024px) {
+      grid-column: span 2; // 2/4 = 50% cada una
+      min-height: 340px;
     }
   }
 
-  // Fila 2: las últimas 3 cards (índice 3, 4 y 5) — más bajas
-  &:nth-child(3),
+  // Fila 2 (restante): las últimas 2 cards — pequeñas
   &:nth-child(4),
   &:nth-child(5) {
-    min-height: 400px;
-    width: 320px;
+    min-height: 300px;
 
-    @include respond-to('desktop') {
-      grid-column: span 2; // 2/6 = 33% cada una
-      min-height: 450x;
+    @media (min-width: 1024px) {
+      grid-column: span 1; // 1/4 = 25% cada una
+      min-height: 340px;
     }
   }
 
@@ -106,7 +112,7 @@
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 
     .scard__img {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
   }
 
@@ -160,7 +166,7 @@
     background: $primary-red;
 
     .scard__img {
-      width: 100%
+      background-size: cover;
     }
 
     &::after {

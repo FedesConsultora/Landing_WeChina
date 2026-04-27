@@ -23,7 +23,7 @@ $navbar-height: 80px;
     align-items: center;
     gap: 16px;
 
-    @include respond-to('desktop') {
+    @media (min-width: 1024px) {
       // Desktop: logo | centered nav | cta
       grid-template-columns: 200px 1fr 200px;
       gap: 24px;
@@ -41,7 +41,7 @@ $navbar-height: 80px;
       object-fit: contain;
       display: block;
 
-      @include respond-to('desktop') {
+      @media (min-width: 1024px) {
         height: 64px;
       }
     }
@@ -71,7 +71,7 @@ $navbar-height: 80px;
       padding: 24px 20px 32px;
     }
 
-    @include respond-to('desktop') {
+    @media (min-width: 1024px) {
       position: static;
       flex-direction: row;
       max-height: none;
@@ -97,7 +97,7 @@ $navbar-height: 80px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       transition: color 0.25s ease;
 
-      @include respond-to('desktop') {
+      @media (min-width: 1024px) {
         font-size: 0.8rem;
         padding: 0;
         border-bottom: none;
@@ -124,7 +124,7 @@ $navbar-height: 80px;
   &__cta-btn {
     display: none;
 
-    @include respond-to('tablet') {
+    @media (min-width: 768px) {
       display: inline-block;
       background: $primary-red;
       color: $pure-white;
@@ -156,7 +156,7 @@ $navbar-height: 80px;
     cursor: pointer;
     position: relative;
 
-    @include respond-to('desktop') {
+    @media (min-width: 1024px) {
       display: none;
     }
 

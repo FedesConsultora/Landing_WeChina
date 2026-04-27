@@ -11,7 +11,7 @@
   align-items: center;
   overflow: hidden;
 
-  @include respond-to('desktop') {
+  @media (min-width: 1024px) {
     min-height: 480px;
   }
 

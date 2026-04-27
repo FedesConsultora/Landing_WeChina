@@ -5,7 +5,9 @@
 @use "../abstracts/mixins" as *;
 
 .highlights {
-  @include section-v-pad;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
   background: $pure-white;
 
   // Layout: en mobile stacked, en desktop el h2 ocupa todo
@@ -15,7 +17,7 @@
     grid-template-columns: 1fr;
     gap: 32px;
 
-    @include respond-to('desktop') {
+    @media (min-width: 1024px) {
       justify-content: center;
       align-items: center;
       gap: 60px;
@@ -49,7 +51,7 @@
     color: $medium-gray;
     text-align: center;
 
-    @include respond-to('desktop') {
+    @media (min-width: 1024px) {
       font-size: 1.05rem;
     }
   }

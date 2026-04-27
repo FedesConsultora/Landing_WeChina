@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
         >
           <h1>
             Eliminá el miedo a importar,<br />
-            <span className="hero__highlight">con nosotros tu carga no queda varada</span>
+            <span className="hero__highlight">con nosotros tu carga no <br /> queda varada</span>
           </h1>
           <div className='hero__subtitle'>
             <h3>Expertos allá, socios acá. 20 años eliminando los riesgos de tu inversión en Asia.</h3>
@@ -39,7 +39,7 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="hero__stats">
-        <div className="container">
+        <div className="container-grid">
           <div className="stats-grid">
             {[
               { value: '+20 AÑOS', label: 'trabajando para vos.' },

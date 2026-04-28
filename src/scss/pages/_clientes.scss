@@ -1,0 +1,201 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// ────────────────────────────────────────────────────────────
+//  Clients Section  –  _clientes.scss
+// ────────────────────────────────────────────────────────────
+
+// The section clips everything that overflows horizontally
+.clients-section {
+  background: $pure-white;
+  overflow-x: hidden;
+  padding: 40px 0 60px;
+  position: relative; // anchor for the fade overlay
+
+  @include respond-to('desktop') {
+    padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+
+// ── Two-column inner wrapper ──────────────────────────────────
+.clients-section__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 0 24px;
+
+  @include respond-to('tablet') {
+    padding: 0 40px;
+  }
+
+  @include respond-to('desktop') {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0 0 0 60px;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative; // anchor for ::before fade
+
+    // The fade — a pseudo-element in the same flex stacking context
+    // z-index comparisons work correctly between siblings here
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      // Covers the section left padding (60px) + text column (380px) + a bit into cards
+      width: 650px;
+      height: 100%;
+      background: linear-gradient(to right,
+          rgba($pure-white, 1) 0%,
+          rgba($pure-white, 1) 72%,
+          rgba($pure-white, 0.5) 88%,
+          rgba($pure-white, 0) 100%);
+      z-index: 1; // above cards (z:0), below text (z:2)
+      pointer-events: none;
+    }
+  }
+}
+
+// ── Text column ───────────────────────────────────────────────
+.clients-section__text {
+  flex: 0 0 auto;
+  max-width: 100%;
+
+  @include respond-to('desktop') {
+    width: 380px;
+    padding-right: 40px;
+    padding-top: 30px;
+    position: relative;
+    z-index: 2; // above the ::before fade
+  }
+}
+
+.clients-section__heading {
+  font-family: $font-headings;
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1.05;
+  color: $dark-carbon;
+  margin: 0 0 18px;
+
+  @include respond-to('tablet') {
+    font-size: 3rem;
+  }
+
+  @include respond-to('desktop') {
+    font-size: 3.4rem;
+  }
+
+  .text-red {
+    color: $primary-red;
+  }
+}
+
+.clients-section__body {
+  font-family: $font-body;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: $medium-gray;
+  margin: 0 0 28px;
+
+  @include respond-to('desktop') {
+    font-size: 1rem;
+  }
+}
+
+.clients-section__cta {
+  display: inline-block;
+}
+
+// ── Cards column ─────────────────────────────────────────────
+.clients-cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden !important;
+
+  @include respond-to('desktop') {
+    overflow: visible;
+    padding: 0;
+  }
+}
+
+// ── Each row ─────────────────────────────────────────────────
+.clients-cards__row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // 2 cols mobile
+  gap: 12px;
+  will-change: transform;
+
+  @include respond-to('tablet') {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  &--offset {
+    @include respond-to('desktop') {
+      // Slight visual stagger between rows for the parallax rows
+      transform: translateX(-24px);
+    }
+  }
+}
+
+// ── Single card ───────────────────────────────────────────────
+.clients-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: $light-gray;
+  // Larger than before: 4:3 ratio so they're taller/bigger
+  aspect-ratio: 3 / 4;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  @include respond-to('desktop') {
+    border-radius: 20px;
+    aspect-ratio: 5 /6; // keep proportional
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 14px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    color: $pure-white;
+    font-family: $font-body;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.3;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  &:hover {
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.13);
+    transform: translateY(-4px);
+
+    .clients-card__label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

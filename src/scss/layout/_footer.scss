@@ -117,15 +117,19 @@
 
   // ── Contact column ───────────────────────────────────────
   &__contact {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-self: stretch;
     color: $pure-white;
   }
 
   &__contact-title {
+    margin-top: 1rem;
     font-family: $font-headings;
     font-weight: 700;
-    font-size: 1.8rem;
+    font-size: 3rem !important;
     color: $pure-white;
-    margin-bottom: 14px;
 
     @media (min-width: 768px) {
       font-size: 2.2rem;
@@ -137,19 +141,24 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: .6rem;
 
     p {
       display: flex;
       align-items: flex-start;
       gap: 10px;
+      margin-top: 1rem;
       font-family: $font-body;
-      font-size: 0.88rem;
+      font-size: 1.1rem;
       color: rgba($pure-white, 0.9);
-      line-height: 1.4;
+      line-height: 1;
 
       svg {
         flex-shrink: 0;
         margin-top: 2px;
+        transform: scale(1.1);
       }
     }
   }
@@ -286,6 +295,14 @@
   &__bottom-links {
     display: flex;
     gap: 20px;
+
+    p {
+      font-family: $font-body;
+      font-size: 0.78rem;
+      color: rgba($pure-white, 0.5);
+      margin: 0;
+      cursor: auto;
+    }
 
     a {
       font-family: $font-body;

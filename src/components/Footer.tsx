@@ -47,6 +47,10 @@ const Footer: React.FC = () => {
               <h4 className="footer__contact-title">CONTACTANOS</h4>
               <div className="footer__contact-info">
                 <p>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="white" strokeWidth="2" /><circle cx="12" cy="10" r="3" stroke="white" strokeWidth="2" /></svg>
+                  Av. Triunvirato 2766, 7B, Buenos Aires
+                </p>
+                <p>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.73 12.5a19.79 19.79 0 01-3.07-8.67A2 2 0 013.66 2H6.7a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.29 6.29l1.27-1.04a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="white" strokeWidth="2" /></svg>
                   +54 11 3089 7009
                 </p>
@@ -54,10 +58,7 @@ const Footer: React.FC = () => {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="white" strokeWidth="2" /><polyline points="22,6 12,13 2,6" stroke="white" strokeWidth="2" /></svg>
                   oficina@wechina.com.ar
                 </p>
-                <p>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="white" strokeWidth="2" /><circle cx="12" cy="10" r="3" stroke="white" strokeWidth="2" /></svg>
-                  Av. Triunvirato 2766, 7B, Buenos Aires
-                </p>
+
               </div>
             </div>
           </div>
@@ -104,8 +105,10 @@ const Footer: React.FC = () => {
           <div className="footer__bottom-grid">
             <span className="footer__copy">© {new Date().getFullYear()} WeChina</span>
             <div className="footer__bottom-links">
-              <Link to="/legales">Legales</Link>
-              <Link to="/privacidad">Privacidad</Link>
+              <p>Desarrollado por {' '}
+                <a href="https://fedes.ai/" target="_blank">Fedes Consultora</a>
+              </p>
+
             </div>
           </div>
         </div>

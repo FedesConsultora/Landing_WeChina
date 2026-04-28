@@ -1,0 +1,173 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// ────────────────────────────────────────────────────────────
+//  Contact Section  –  _contacto.scss
+// ────────────────────────────────────────────────────────────
+
+.contact-section {
+  background: $pure-white;
+  overflow: hidden; // clips cards that scroll outside
+  padding: 60px 0;
+
+  @include respond-to('desktop') {
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+
+// ── Two-column inner wrapper ──────────────────────────────────
+.contact-section__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  @include respond-to('tablet') {
+    padding: 0 40px;
+  }
+
+  @include respond-to('desktop') {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    padding: 0 60px;
+  }
+}
+
+// ── Text column ───────────────────────────────────────────────
+.contact-section__text {
+  flex: 0 0 auto;
+  max-width: 100%;
+
+  @include respond-to('desktop') {
+    max-width: 360px;
+    padding-right: 40px;
+  }
+}
+
+.contact-section__heading {
+  font-family: $font-headings;
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1.05;
+  color: $dark-carbon;
+  margin: 0 0 20px;
+
+  @include respond-to('tablet') {
+    font-size: 3.2rem;
+  }
+
+  @include respond-to('desktop') {
+    font-size: 3.4rem;
+  }
+
+  .text-red {
+    color: $primary-red;
+  }
+}
+
+.contact-section__body {
+  font-family: $font-body;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: $medium-gray;
+  margin: 0 0 32px;
+
+  @include respond-to('desktop') {
+    font-size: 1rem;
+  }
+}
+
+.contact-section__cta {
+  display: inline-block;
+}
+
+// ── Cards column ─────────────────────────────────────────────
+.contact-cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  // On mobile: normal stacked grid, no scroll animation
+  overflow: hidden; // prevent horizontal overflow on mobile
+
+  @include respond-to('desktop') {
+    overflow: visible; // allow GSAP to move cards slightly outside
+    padding: 60px 0;
+  }
+}
+
+// ── Each row ─────────────────────────────────────────────────
+.contact-cards__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  // On mobile, will-change none to save resources
+  will-change: transform;
+
+  // The offset row is slightly indented on desktop for stagger effect
+  &--offset {
+    @include respond-to('desktop') {
+      transform: translateX(-30px); // initial visual offset
+    }
+  }
+}
+
+// ── Single card ───────────────────────────────────────────────
+.contact-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: $light-gray;
+  aspect-ratio: 1 / 1;   // always square
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  @include respond-to('desktop') {
+    border-radius: 20px;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 12px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+    color: $pure-white;
+    font-family: $font-body;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.3;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    @include respond-to('desktop') {
+      font-size: 0.85rem;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+
+    .contact-card__label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

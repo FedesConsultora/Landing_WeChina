@@ -1,96 +1,125 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-.page-header {
+.about-section {
   position: relative;
-  height: 400px;
+  padding: 100px 0;
+  min-height: 80vh;
   display: flex;
   align-items: center;
-  color: $pure-white;
+  background-color: $pure-white;
   overflow: hidden;
 
-  &__bg {
+  &::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(rgba($deep-carbon, 0.7), rgba($deep-carbon, 0.4));
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    // Subtle background pattern/image simulation
+    background-image: linear-gradient(rgba($pure-white, 0.9), rgba($pure-white, 0.7)), url('/assets/images/background-pattern.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
   }
 
-  h1 {
-    color: $pure-white;
-    max-width: 900px;
-    margin: 0;
+  .container {
+    position: relative;
+    z-index: 1;
   }
 }
 
-.about-grid {
+.about-content {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 60px;
+  gap: 40px;
   align-items: center;
 
   @include respond-to('desktop') {
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
   }
 }
 
-.about-text {
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 25px;
-    line-height: 1.6;
-  }
-}
+.about-text-column {
+  .about-title {
+    font-family: $font-headings;
+    font-size: 3.5rem;
+    line-height: 1.1;
+    color: $dark-carbon;
+    margin-bottom: 40px;
+    font-weight: 700;
 
-.about-features {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
-
-  .feature-card {
-    background: $soft-white;
-    padding: 40px;
-    border-radius: 20px;
-    transition: $transition-smooth;
-    border: 1px solid rgba($deep-carbon, 0.05);
-
-    &:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    @include respond-to('tablet') {
+      font-size: 4.5rem;
     }
 
-    .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+    .text-highlight {
+      color: $primary-red;
       display: block;
     }
+  }
 
-    h3 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
+  .about-description {
+    p {
+      font-family: $font-body;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: $medium-gray;
+      margin-bottom: 25px;
+      max-width: 600px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.about-image-column {
+  position: relative;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .about-image-placeholder {
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+    min-height: 500px;
+    background-color: rgba($primary-red, 0.03);
+    border: 2px dashed rgba($primary-red, 0.1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: $transition-smooth;
+
+    &::before {
+      content: '🏗️';
+      font-size: 4rem;
+      margin-bottom: 15px;
+      opacity: 0.3;
     }
 
-    p {
-      margin-bottom: 0;
+    &::after {
+      content: 'Espacio para imagen (Contenedor / Grúa)';
+      color: rgba($primary-red, 0.4);
+      font-family: $font-body;
       font-size: 1rem;
+      text-transform: none;
+      font-weight: 600;
+    }
+
+    &:hover {
+      background-color: rgba($primary-red, 0.05);
+      border-color: rgba($primary-red, 0.2);
     }
   }
 }

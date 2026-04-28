@@ -5,56 +5,85 @@
 @use "../abstracts/mixins" as *;
 
 .footer {
+
+  // ── Main area (red) ──────────────────────────────────────
   &__main {
     background: $primary-red;
-    padding: 50px 0 40px;
-  }
-
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
+    padding: 40px 0 30px;
 
     @media (min-width: 768px) {
-      grid-template-columns: 180px 1fr 220px;
-      gap: 30px;
-      align-items: start;
+      padding: 50px 0 40px;
     }
   }
 
-  // Brand column
-  &__brand {
+  &__grid {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+    gap: 32px;
+
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 160px 1fr 240px;
+      gap: 40px;
+      align-items: center;
+    }
+  }
+
+  // ── Brand column ─────────────────────────────────────────
+  &__brand {
+    display: flex;
+    flex-direction: row; // Logo + socials side-by-side on mobile
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    @media (min-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
   }
 
   &__logo {
-    height: 60px;
+    height: 44px; // Proportional on mobile
     width: auto;
-    // Invert to white since footer is red
+    display: block;
     filter: brightness(0) invert(1);
+
+    @media (min-width: 1024px) {
+      height: 130px; // Slightly smaller to avoid deformation
+    }
   }
 
   &__socials {
     display: flex;
-    gap: 14px;
+    gap: 12px;
+
+    @media (min-width: 768px) {
+      gap: 14px;
+    }
   }
 
   &__social-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid rgba($pure-white, 0.4);
+    width: 50px;
+    height: 50px;
     transition: $transition-smooth;
+    flex-shrink: 0;
+
+
+
+    img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      transition: all 0.3s ease;
+    }
 
     &:hover {
-      background: rgba($pure-white, 0.15);
-      border-color: $pure-white;
+      transform: scale(1.1);
     }
 
     svg {
@@ -62,14 +91,20 @@
     }
   }
 
-  // Map column
+  // ── Map column ───────────────────────────────────────────
   &__map {
-    border-radius: 8px;
+    border-radius: 16px;
     overflow: hidden;
     height: 200px;
+    width: 100%;
 
     @media (min-width: 768px) {
-      height: 220px;
+      border-radius: 20px;
+      height: 280px;
+    }
+
+    @media (min-width: 1024px) {
+      height: 320px;
     }
 
     iframe {
@@ -77,11 +112,10 @@
       width: 100%;
       height: 100%;
       border: none;
-      filter: hue-rotate(0deg) saturate(1);
     }
   }
 
-  // Contact column
+  // ── Contact column ───────────────────────────────────────
   &__contact {
     color: $pure-white;
   }
@@ -89,9 +123,14 @@
   &__contact-title {
     font-family: $font-headings;
     font-weight: 700;
-    font-size: 3rem;
+    font-size: 1.8rem;
     color: $pure-white;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
+
+    @media (min-width: 768px) {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+    }
   }
 
   &__contact-info {
@@ -115,7 +154,111 @@
     }
   }
 
-  // Bottom bar (darker)
+  // ── Services section ─────────────────────────────────────
+  &__services-section {
+    background: $primary-red;
+    padding: 0 0 40px;
+
+    @media (min-width: 768px) {
+      padding: 0 0 60px;
+    }
+  }
+
+  &__services-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-top: 1px solid rgba($pure-white, 0.15);
+    padding-top: 32px;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 40px;
+      padding-top: 50px;
+    }
+  }
+
+  &__services-title-col {
+    flex-shrink: 0;
+  }
+
+  &__services-heading {
+    font-family: $font-headings;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: $pure-white;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+
+    @media (min-width: 768px) {
+      font-size: 2.2rem;
+    }
+  }
+
+  &__services-more {
+    color: rgba($pure-white, 0.8);
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: $transition-smooth;
+
+    &:hover {
+      color: $pure-white;
+      transform: translateX(4px);
+    }
+  }
+
+  &__services-divider {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+      width: 1px;
+      align-self: stretch;
+      background: rgba($pure-white, 0.2);
+      flex-shrink: 0;
+    }
+  }
+
+  &__services-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; // 2 cols on mobile
+    gap: 12px 20px;
+    flex: 1;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px 32px;
+    }
+  }
+
+  &__services-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    a {
+      color: rgba($pure-white, 0.75);
+      font-family: $font-body;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: $transition-smooth;
+      line-height: 1.4;
+
+      @media (min-width: 768px) {
+        font-size: 0.95rem;
+      }
+
+      &:hover {
+        color: $pure-white;
+      }
+    }
+  }
+
+  // ── Bottom bar ────────────────────────────────────────────
   &__bottom {
     background: $primary-red-dark;
     padding: 16px 0;
@@ -124,7 +267,7 @@
   &__bottom-grid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     align-items: flex-start;
 
     @media (min-width: 768px) {
@@ -137,18 +280,17 @@
   &__copy {
     font-family: $font-body;
     font-size: 0.78rem;
-    color: rgba($pure-white, 0.6);
+    color: rgba($pure-white, 0.5);
   }
 
-  &__links {
+  &__bottom-links {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
+    gap: 20px;
 
     a {
       font-family: $font-body;
       font-size: 0.78rem;
-      color: rgba($pure-white, 0.65);
+      color: rgba($pure-white, 0.5);
       text-decoration: none;
       transition: $transition-smooth;
 

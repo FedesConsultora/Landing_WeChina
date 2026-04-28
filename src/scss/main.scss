@@ -17,6 +17,11 @@
 @use "components/logistics-cta";
 @use "components/sector-bridge";
 
+// ── Pages ─────────────────────────────────────────────────────
+@use "pages/home";
+@use "pages/nosotros";
+@use "pages/servicios";
+
 // ── Global helpers ────────────────────────────────────────────
 .container {
   width: 100%;

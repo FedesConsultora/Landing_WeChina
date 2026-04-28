@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/img/logo-2.png';
+import logo from '../assets/img/logo-1.png';
+import igIcon from '../assets/img/ig-logo.png';
+import fbIcon from '../assets/img/fb-logo.png';
 
 const Footer: React.FC = () => {
   return (
@@ -11,21 +13,17 @@ const Footer: React.FC = () => {
           <div className="footer__grid">
             {/* Left: Logo + social */}
             <div className="footer__brand">
-              <img src={logo} alt="WeChina" className="footer__logo" />
+              <div className="footer__logo-container">
+                <img src={logo} alt="WeChina" className="footer__logo" />
+              </div>
               <div className="footer__socials">
                 {/* Instagram icon */}
                 <a href="#" aria-label="Instagram" className="footer__social-link">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" strokeWidth="2"/>
-                    <circle cx="12" cy="12" r="5" stroke="white" strokeWidth="2"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="white"/>
-                  </svg>
+                  <img src={igIcon} alt="Instagram" />
                 </a>
                 {/* Facebook icon */}
                 <a href="#" aria-label="Facebook" className="footer__social-link">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <img src={fbIcon} alt="Facebook" />
                 </a>
               </div>
             </div>
@@ -49,17 +47,51 @@ const Footer: React.FC = () => {
               <h4 className="footer__contact-title">CONTACTANOS</h4>
               <div className="footer__contact-info">
                 <p>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.73 12.5a19.79 19.79 0 01-3.07-8.67A2 2 0 013.66 2H6.7a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.29 6.29l1.27-1.04a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="white" strokeWidth="2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.73 12.5a19.79 19.79 0 01-3.07-8.67A2 2 0 013.66 2H6.7a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.29 6.29l1.27-1.04a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="white" strokeWidth="2" /></svg>
                   +54 11 3089 7009
                 </p>
                 <p>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="white" strokeWidth="2"/><polyline points="22,6 12,13 2,6" stroke="white" strokeWidth="2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="white" strokeWidth="2" /><polyline points="22,6 12,13 2,6" stroke="white" strokeWidth="2" /></svg>
                   oficina@wechina.com.ar
                 </p>
                 <p>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="white" strokeWidth="2"/><circle cx="12" cy="10" r="3" stroke="white" strokeWidth="2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="white" strokeWidth="2" /><circle cx="12" cy="10" r="3" stroke="white" strokeWidth="2" /></svg>
                   Av. Triunvirato 2766, 7B, Buenos Aires
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Services section in footer */}
+      <div className="footer__services-section">
+        <div className="container">
+          <div className="footer__services-grid">
+            <div className="footer__services-title-col">
+              <h4 className="footer__services-heading">SERVICIOS</h4>
+              <Link to="/servicios" className="footer__services-more">
+                Conocé más <span>↗</span>
+              </Link>
+            </div>
+
+            <div className="footer__services-divider" />
+
+            <div className="footer__services-links-grid">
+              <div className="footer__services-col">
+                <Link to="/servicios?service=agentes-de-compras">Agentes de compras</Link>
+                <Link to="/servicios?service=busqueda-de-proveedores">Búsqueda de proveedores</Link>
+                <Link to="/servicios?service=control-de-calidad">Control de calidad</Link>
+              </div>
+              <div className="footer__services-col">
+                <Link to="/servicios?service=fletes-maritimos-y-aereos">Fletes marítimos y aéreos</Link>
+                <Link to="/servicios?service=validacion-de-fabricantes-online">Validación de fabricantes online</Link>
+                <Link to="/servicios?service=manejo-de-muestras">Manejo de muestras</Link>
+              </div>
+              <div className="footer__services-col">
+                <Link to="/servicios?service=almacenaje-y-consolidacion-de-cargas">Almacenaje y consolidación de cargas</Link>
+                <Link to="/servicios?service=viajes-de-negocios-a-china">Viajes de negocios a China</Link>
+                <Link to="/servicios?service=creacion-de-marcas-propias">Creación de marcas propias</Link>
               </div>
             </div>
           </div>
@@ -71,13 +103,10 @@ const Footer: React.FC = () => {
         <div className="container">
           <div className="footer__bottom-grid">
             <span className="footer__copy">© {new Date().getFullYear()} WeChina</span>
-            <nav className="footer__links">
-              <Link to="/servicios">Agentes de compras</Link>
-              <Link to="/servicios">Búsqueda de proveedores</Link>
-              <Link to="/servicios">Control de calidad</Link>
-              <Link to="/servicios">Validación de fabricantes</Link>
-              <Link to="/servicios">Fletes marítimos</Link>
-            </nav>
+            <div className="footer__bottom-links">
+              <Link to="/legales">Legales</Link>
+              <Link to="/privacidad">Privacidad</Link>
+            </div>
           </div>
         </div>
       </div>

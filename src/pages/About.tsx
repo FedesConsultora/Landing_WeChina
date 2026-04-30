@@ -1,10 +1,23 @@
 import React from 'react';
 import SectionWrapper from '../components/SectionWrapper';
+import aboutVideo from '../assets/img/nosotros/HERO-aboutus_1.mp4';
 
 const About: React.FC = () => {
   return (
     <SectionWrapper id="nosotros" className="about-section">
-      <div className="container">
+      <div className="about-video-bg">
+        <video 
+          src={aboutVideo} 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="about-video"
+        />
+        <div className="video-overlay"></div>
+      </div>
+      
+      <div className="container about-container">
         <div className="about-content">
           <div className="about-text-column">
             <h1 className="about-title">
@@ -17,12 +30,6 @@ const About: React.FC = () => {
               <p>
                 Somos el aliado estratégico a nivel comercial y logístico que cualquier emprendedor, empresa o industria debería tener, ofreciendo un servicio profesional y de alta performance en el mercado chino.
               </p>
-            </div>
-          </div>
-          <div className="about-image-column">
-            {/* Image placeholder - to be replaced by the user */}
-            <div className="about-image-placeholder">
-              {/* <img src="/path-to-container-image.jpg" alt="WeChina Logistics" /> */}
             </div>
           </div>
         </div>

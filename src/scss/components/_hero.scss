@@ -8,24 +8,26 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 100svh;
+  height: 110dvh;
   min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: $pure-white;
+
   overflow: hidden;
+  background-color: #fff !important;
+
 
   // Desktop: show video, hide static bg
   &__video {
-    display: none;
+
 
     @media (min-width: 992px) {
       display: block;
       position: absolute;
       inset: 0;
       width: 100%;
-      height: 100%;
+      height: 120%;
       object-fit: cover;
       z-index: 0;
     }
@@ -47,10 +49,7 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom,
-        rgba(0, 0, 0, 0.55) 0%,
-        rgba(0, 0, 0, 0.35) 70%,
-        rgba(0, 0, 0, 0.60) 100%);
+
     z-index: 1;
   }
 
@@ -113,7 +112,7 @@
       font-weight: 400;
       font-size: clamp(0.85rem, 1.2vw, 1rem);
       line-height: 1.55;
-      color: rgba($pure-white, 0.85);
+      color: $neutral-gray;
     }
   }
 

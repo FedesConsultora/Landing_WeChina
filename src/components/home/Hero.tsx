@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import heroFallback from '../../assets/img/hero/divider.webp';
+import heroVideo from '../../assets/img/hero/HERO-home_1.mp4';
 
 const Hero: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const Hero: React.FC = () => {
           className="hero__video"
           poster={heroFallback}
         >
-          <source src="/src/assets/img/hero/hero.webm" type="video/webm" />
+          <source src={heroVideo} type="video/webm" />
         </video>
         <div className="hero__mobile-bg" style={{ backgroundImage: `url(${heroFallback})` }} />
       </div>

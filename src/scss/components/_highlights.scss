@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   background: $pure-white;
+  padding-top: 80px; // Space for the protruding stats bar
 
   // Layout: en mobile stacked, en desktop el h2 ocupa todo
   // el ancho centrado arriba y el párrafo va al lado derecho

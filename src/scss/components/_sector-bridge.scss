@@ -28,10 +28,6 @@
     }
   }
 
-
-
-
-
   &__title {
     font-family: $font-headings;
     font-weight: 800;
@@ -47,7 +43,6 @@
     color: $medium-gray;
     line-height: 1.7;
     max-width: 300px;
-
 
     @media (min-width: 1024px) {
       align-self: end;
@@ -94,7 +89,6 @@
   }
 }
 
-// ─── Sector cards ─────────────────────────────────────────────
 .sector-card {
   position: relative;
   border-radius: 10px;
@@ -119,7 +113,6 @@
     transform: scale(1.07);
   }
 
-  // Gradient overlay
   &::after {
     content: '';
     position: absolute;

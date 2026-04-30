@@ -1,20 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import rubro1 from '../../assets/img/rubros/rubro-1.webp';
-import rubro2 from '../../assets/img/rubros/rubro-2.webp';
-import rubro3 from '../../assets/img/rubros/rubro-3.webp';
-import rubro4 from '../../assets/img/rubros/rubro-4.webp';
+import rubro1 from '../../assets/img/rubros/logos/rubro-1.webp';
+import rubro2 from '../../assets/img/rubros/logos/rubro-2.webp';
+import rubro3 from '../../assets/img/rubros/logos/rubro-3.webp';
+import rubro4 from '../../assets/img/rubros/logos/rubro-4.webp';
 
-import iconCar from '../../assets/img/rubros/car.png';
-import iconSafety from '../../assets/img/rubros/Safety Hat.png';
-import iconBoots from '../../assets/img/rubros/Winter Boots.png';
-import iconDress from '../../assets/img/rubros/Little Black Dress.png';
+import iconCar from '../../assets/img/rubros/logos/car.png';
+import iconSafety from '../../assets/img/rubros/logos/Safety Hat.png';
+import iconBoots from '../../assets/img/rubros/logos/Winter Boots.png';
+import iconDress from '../../assets/img/rubros/logos/Little Black Dress.png';
 
 const sectors = [
   { img: rubro1, icon: iconCar, label: 'Repuestos de autos' },
   { img: rubro2, icon: iconSafety, label: 'Seguridad industrial' },
-  { img: rubro3, icon: iconBoots, label: 'Tus expertos en logística' },
+  { img: rubro3, icon: iconBoots, label: 'Tus expertos en otro continente' },
   { img: rubro4, icon: iconDress, label: 'Moda' },
 ];
 

@@ -1,14 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import divider from '../../assets/img/hero/divider.webp';
+import barcoVideo from '../../assets/img/barco.mov';
 
 const LogisticsCTA: React.FC = () => {
   return (
     <section className="logistics-cta">
-      <div
-        className="logistics-cta__bg"
-        style={{ backgroundImage: `url(${divider})` }}
-      />
+      <div className="logistics-cta__bg">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="logistics-cta__video"
+        >
+          <source src={barcoVideo} type="video/quicktime" />
+          <source src={barcoVideo} type="video/mp4" />
+        </video>
+      </div>
       <div className="logistics-cta__overlay" />
       <div className="container">
         <motion.div
@@ -20,7 +28,7 @@ const LogisticsCTA: React.FC = () => {
         >
           <h2>
             Tus expertos en<br />
-            <span className="logistics-cta__highlight">logística</span>
+            <span className="logistics-cta__highlight">otro continente</span>
           </h2>
           <a href="/contacto" className="logistics-cta__btn">
             Hablá con un experto

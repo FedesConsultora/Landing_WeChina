@@ -15,7 +15,7 @@
   justify-content: center;
 
   overflow: visible; // Allow stats bar to protrude
-  background-color: transparent !important;
+  background-color: #fff !important; // Fixed background to match fade
 
 
   // Desktop: show video, hide static bg
@@ -25,16 +25,24 @@
     @media (min-width: 992px) {
       display: block;
       position: absolute;
-      top: 100px;
+      top: 80px;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 90%;
       object-fit: cover;
       z-index: 0;
 
-      // Mask to fade out the bottom
-      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      // Mascara ultra-suave para eliminar bordes marcados abajo y a los lados
+      mask-image: linear-gradient(to bottom,
+          black 0%,
+          black 60%,
+          rgba(0, 0, 0, 0.6) 80%,
+          transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom,
+          black 0%,
+          black 60%,
+          rgba(0, 0, 0, 0.6) 80%,
+          transparent 100%);
     }
   }
 

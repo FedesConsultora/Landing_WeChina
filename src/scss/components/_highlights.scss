@@ -5,24 +5,36 @@
 @use "../abstracts/mixins" as *;
 
 .highlights {
+  position: relative; // Added to allow absolute positioning of background elements
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center; // Center content horizontally
   background: $pure-white;
-  padding-top: 80px; // Space for the protruding stats bar
+  padding-top: 80px;
 
-  // Layout: en mobile stacked, en desktop el h2 ocupa todo
-  // el ancho centrado arriba y el párrafo va al lado derecho
-  &__layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .img-container {
+    position: absolute;
+    left: -2%; // Adjust to keep it where it was
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35%;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.3; // Light gray effect starts here
 
-    @media (min-width: 1024px) {
-      justify-content: center;
-      align-items: center;
-      gap: 60px;
+    img {
+      width: 60%;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(100%) brightness(1.2); // Makes it light gray
     }
+  }
+
+
+  .container {
+    padding: 0;
   }
 
   &__main {

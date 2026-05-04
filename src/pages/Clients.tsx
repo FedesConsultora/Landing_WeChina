@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -36,6 +36,7 @@ const Clients: React.FC = () => {
   const totalImages = cards.length;
 
   const sectionRef = useRef<HTMLElement>(null);
+  const pinWrapRef = useRef<HTMLDivElement>(null);
   const rowRef1 = useRef<HTMLDivElement>(null);
   const rowRef2 = useRef<HTMLDivElement>(null);
   const rowRef3 = useRef<HTMLDivElement>(null);
@@ -50,26 +51,33 @@ const Clients: React.FC = () => {
     }
   }, [imagesLoaded, totalImages]);
 
-  useEffect(() => {
-    if (isLoading) return;
+  useLayoutEffect(() => {
+    if (isLoading) {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+      return;
+    }
 
     const section = sectionRef.current;
-    if (!section) return;
+    const pinWrap = pinWrapRef.current;
+    if (!section || !pinWrap) return;
+
+    // Refresh ScrollTrigger to ensure correct measurements after loading
+    ScrollTrigger.refresh();
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add('(min-width: 1024px)', () => {
-        // Create a dedicated timeline for the scroll effect
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
             start: 'top top',
-            end: '+=150%', // 150% of viewport height extra scroll
+            end: '+=150%',
             scrub: 1.5,
-            pin: true,
+            pin: pinWrap,
             pinSpacing: true,
-            anticipatePin: 1
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           }
         });
 
@@ -77,9 +85,15 @@ const Clients: React.FC = () => {
           .fromTo(rowRef2.current, { x: -250 }, { x: 250, ease: 'none' }, 0)
           .fromTo(rowRef3.current, { x: 250 }, { x: -250, ease: 'none' }, 0);
       });
-    }, sectionRef);
+    }, section);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      // Force kill all triggers related to this section
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.trigger === section) t.kill();
+      });
+    };
   }, [isLoading]);
 
   const renderRow = (
@@ -103,7 +117,8 @@ const Clients: React.FC = () => {
 
   return (
     <section className="clients-section" ref={sectionRef} id="clientes">
-      <div className="clients-section__inner">
+      <div className="clients-pin-wrap" ref={pinWrapRef} style={{ width: '100%' }}>
+        <div className="clients-section__inner">
         {/* ── Left: text ── */}
         <div className="clients-section__text">
           <h1 className="clients-section__heading">
@@ -136,6 +151,7 @@ const Clients: React.FC = () => {
             {renderRow(row2, rowRef2, 'clients-cards__row--offset')}
             {renderRow(row3, rowRef3)}
           </div>
+        </div>
         </div>
       </div>
     </section>

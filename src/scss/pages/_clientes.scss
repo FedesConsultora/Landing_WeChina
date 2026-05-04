@@ -13,10 +13,11 @@
   position: relative; // anchor for the fade overlay
 
   @include respond-to('desktop') {
-    padding: 50px 0;
+    padding: 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    background: $pure-white;
   }
 }
 
@@ -125,7 +126,7 @@
 
   @include respond-to('desktop') {
     overflow: visible;
-    padding: 0;
+    padding: 80px 0;
     min-height: 80vh; // Ensure it occupies space even if empty
   }
 

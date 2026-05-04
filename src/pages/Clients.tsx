@@ -59,23 +59,25 @@ const Clients: React.FC = () => {
     const mm = gsap.matchMedia();
 
     mm.add('(min-width: 1024px)', () => {
-      const tl1 = gsap.fromTo(rowRef1.current, { x: 60 }, {
-        x: -60, ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1.2 },
-      });
-      const tl2 = gsap.fromTo(rowRef2.current, { x: -60 }, {
-        x: 60, ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1.2 },
-      });
-      const tl3 = gsap.fromTo(rowRef3.current, { x: 60 }, {
-        x: -60, ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1.2 },
+      // Create a dedicated timeline for the scroll effect
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=150%', // 150% of viewport height extra scroll
+          scrub: 1.5,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1
+        }
       });
 
+      tl.fromTo(rowRef1.current, { x: 250 }, { x: -250, ease: 'none' }, 0)
+        .fromTo(rowRef2.current, { x: -250 }, { x: 250, ease: 'none' }, 0)
+        .fromTo(rowRef3.current, { x: 250 }, { x: -250, ease: 'none' }, 0);
+
       return () => {
-        tl1.scrollTrigger?.kill();
-        tl2.scrollTrigger?.kill();
-        tl3.scrollTrigger?.kill();
+        tl.kill();
       };
     });
 

@@ -8,6 +8,9 @@ import img2 from '../assets/img/rubros/rubros (2).webp';
 import img3 from '../assets/img/rubros/rubros (3).webp';
 import img4 from '../assets/img/rubros/rubros (4).webp';
 import img5 from '../assets/img/rubros/rubros (5).webp';
+import img6 from '../assets/img/rubros/rubros (6).webp';
+import img7 from '../assets/img/rubros/rubros (7).webp';
+import img8 from '../assets/img/rubros/rubros (8).webp';
 import img9 from '../assets/img/rubros/rubros (9).webp';
 import img10 from '../assets/img/rubros/rubros (10).webp';
 import img11 from '../assets/img/rubros/rubros (11).webp';
@@ -20,24 +23,24 @@ import img17 from '../assets/img/rubros/rubros (17).webp';
 import img18 from '../assets/img/rubros/rubros (18).webp';
 
 const sectors = [
-  { id: 1, label: 'Calzados', img: img1 },
-  { id: 2, label: 'Moda', img: img2 },
-  { id: 3, label: 'Seguridad', img: img3 },
-  { id: 4, label: 'Maquinaria', img: img4 },
-  { id: 5, label: 'Repuestos de auto', img: img5 },
-  { id: 6, label: 'Equipos y productos para supermercado', img: img9 },
-  { id: 7, label: 'Materiales de construcción', img: img10 },
-  { id: 8, label: 'Ferretería', img: img11 },
-  { id: 9, label: 'Iluminación', img: img9 },
-  { id: 10, label: 'Repuestos y accesorios para motos', img: img10 },
-  { id: 11, label: 'Metalúrgica', img: img11 },
-  { id: 12, label: 'Joyería', img: img12 },
-  { id: 13, label: 'Marroquinería', img: img13 },
-  { id: 14, label: 'Cotillón', img: img14 },
-  { id: 15, label: 'Peluquería', img: img15 },
-  { id: 16, label: 'Textil', img: img16 },
-  { id: 17, label: 'Farmacias', img: img17 },
-  { id: 18, label: 'Merchandising', img: img18 },
+  { id: 1, label: 'Calzados', img: img7 },
+  { id: 2, label: 'Moda', img: img18 },
+  { id: 3, label: 'Seguridad', img: img17 },
+  { id: 4, label: 'Maquinaria', img: img1 },
+  { id: 5, label: 'Repuestos de auto', img: img2 },
+  { id: 6, label: 'Equipos y productos para supermercado', img: img3 },
+  { id: 7, label: 'Materiales de construcción', img: img4 },
+  { id: 8, label: 'Ferretería', img: img5 },
+  { id: 9, label: 'Iluminación', img: img8 },
+  { id: 10, label: 'Repuestos y accesorios para motos', img: img6 },
+  { id: 11, label: 'Metalúrgica', img: img9 },
+  { id: 12, label: 'Joyería', img: img10 },
+  { id: 13, label: 'Marroquinería', img: img11 },
+  { id: 14, label: 'Cotillón', img: img12 },
+  { id: 15, label: 'Peluquería', img: img13 },
+  { id: 16, label: 'Textil', img: img14 },
+  { id: 17, label: 'Farmacias', img: img15 },
+  { id: 18, label: 'Merchandising', img: img16 },
 ];
 
 // Triplicate the list for seamless looping

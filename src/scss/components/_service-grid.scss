@@ -171,20 +171,102 @@
 
   &--conoce {
     background: $primary-red;
+    text-decoration: none;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
 
-    .scard__img {
-      background-size: cover;
-    }
-
+    // No dark overlay needed — it's a solid color card
     &::after {
-      background: linear-gradient(to top,
-          rgba($primary-red, 0.85) 0%,
-          rgba($primary-red, 0.3) 100%);
+      display: none;
     }
 
-    .scard__title {
-      font-size: 1.5rem;
-      font-weight: 800;
+    // Subtle noise texture via gradient
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top right,
+          rgba(255, 255, 255, 0.08) 0%,
+          transparent 60%);
+      pointer-events: none;
+      z-index: 0;
     }
+  }
+}
+
+// ─── Conoce mas inner elements ────────────────────────────────
+
+.scard__conoce-logo {
+  position: absolute;
+  top: -3rem;
+  right: -5rem;
+  z-index: 2;
+  opacity: 0.2;
+  transition: opacity 0.35s ease;
+
+  svg {
+    width: 280px;
+    height: auto;
+
+    @media (min-width: 1024px) {
+      width: 280px;
+    }
+  }
+
+  .scard--conoce:hover & {
+    opacity: 0.35;
+  }
+}
+
+.scard__conoce-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.scard__conoce-eyebrow {
+  font-family: $font-body;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.scard__conoce-title {
+  font-family: $font-headings;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 2.8vw, 4rem);
+  color: $pure-white;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  opacity: .7;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.scard__conoce-cta {
+  display: inline-block;
+  font-family: $font-body;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: $pure-white;
+  letter-spacing: 0.03em;
+  border-bottom: 1px transparent;
+  padding-bottom: 2px;
+  opacity: .7;
+
+  .scard--conoce:hover & {
+    border-color: $pure-white;
+    letter-spacing: 0.07em;
   }
 }

@@ -128,6 +128,7 @@ const Services: React.FC = () => {
   const [activeService, setActiveService] = useState<ServiceItem>(servicesData[0]);
 
   useEffect(() => {
+    document.title = 'WeChina - Servicios';
     if (serviceQuery) {
       const found = servicesData.find((s) => s.id === serviceQuery);
       if (found) {

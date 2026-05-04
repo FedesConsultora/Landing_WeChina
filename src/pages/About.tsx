@@ -3,6 +3,10 @@ import SectionWrapper from '../components/SectionWrapper';
 import aboutVideo from '../assets/img/nosotros/HERO-aboutus_1.mp4';
 
 const About: React.FC = () => {
+  React.useEffect(() => {
+    document.title = 'WeChina - Nosotros';
+  }, []);
+
   return (
     <SectionWrapper id="nosotros" className="about-section">
       <div className="about-video-bg">

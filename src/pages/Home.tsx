@@ -6,6 +6,10 @@ import LogisticsCTA from '../components/home/LogisticsCTA';
 import SectorBridge from '../components/home/SectorBridge';
 
 const Home: React.FC = () => {
+  React.useEffect(() => {
+    document.title = 'WeChina - Inicio';
+  }, []);
+
   return (
     <div className="home-page">
       <Hero />

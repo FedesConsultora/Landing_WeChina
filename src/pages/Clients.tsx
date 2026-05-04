@@ -46,6 +46,7 @@ const Clients: React.FC = () => {
   };
 
   useEffect(() => {
+    document.title = 'WeChina - Clientes';
     if (imagesLoaded === totalImages) {
       setIsLoading(false);
     }

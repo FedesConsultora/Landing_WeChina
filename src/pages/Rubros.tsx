@@ -60,6 +60,7 @@ const Rubros: React.FC = () => {
   const isDesktop = () => window.innerWidth >= 1024;
 
   useLayoutEffect(() => {
+    document.title = 'WeChina - Rubros';
     const track = trackRef.current;
     if (!track) return;
 

@@ -151,6 +151,10 @@
       color: $medium-gray;
       margin-bottom: 25px;
 
+      @include respond-to('desktop') {
+        line-height: 1.5;
+      }
+
       &:last-child {
         margin-bottom: 0;
       }

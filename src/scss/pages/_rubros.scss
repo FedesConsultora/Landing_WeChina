@@ -79,7 +79,7 @@
 
   @media (min-width: 1024px) {
     // Desktop: vertical strip
-    height: 460px;
+    height: 700px;
 
     // Vertical fade mask (desktop)
     mask-image: linear-gradient(to bottom,
@@ -186,7 +186,7 @@
   }
 
   @media (min-width: 1024px) {
-    height: 460px;
+    height: 700px;
   }
 
   .preview-frame {
@@ -215,6 +215,9 @@
       right: 0;
       padding: 1.5rem;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
 
       @media (min-width: 1024px) {
         padding: 2rem;
@@ -225,6 +228,90 @@
         font-family: $font-headings;
         font-size: clamp(1.4rem, 4vw, 2.8rem);
         font-weight: 700;
+      }
+
+      .expand-hint {
+        color: rgba($pure-white, 0.8);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+    }
+  }
+}
+
+// ── Lightbox ──────────────────────────────────────────────────
+
+.rubros-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  cursor: zoom-out;
+
+  .lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 85vh;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: default;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+    }
+
+    .close-lightbox {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      z-index: 10;
+
+      &:hover {
+        background: $primary-red;
+      }
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: white;
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
       }
     }
   }

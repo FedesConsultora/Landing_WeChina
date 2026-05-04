@@ -116,7 +116,7 @@ const Clients: React.FC = () => {
             La confianza de nuestros clientes se basa en nuestra capacidad de
             ser su oficina técnica en origen.
           </p>
-          <a href="https://wa.me/541130897009" target="_blank" rel="noopener noreferrer" className="btn btn-primary clients-section__cta">
+          <a href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="btn btn-primary clients-section__cta">
             Hablá con un experto
           </a>
         </div>

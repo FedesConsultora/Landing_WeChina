@@ -90,6 +90,9 @@ $navbar-height: 80px;
       padding: 0;
       gap: 28px;
       background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+
       box-shadow: none;
       transition: none;
       // Center links in the middle column
@@ -107,8 +110,18 @@ $navbar-height: 80px;
       padding: 12px 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       transition: color 0.25s ease;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-
+      .nav-icon {
+        width: 16px;
+        height: 16px;
+        object-fit: contain;
+        filter: brightness(0) saturate(100%) invert(30%) sepia(84%) saturate(2361%) hue-rotate(341deg) brightness(91%) contrast(100%);
+        transition: transform 0.3s ease;
+      }
 
       &:last-child {
         border-bottom: none;
@@ -124,6 +137,10 @@ $navbar-height: 80px;
       &:hover,
       &.active {
         color: $primary-red;
+
+        .nav-icon {
+          transform: scale(1.1);
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import logo from '../assets/img/logo.png';
+import logo2 from '../assets/img/logo-2.png';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -41,17 +42,32 @@ const Navbar: React.FC = () => {
 
         {/* Column 2: Nav — centered on desktop, dropdown on mobile */}
         <nav className={`main-header__nav${isOpen ? ' is-open' : ''}`}>
-          <NavLink to="/" end onClick={close}>Inicio</NavLink>
-          <NavLink to="/nosotros" onClick={close}>Nosotros</NavLink>
-          <NavLink to="/servicios" onClick={close}>Servicios</NavLink>
-          <NavLink to="/rubros" onClick={close}>Rubros</NavLink>
-          <NavLink to="/clientes" onClick={close}>Clientes</NavLink>
+          <NavLink to="/" end onClick={close}>
+            <img src={logo2} alt="" className="nav-icon" />
+            Inicio
+          </NavLink>
+          <NavLink to="/nosotros" onClick={close}>
+            <img src={logo2} alt="" className="nav-icon" />
+            Nosotros
+          </NavLink>
+          <NavLink to="/servicios" onClick={close}>
+            <img src={logo2} alt="" className="nav-icon" />
+            Servicios
+          </NavLink>
+          <NavLink to="/rubros" onClick={close}>
+            <img src={logo2} alt="" className="nav-icon" />
+            Rubros
+          </NavLink>
+          <NavLink to="/clientes" onClick={close}>
+            <img src={logo2} alt="" className="nav-icon" />
+            Clientes
+          </NavLink>
         </nav>
 
         {/* Column 3: CTA on desktop / Hamburger on mobile */}
         <div className="main-header__actions">
           {/* CTA — hidden on mobile via CSS */}
-          <a href="https://wa.me/541130897009" target="_blank" rel="noopener noreferrer" className="main-header__cta-btn" onClick={close}>
+          <a href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="main-header__cta-btn" onClick={close}>
             Hablá con un experto
           </a>
 

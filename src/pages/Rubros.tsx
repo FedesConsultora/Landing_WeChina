@@ -93,17 +93,31 @@ const Rubros: React.FC = () => {
     };
   }, []);
 
+  const resumeTimeoutRef = useRef<number | null>(null);
+
   const handlePointerEnter = () => {
-    if (!isDragging.current) animationRef.current?.pause();
+    if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
+    animationRef.current?.pause();
   };
+
   const handlePointerLeave = () => {
-    if (!isDragging.current) animationRef.current?.play();
+    if (!isDragging.current) {
+      // Wait a bit before resuming on leave too, or resume immediately? 
+      // User said "que espere un poco para volver a moverse"
+      if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
+      resumeTimeoutRef.current = window.setTimeout(() => {
+        animationRef.current?.play();
+      }, 2000);
+    }
   };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
     isDragging.current = true;
     dragStart.current = dragAxis.current === 'x' ? e.clientX : e.clientY;
+    
     animationRef.current?.pause();
+    
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
@@ -123,6 +137,7 @@ const Rubros: React.FC = () => {
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return;
     isDragging.current = false;
+    
     const track = trackRef.current;
     if (!track) return;
 
@@ -132,7 +147,7 @@ const Rubros: React.FC = () => {
 
     currentOffset.current += delta;
 
-    // Sync GSAP timeline progress to match current visual position
+    // Sync GSAP timeline
     const anim = animationRef.current;
     if (anim) {
       const prop = dragAxis.current;
@@ -141,7 +156,6 @@ const Rubros: React.FC = () => {
         ? track.scrollWidth / 3
         : track.scrollHeight / 3;
 
-      // Normalize position: wrap into [0, -totalSize]
       let normalized = currentPos % -totalSize;
       if (normalized > 0) normalized -= totalSize;
 
@@ -149,14 +163,22 @@ const Rubros: React.FC = () => {
       currentOffset.current = normalized;
 
       const progress = Math.abs(normalized / totalSize);
-      anim.progress(progress).play();
+      anim.progress(progress);
+      
+      // WAIT before playing
+      if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
+      resumeTimeoutRef.current = window.setTimeout(() => {
+        anim.play();
+      }, 2000);
     }
   };
+
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   // Auto-cycle the preview image
   useEffect(() => {
     const interval = setInterval(() => {
-      if (animationRef.current && !animationRef.current.paused()) {
+      if (animationRef.current && !animationRef.current.paused() && !isLightboxOpen) {
         setActiveId((prevId) => {
           const currentIndex = sectors.findIndex(s => s.id === prevId);
           const nextIndex = (currentIndex + 1) % sectors.length;
@@ -166,14 +188,13 @@ const Rubros: React.FC = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isLightboxOpen]);
 
   return (
     <div className="rubros-page">
       <section className="rubros-hero">
         <div className="container">
           <div className="rubros-layout">
-
             {/* Text – always first */}
             <div className="rubros-text">
               <motion.h1
@@ -224,7 +245,7 @@ const Rubros: React.FC = () => {
             </div>
 
             {/* Preview */}
-            <div className="rubros-preview">
+            <div className="rubros-preview" onClick={() => setIsLightboxOpen(true)}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeId}
@@ -237,14 +258,41 @@ const Rubros: React.FC = () => {
                   <img src={activeSector.img} alt={activeSector.label} />
                   <div className="preview-label">
                     <h3>{activeSector.label}</h3>
+                    <span className="expand-hint">Click para ampliar</span>
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
-
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {isLightboxOpen && (
+          <motion.div 
+            className="rubros-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            <motion.div 
+              className="lightbox-content"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="close-lightbox" onClick={() => setIsLightboxOpen(false)} aria-label="Cerrar">×</button>
+              <img src={activeSector.img} alt={activeSector.label} />
+              <div className="lightbox-caption">
+                <h2>{activeSector.label}</h2>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

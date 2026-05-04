@@ -54,6 +54,8 @@
       opacity: 1;
       mask-image: none;
       -webkit-mask-image: none;
+      transform: none; // Remove sub-pixel rendering hacks
+      filter: none;
     }
   }
 
@@ -65,7 +67,7 @@
     background: transparent;
 
     @media (min-width: 1024px) {
-      background: rgba(0, 0, 0, 0.5);
+      background: transparent;
     }
   }
 

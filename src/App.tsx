@@ -6,7 +6,6 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Rubros from './pages/Rubros';
 import Clients from './pages/Clients';
-import Contact from './pages/Contact';
 import ScrollToTop from './components/ScrollToTop';
 
 const App: React.FC = () => {
@@ -20,7 +19,6 @@ const App: React.FC = () => {
           <Route path="servicios" element={<Services />} />
           <Route path="rubros" element={<Rubros />} />
           <Route path="clientes" element={<Clients />} />
-          <Route path="contacto" element={<Contact />} />
         </Route>
       </Routes>
     </Router>

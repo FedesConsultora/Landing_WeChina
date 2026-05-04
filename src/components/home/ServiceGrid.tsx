@@ -1,5 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 import service1 from '../../assets/img/servicios/service-1.webp';
 import service2 from '../../assets/img/servicios/service-2.webp';
@@ -8,21 +8,25 @@ import service4 from '../../assets/img/servicios/service-4.webp';
 
 const services = [
   {
+    id: 'agentes-de-compras',
     img: service3,
     title: 'Agentes de compras',
     desc: 'Ubicamos los mejores precios y fábricas de China, validamos sus licencias de negocios y certificados.',
   },
   {
+    id: 'busqueda-de-proveedores',
     img: service4,
     title: 'Búsqueda de proveedores',
     desc: 'Encontrar proveedores calificados requiere una eficaz y bien estructurada estrategia.',
   },
   {
+    id: 'validacion-de-fabricantes-online',
     img: service1,
     title: 'Validación de fabricantes online',
     desc: 'Evite estafas y revendedores validando la legitimidad de las fábricas antes de comprometerse.',
   },
   {
+    id: 'control-de-calidad',
     img: service2,
     title: 'Control de calidad',
     desc: 'Inspecciones profesionales titulados en normas ISO y CE para garantizar lo deseado.',
@@ -55,17 +59,18 @@ const ServiceGrid: React.FC = () => {
           {services.map((service, i) => (
             <motion.div
               key={i}
-              className="scard"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
             >
-              <div className="scard__img" style={{ backgroundImage: `url(${service.img})` }} />
-              <div className="scard__body">
-                <h3 className="scard__title">{service.title}</h3>
-                <p className="scard__desc">{service.desc}</p>
-              </div>
+              <Link to={`/servicios?service=${service.id}`} className="scard" style={{ textDecoration: 'none' }}>
+                <div className="scard__img" style={{ backgroundImage: `url(${service.img})` }} />
+                <div className="scard__body">
+                  <h3 className="scard__title">{service.title}</h3>
+                  <p className="scard__desc">{service.desc}</p>
+                </div>
+              </Link>
             </motion.div>
           ))}
 

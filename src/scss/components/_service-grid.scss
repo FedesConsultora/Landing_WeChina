@@ -77,6 +77,32 @@
     @media (min-width: 1024px) {
       grid-template-columns: repeat(4, 1fr);
     }
+
+    // Direct children (motion.divs) handle the grid spans
+    & > * {
+      // Fila 1 y primera de fila 2: las 3 primeras cards — grandes
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3) {
+        min-height: 300px;
+
+        @media (min-width: 1024px) {
+          grid-column: span 2; // 2/4 = 50% cada una
+          min-height: 340px;
+        }
+      }
+
+      // Fila 2 (restante): las últimas 2 cards — pequeñas
+      &:nth-child(4),
+      &:nth-child(5) {
+        min-height: 300px;
+
+        @media (min-width: 1024px) {
+          grid-column: span 1; // 1/4 = 25% cada una
+          min-height: 340px;
+        }
+      }
+    }
   }
 }
 
@@ -87,32 +113,10 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%; // Fill the grid cell
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
-
-  // Fila 1 y primera de fila 2: las 3 primeras cards — grandes
-  &:nth-child(1),
-  &:nth-child(2),
-  &:nth-child(3) {
-    min-height: 300px;
-
-    @media (min-width: 1024px) {
-      grid-column: span 2; // 2/4 = 50% cada una
-      min-height: 340px;
-    }
-  }
-
-  // Fila 2 (restante): las últimas 2 cards — pequeñas
-  &:nth-child(4),
-  &:nth-child(5) {
-    min-height: 300px;
-
-    @media (min-width: 1024px) {
-      grid-column: span 1; // 1/4 = 25% cada una
-      min-height: 340px;
-    }
-  }
 
   &:hover {
     transform: translateY(-5px);
@@ -261,12 +265,15 @@
   font-weight: 400;
   color: $pure-white;
   letter-spacing: 0.03em;
-  border-bottom: 1px transparent;
+
   padding-bottom: 2px;
   opacity: .7;
 
   .scard--conoce:hover & {
-    border-color: $pure-white;
-    letter-spacing: 0.07em;
+
+    border-bottom: 1px solid rgba($pure-white, 0.5);
+    transition: 0.3s ease-in-out;
+
+
   }
 }

@@ -27,9 +27,9 @@ const Navbar: React.FC = () => {
         {/* Column 3: CTA on desktop / Hamburger on mobile */}
         <div className="main-header__actions">
           {/* CTA — hidden on mobile via CSS */}
-          <Link to="/contacto" className="main-header__cta-btn" onClick={close}>
+          <a href="https://wa.me/541130897009" target="_blank" rel="noopener noreferrer" className="main-header__cta-btn" onClick={close}>
             Hablá con un experto
-          </Link>
+          </a>
 
           {/* Hamburger — hidden on desktop via CSS */}
           <button

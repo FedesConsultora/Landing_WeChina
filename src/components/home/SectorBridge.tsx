@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 
 import rubro1 from '../../assets/img/rubros/logos/rubro-1.webp';
 import rubro2 from '../../assets/img/rubros/logos/rubro-2.webp';
@@ -101,45 +102,46 @@ const SectorBridge: React.FC = () => {
 
           <div className="sector-bridge__slider-track">
             <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={currentIndex}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 }
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={1}
-                onDragEnd={(_e, { offset, velocity }) => {
-                  handleInteraction();
-                  const swipe = offset.x;
-                  if (swipe < -50 || velocity.x < -500) {
-                    nextSlide();
-                  } else if (swipe > 50 || velocity.x > 500) {
-                    prevSlide();
-                  }
-                }}
-                className="sector-card"
-                style={{ position: 'absolute' }}
-              >
-                <div
-                  className="sector-card__bg"
-                  style={{ backgroundImage: `url(${sectors[currentIndex].img})` }}
-                />
-                <div className="sector-card__icon-wrap">
-                  <div className="sector-card__icon">
-                    <img src={sectors[currentIndex].icon} alt={sectors[currentIndex].label} className="sector-card__icon-img" />
-                  </div>
-                </div>
-                <div className="sector-card__overlay">
-                  <span className="sector-card__label">{sectors[currentIndex].label}</span>
-                </div>
-              </motion.div>
+                <Link to="/rubros" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }}>
+                  <motion.div
+                    key={currentIndex}
+                    custom={direction}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{
+                      x: { type: "spring", stiffness: 300, damping: 30 },
+                      opacity: { duration: 0.2 }
+                    }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={1}
+                    onDragEnd={(_e, { offset, velocity }) => {
+                      handleInteraction();
+                      const swipe = offset.x;
+                      if (swipe < -50 || velocity.x < -500) {
+                        nextSlide();
+                      } else if (swipe > 50 || velocity.x > 500) {
+                        prevSlide();
+                      }
+                    }}
+                    className="sector-card"
+                  >
+                    <div
+                      className="sector-card__bg"
+                      style={{ backgroundImage: `url(${sectors[currentIndex].img})` }}
+                    />
+                    <div className="sector-card__icon-wrap">
+                      <div className="sector-card__icon">
+                        <img src={sectors[currentIndex].icon} alt={sectors[currentIndex].label} className="sector-card__icon-img" />
+                      </div>
+                    </div>
+                    <div className="sector-card__overlay">
+                      <span className="sector-card__label">{sectors[currentIndex].label}</span>
+                    </div>
+                  </motion.div>
+                </Link>
             </AnimatePresence>
           </div>
 
@@ -155,27 +157,28 @@ const SectorBridge: React.FC = () => {
         {/* DESKTOP GRID (Hidden on mobile via CSS) */}
         <div className="sector-bridge__grid">
           {sectors.map((sector, i) => (
-            <motion.div
-              key={i}
-              className="sector-card"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <div
-                className="sector-card__bg"
-                style={{ backgroundImage: `url(${sector.img})` }}
-              />
-              <div className="sector-card__icon-wrap">
-                <div className="sector-card__icon">
-                  <img src={sector.icon} alt={sector.label} className="sector-card__icon-img" />
+            <Link to="/rubros" key={i} style={{ textDecoration: 'none' }}>
+              <motion.div
+                className="sector-card"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <div
+                  className="sector-card__bg"
+                  style={{ backgroundImage: `url(${sector.img})` }}
+                />
+                <div className="sector-card__icon-wrap">
+                  <div className="sector-card__icon">
+                    <img src={sector.icon} alt={sector.label} className="sector-card__icon-img" />
+                  </div>
                 </div>
-              </div>
-              <div className="sector-card__overlay">
-                <span className="sector-card__label">{sector.label}</span>
-              </div>
-            </motion.div>
+                <div className="sector-card__overlay">
+                  <span className="sector-card__label">{sector.label}</span>
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
 
@@ -186,10 +189,10 @@ const SectorBridge: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <a href="/rubros" className="sector-bridge__link">
+          <Link to="/rubros" className="sector-bridge__link">
             Ver todos los rubros
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

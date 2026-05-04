@@ -30,7 +30,7 @@ const LogisticsCTA: React.FC = () => {
             Tus expertos en<br />
             <span className="logistics-cta__highlight">otro continente</span>
           </h2>
-          <a href="/contacto" className="logistics-cta__btn">
+          <a href="https://wa.me/541130897009" target="_blank" rel="noopener noreferrer" className="logistics-cta__btn">
             Hablá con un experto
           </a>
         </motion.div>

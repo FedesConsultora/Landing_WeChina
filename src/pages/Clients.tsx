@@ -56,32 +56,30 @@ const Clients: React.FC = () => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
 
-    mm.add('(min-width: 1024px)', () => {
-      // Create a dedicated timeline for the scroll effect
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '+=150%', // 150% of viewport height extra scroll
-          scrub: 1.5,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1
-        }
+      mm.add('(min-width: 1024px)', () => {
+        // Create a dedicated timeline for the scroll effect
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: '+=150%', // 150% of viewport height extra scroll
+            scrub: 1.5,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1
+          }
+        });
+
+        tl.fromTo(rowRef1.current, { x: 250 }, { x: -250, ease: 'none' }, 0)
+          .fromTo(rowRef2.current, { x: -250 }, { x: 250, ease: 'none' }, 0)
+          .fromTo(rowRef3.current, { x: 250 }, { x: -250, ease: 'none' }, 0);
       });
+    }, sectionRef);
 
-      tl.fromTo(rowRef1.current, { x: 250 }, { x: -250, ease: 'none' }, 0)
-        .fromTo(rowRef2.current, { x: -250 }, { x: 250, ease: 'none' }, 0)
-        .fromTo(rowRef3.current, { x: 250 }, { x: -250, ease: 'none' }, 0);
-
-      return () => {
-        tl.kill();
-      };
-    });
-
-    return () => mm.revert();
+    return () => ctx.revert();
   }, [isLoading]);
 
   const renderRow = (

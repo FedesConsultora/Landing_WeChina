@@ -22,8 +22,7 @@ const Highlights: React.FC = () => {
         <img src={argentinaMap} alt="argentina-map" />
       </div>
       <div className="container">
-        <div className="highlights__layout"  {...fadeUp(0)}>
-
+        <motion.div className="highlights__layout"  {...fadeUp(0)}>
           <motion.div className="highlights__main">
             <h2>
               EL 90% DE LOS PROBLEMAS
@@ -32,9 +31,7 @@ const Highlights: React.FC = () => {
 
             <p className="highlights__text">Nosotros estamos ahí.</p>
           </motion.div>
-
-
-        </div>
+        </motion.div>
       </div>
     </section>
   );

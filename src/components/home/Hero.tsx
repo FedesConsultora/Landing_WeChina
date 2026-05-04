@@ -1,27 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heroFallback from '../../assets/img/hero/divider.webp';
 import heroVideo from '../../assets/img/hero/HERO-home_1.mp4';
 
 const Hero: React.FC = () => {
   return (
     <section className="hero">
-      {/* Desktop: video, Mobile: image via CSS class */}
-      <div className="hero__media">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="hero__video"
-          poster={heroFallback}
-        >
-          <source src={heroVideo} type="video/webm" />
-        </video>
-        <div className="hero__mobile-bg" style={{ backgroundImage: `url(${heroFallback})` }} />
-      </div>
-      <div className="hero__overlay" />
 
+      {/* TEXT — rendered first in the DOM so it appears on top in mobile */}
       <div className="container">
         <motion.div
           className="hero__content"
@@ -39,6 +24,23 @@ const Hero: React.FC = () => {
         </motion.div>
       </div>
 
+      {/* VIDEO — appears below text on mobile, absolute background on desktop */}
+      <div className="hero__media">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="hero__video"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Overlay (desktop only, handled via CSS) */}
+      <div className="hero__overlay" />
+
+      {/* STATS BAR */}
       <div className="hero__stats">
         <div className="container-grid">
           <div className="stats-grid">

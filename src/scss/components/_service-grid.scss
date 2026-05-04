@@ -24,8 +24,8 @@
 
     @media (min-width: 1024px) {
       flex-direction: row;
-      align-items: baseline;
-      gap: 16px;
+      align-items: flex-end;
+      gap: 32px;
     }
   }
 
@@ -48,10 +48,17 @@
 
   &__subtitle {
     font-family: $font-body;
-    font-size: clamp(0.6rem, 1.2vw, 1rem);
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
     color: $medium-gray;
-    max-width: 300px;
-    text-align: right;
+    max-width: 100%;
+    text-align: left;
+    margin-top: 12px;
+
+    @media (min-width: 1024px) {
+      max-width: 380px;
+      text-align: right;
+      margin-top: 0;
+    }
   }
 
   // ── Grid: 2 cols en tablet/desktop ─────────────────────────

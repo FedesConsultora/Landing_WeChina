@@ -6,19 +6,25 @@
 
 .logistics-cta {
   position: relative;
-  min-height: 380px;
+  
+  // MOBILE: Full viewport height for premium impact
+  min-height: 100vh;
+  min-height: 100dvh; 
   display: flex;
   align-items: center;
   overflow: hidden;
+  background-color: #000; // Black base for the video
 
   @media (min-width: 1024px) {
     min-height: 480px;
+    background-color: transparent;
   }
 
   &__bg {
     position: absolute;
     inset: 0;
     z-index: 0;
+    overflow: hidden;
   }
 
   &__video {
@@ -26,35 +32,74 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    
+    // MOBILE: Depth effect via opacity and gradient mask
+    opacity: 0.3; 
+    transform: translateZ(0); 
+    
+    // Smooth fade at edges
+    mask-image: linear-gradient(to bottom, 
+      transparent 0%, 
+      black 25%, 
+      black 75%, 
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(to bottom, 
+      transparent 0%, 
+      black 25%, 
+      black 75%, 
+      transparent 100%
+    );
+
+    @media (min-width: 1024px) {
+      opacity: 1;
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.50);
     z-index: 1;
+    // On mobile we rely on the black background and video opacity/mask
+    background: transparent;
+
+    @media (min-width: 1024px) {
+      background: rgba(0, 0, 0, 0.5);
+    }
   }
 
   .container {
     position: relative;
     z-index: 2;
+    padding: 0 24px;
   }
 
   &__content {
     max-width: 520px;
+    text-align: center;
+    margin: 0 auto;
+
+    @media (min-width: 1024px) {
+      text-align: left;
+      margin: 0;
+    }
   }
 
   h2 {
     font-family: $font-headings;
     font-weight: 800;
-    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-size: clamp(2.3rem, 6vw, 3.4rem);
     color: $pure-white;
-    line-height: 1.1;
-    margin-bottom: 28px;
+    line-height: 1.05;
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
   }
 
   &__highlight {
     color: $primary-red;
+    display: block; // Makes it more dramatic
   }
 
   &__btn {
@@ -62,17 +107,18 @@
     background: $primary-red;
     color: $pure-white;
     font-family: $font-body;
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding: 13px 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px 36px;
     border-radius: 50px;
-
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     transition: $transition-smooth;
+    box-shadow: 0 10px 20px rgba($primary-red, 0.3);
 
     &:hover {
       background: $primary-red-dark;
       transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba($primary-red, 0.4);
     }
   }
 }

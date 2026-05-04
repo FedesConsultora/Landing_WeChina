@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import rubro1 from '../../assets/img/rubros/logos/rubro-1.webp';
 import rubro2 from '../../assets/img/rubros/logos/rubro-2.webp';
@@ -14,11 +14,55 @@ import iconDress from '../../assets/img/rubros/logos/Little Black Dress.png';
 const sectors = [
   { img: rubro1, icon: iconCar, label: 'Repuestos de autos' },
   { img: rubro2, icon: iconSafety, label: 'Seguridad industrial' },
-  { img: rubro3, icon: iconBoots, label: 'Tus expertos en otro continente' },
+  { img: rubro3, icon: iconBoots, label: 'Calzado' },
   { img: rubro4, icon: iconDress, label: 'Moda' },
 ];
 
+const variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? '100%' : '-100%',
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? '100%' : '-100%',
+    opacity: 0,
+  }),
+};
+
 const SectorBridge: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+
+  const nextSlide = useCallback(() => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % sectors.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + sectors.length) % sectors.length);
+  }, []);
+
+  useEffect(() => {
+    if (isAutoPlaying) {
+      autoPlayRef.current = setInterval(nextSlide, 4000);
+    }
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
+  }, [isAutoPlaying, nextSlide]);
+
+  const handleInteraction = () => {
+    setIsAutoPlaying(false);
+    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+  };
+
   return (
     <section className="sector-bridge">
       <div className="container">
@@ -45,6 +89,70 @@ const SectorBridge: React.FC = () => {
           </motion.p>
         </div>
 
+        {/* MOBILE SLIDER */}
+        <div className="sector-bridge__slider">
+          <button
+            className="sector-bridge__nav sector-bridge__nav--prev"
+            onClick={() => { handleInteraction(); prevSlide(); }}
+            aria-label="Previous slide"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+          </button>
+
+          <div className="sector-bridge__slider-track">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 }
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(_e, { offset, velocity }) => {
+                  handleInteraction();
+                  const swipe = offset.x;
+                  if (swipe < -50 || velocity.x < -500) {
+                    nextSlide();
+                  } else if (swipe > 50 || velocity.x > 500) {
+                    prevSlide();
+                  }
+                }}
+                className="sector-card"
+                style={{ position: 'absolute' }}
+              >
+                <div
+                  className="sector-card__bg"
+                  style={{ backgroundImage: `url(${sectors[currentIndex].img})` }}
+                />
+                <div className="sector-card__icon-wrap">
+                  <div className="sector-card__icon">
+                    <img src={sectors[currentIndex].icon} alt={sectors[currentIndex].label} className="sector-card__icon-img" />
+                  </div>
+                </div>
+                <div className="sector-card__overlay">
+                  <span className="sector-card__label">{sectors[currentIndex].label}</span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <button
+            className="sector-bridge__nav sector-bridge__nav--next"
+            onClick={() => { handleInteraction(); nextSlide(); }}
+            aria-label="Next slide"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+          </button>
+        </div>
+
+        {/* DESKTOP GRID (Hidden on mobile via CSS) */}
         <div className="sector-bridge__grid">
           {sectors.map((sector, i) => (
             <motion.div
@@ -80,6 +188,7 @@ const SectorBridge: React.FC = () => {
         >
           <a href="/rubros" className="sector-bridge__link">
             Ver todos los rubros
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
           </a>
         </motion.div>
       </div>

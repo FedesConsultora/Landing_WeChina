@@ -8,31 +8,50 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 110dvh;
-  min-height: 600px;
+  overflow-x: hidden; // Prevent lateral scroll
+
+  // ── MOBILE / DEFAULT: stacked layout (text → video) ──────
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  background-color: #fff;
 
-  overflow: visible; // Allow stats bar to protrude
-  background-color: #fff !important; // Fixed background to match fade
+  // ── DESKTOP: full-screen video background ────────────────
+  @media (min-width: 992px) {
+    height: 110dvh;
+    min-height: 600px;
+    flex-direction: column;
+    justify-content: center;
+    overflow: visible; // Allow stats bar to protrude
+    background-color: #fff !important;
+  }
 
-
-  // Desktop: show video, hide static bg
+  // ── VIDEO ─────────────────────────────────────────────────
   &__video {
+    // MOBILE: displayed inline as block element below text
+    display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0;
 
+    @include respond-to('tablet') {
+      height: 380px;
+      border-radius: 16px;
+    }
 
+    // DESKTOP: absolute positioned full-bleed background
     @media (min-width: 992px) {
-      display: block;
       position: absolute;
       top: 80px;
       left: 0;
       width: 100%;
       height: 90%;
+      border-radius: 0;
+      margin: 0;
       object-fit: cover;
       z-index: 0;
 
-      // Mascara ultra-suave para eliminar bordes marcados abajo y a los lados
       mask-image: linear-gradient(to bottom,
           black 0%,
           black 60%,
@@ -46,37 +65,58 @@
     }
   }
 
-  // Mobile: static bg image
+  // Mobile-bg: removed / not used
   &__mobile-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
+    display: none;
+  }
+
+  // Overlay only used on desktop (above video background)
+  &__overlay {
+    display: none;
 
     @media (min-width: 992px) {
-      display: none;
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
     }
   }
 
-  &__overlay {
-    position: absolute;
-    inset: 0;
+  // ── Mobile media wrapper ───────────────────────────────────
+  &__media {
+    // Mobile: pad horizontally so video has breathing room
 
-    z-index: 1;
+    @include respond-to('tablet') {
+      padding: 0 32px;
+    }
+
+    @media (min-width: 992px) {
+      padding: 0;
+      // On desktop the video is absolute; this wrapper is essentially invisible
+      position: static;
+    }
   }
 
-  // Content lives above overlay
+  // ── Container (text block) ────────────────────────────────
   .container {
+    order: -1; // Text first on mobile
     position: relative;
     z-index: 2;
-    flex: 1;
-    display: flex;
-    align-items: flex-start;
-    margin-top: 4rem;
+    padding-top: 20px; // Leave room for fixed navbar
+    padding-bottom: 20px;
+
+    @media (min-width: 992px) {
+      order: 0;
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 4rem;
+    }
   }
 
-  // ── Content block: h1 + subtitle en la misma fila (desktop) ──
+  // ── Content block: h1 + subtitle ──────────────────────────
   &__content {
     width: 100%;
     display: flex;
@@ -97,6 +137,14 @@
       line-height: 1.1;
       letter-spacing: -0.01em;
       flex: 1;
+
+
+      // On mobile, make sure text color is dark (no video overlay)
+      color: $dark-carbon;
+
+      @media (min-width: 992px) {
+        color: inherit; // let desktop theme decide
+      }
     }
   }
 
@@ -105,17 +153,16 @@
     display: block;
   }
 
-  // Subtítulo alineado con el h1 en la misma fila en desktop
+  // Subtítulo
   &__subtitle {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-shrink: 0;
-    max-width: 280px;
+    max-width: 100%;
 
-
-    // En mobile va debajo del h1
     @media (min-width: 992px) {
+      max-width: 280px;
       align-self: flex-start;
       padding-top: 0.8rem;
     }
@@ -130,7 +177,6 @@
   }
 
   // ── Stats bar ─────────────────────────────────────────────
-
   .container-grid {
     display: flex;
     justify-content: center;
@@ -140,19 +186,34 @@
   }
 
   &__stats {
-    display: flex;
-    position: absolute;
-    bottom: -40px; // Protrude downwards
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: auto;
-    min-width: min(90vw, 1000px);
-    z-index: 10;
+    position: relative; // mobile: in normal flow, no overlap issues
+    width: 100%;
+    left: auto;
+    transform: none;
     background: #AF191C;
-    padding: 12px 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 12px 12px;
+    border-radius: 0; // flush on mobile
+    box-shadow: none;
+    z-index: 10;
+    box-sizing: border-box;
+
+    @include respond-to('tablet') {
+      padding: 16px 24px;
+    }
+
+    // Desktop: absolute, protruding below the section
+    @media (min-width: 992px) {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: auto;
+      min-width: min(90vw, 1000px);
+      max-width: 95vw;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
 
     .stats-grid {
       display: grid;
@@ -163,44 +224,37 @@
   }
 }
 
+// ── Stat item ─────────────────────────────────────────────────
 .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 6px 5px;
-  margin: 1rem;
-
-
+  padding: 8px 4px;
 
   &:first-child {
-    padding: 6px 5px;
-    margin: 0;
     border-right: 1px solid rgba($pure-white, 0.25);
-
   }
 
   &:last-child {
-    border-right: none;
-    padding: 6px 5px;
-    margin: 0;
     border-left: 1px solid rgba($pure-white, 0.25);
-
   }
 
   &__value {
     font-family: $font-headings;
     font-weight: 600;
-    font-size: 1.9rem;
+    font-size: clamp(1.1rem, 4vw, 1.9rem);
     color: $pure-white;
     display: block;
+    line-height: 1.2;
   }
 
   &__label {
     font-family: $font-body;
-    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    font-size: clamp(0.6rem, 1.5vw, 0.9rem);
     color: rgba($pure-white, 0.8);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
   }
 }

@@ -30,6 +30,18 @@
       object-fit: contain;
       filter: grayscale(100%) brightness(1.2); // Makes it light gray
     }
+
+    // Mobile only: bigger image, anchored to the left
+    @media (max-width: 767px) {
+      left: 0;
+      width: 55%;
+
+      img {
+
+        width: 100%;
+        opacity: .5;
+      }
+    }
   }
 
 

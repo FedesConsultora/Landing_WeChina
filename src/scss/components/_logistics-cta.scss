@@ -6,17 +6,18 @@
 
 .logistics-cta {
   position: relative;
-  
+
   // MOBILE: Full viewport height for premium impact
   min-height: 100vh;
-  min-height: 100dvh; 
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   overflow: hidden;
   background-color: #000; // Black base for the video
 
   @media (min-width: 1024px) {
-    min-height: 480px;
+    min-height: 60vh;
+    min-height: 60dvh;
     background-color: transparent;
   }
 
@@ -32,24 +33,22 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    
+
     // MOBILE: Depth effect via opacity and gradient mask
-    opacity: 0.3; 
-    transform: translateZ(0); 
-    
+    opacity: 0.3;
+    transform: translateZ(0);
+
     // Smooth fade at edges
-    mask-image: linear-gradient(to bottom, 
-      transparent 0%, 
-      black 25%, 
-      black 75%, 
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(to bottom, 
-      transparent 0%, 
-      black 25%, 
-      black 75%, 
-      transparent 100%
-    );
+    mask-image: linear-gradient(to bottom,
+        transparent 0%,
+        black 25%,
+        black 75%,
+        transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom,
+        transparent 0%,
+        black 25%,
+        black 75%,
+        transparent 100%);
 
     @media (min-width: 1024px) {
       opacity: 1;
@@ -83,7 +82,7 @@
 
     @media (min-width: 1024px) {
       text-align: left;
-      margin: 0;
+      margin-left: 50px;
     }
   }
 

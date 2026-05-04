@@ -2,7 +2,7 @@
 @use "../abstracts/mixins" as *;
 
 .rubros-page {
-  padding: 140px 0 100px;
+  padding: 2rem 0;
   background: $pure-white;
   min-height: 100vh;
 }
@@ -11,7 +11,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
-  align-items: center;
+  align-items: flex-start;
 
   @media (min-width: 1024px) {
     grid-template-columns: 1.2fr 0.8fr 1.5fr;
@@ -20,12 +20,17 @@
 }
 
 .rubros-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
   .rubros-title {
     font-family: $font-headings;
     font-weight: 800;
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     line-height: 0.95;
-    color: $dark-carbon;
+    color: $neutral-gray;
     margin-bottom: 40px;
     letter-spacing: -0.02em;
 
@@ -44,14 +49,25 @@
 }
 
 .rubros-carousel {
-  height: 650px;
+  height: 460px;
   overflow: hidden;
   position: relative;
-  
+
+  mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      black 4%,
+      black 96%,
+      transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      black 4%,
+      black 96%,
+      transparent 100%);
+
   &__track {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
     padding: 10px;
     cursor: grab;
 
@@ -63,11 +79,11 @@
   .rubro-card {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1.1;
-    border-radius: 20px;
+    aspect-ratio: 1.4 / 1;
+    border-radius: 12px;
     overflow: hidden;
     background: #f9f9f9;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     cursor: pointer;
     border: 3.5px solid transparent;
     transition: $transition-smooth;
@@ -75,6 +91,7 @@
     &__img {
       width: 100%;
       height: 100%;
+
       img {
         width: 100%;
         height: 100%;
@@ -88,21 +105,21 @@
       left: 0;
       right: 0;
       padding: 15px;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
       color: $pure-white;
       font-weight: 600;
       font-size: 0.95rem;
     }
 
     &.is-active {
-      border-color: $primary-red;
-      box-shadow: 0 10px 30px rgba($primary-red, 0.2);
+      border: 1px solid $medium-gray;
+      box-shadow: 0 2px 1px rgba(136, 136, 136, 0.2);
     }
   }
 }
 
 .rubros-preview {
-  height: 650px;
+  height: 460px;
 
   .preview-frame {
     width: 100%;
@@ -111,7 +128,7 @@
     border-radius: 35px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 40px 80px -15px rgba(0,0,0,0.15);
+    box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.15);
 
     img {
       width: 100%;
@@ -124,9 +141,9 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 50px;
-      background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
-      
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+
       h3 {
         color: $pure-white;
         font-family: $font-headings;

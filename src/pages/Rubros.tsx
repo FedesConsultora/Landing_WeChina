@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
 
 // Import images
 import img1 from '../assets/img/rubros/rubros (1).webp';
@@ -39,28 +40,74 @@ const sectors = [
   { id: 18, label: 'Merchandising', img: img18 },
 ];
 
+// Triplicate the list for seamless looping
+const loopSectors = [...sectors, ...sectors, ...sectors];
+
 const Rubros: React.FC = () => {
   const [activeId, setActiveId] = useState(sectors[0].id);
   const activeSector = sectors.find(s => s.id === activeId) || sectors[0];
+  
+  const trackRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<gsap.core.Timeline | null>(null);
+
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    // Calculate total height of ONE set of items
+    const totalHeight = (track.scrollHeight / 3);
+
+    animationRef.current = gsap.timeline({
+      repeat: -1,
+      defaults: { ease: 'none' }
+    }).to(track, {
+      y: -totalHeight,
+      duration: 30, // Adjust speed as needed
+    });
+
+    return () => {
+      animationRef.current?.kill();
+    };
+  }, []);
+
+  const handleMouseEnter = () => animationRef.current?.pause();
+  const handleMouseLeave = () => animationRef.current?.play();
+
+  // Auto-cycle the preview image
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      // Only cycle if NOT hovering (using a simple check or just always cycle)
+      // To keep it simple and respect the GSAP pause, we can check if animation is playing
+      if (animationRef.current && !animationRef.current.paused()) {
+        setActiveId((prevId) => {
+          const currentIndex = sectors.findIndex(s => s.id === prevId);
+          const nextIndex = (currentIndex + 1) % sectors.length;
+          return sectors[nextIndex].id;
+        });
+      }
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="rubros-page">
       <section className="rubros-hero">
         <div className="container">
           <div className="rubros-layout">
-            
+
             <div className="rubros-text">
-              <motion.h1 
+              <motion.h1
                 className="rubros-title"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                Conocemos la <br />
-                <span className="text-red">matriz</span> técnica <br />
+                <br />
+                <span className="text-red">Conocemos la matriz</span> técnica <br />
                 de tu negocio.
               </motion.h1>
-              <motion.p 
+              <motion.p
                 className="rubros-desc"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -71,26 +118,25 @@ const Rubros: React.FC = () => {
             </div>
 
             <div className="rubros-carousel">
-              <motion.div 
+              <div 
+                ref={trackRef}
                 className="rubros-carousel__track"
-                drag="y"
-                dragConstraints={{ top: -800, bottom: 0 }} // Dynamic based on items
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
-                {sectors.map((sector) => (
-                  <motion.div
-                    key={sector.id}
+                {loopSectors.map((sector, index) => (
+                  <div
+                    key={`${sector.id}-${index}`}
                     className={`rubro-card ${activeId === sector.id ? 'is-active' : ''}`}
                     onClick={() => setActiveId(sector.id)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                   >
                     <div className="rubro-card__img">
                       <img src={sector.img} alt={sector.label} draggable="false" />
                     </div>
                     <span className="rubro-card__label">{sector.label}</span>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </div>
 
             <div className="rubros-preview">

@@ -13,6 +13,7 @@
   @include respond-to('desktop') {
     padding: 10px 0;
     min-height: 850px;
+
   }
 }
 
@@ -100,6 +101,7 @@
 
   @include respond-to('desktop') {
     flex-direction: row;
+    padding-top: 2rem;
 
   }
 }

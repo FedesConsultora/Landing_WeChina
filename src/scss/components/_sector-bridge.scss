@@ -123,6 +123,12 @@
   &__cta {
     margin-top: 32px;
     text-align: right;
+
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__link {

@@ -13,8 +13,8 @@ const LogisticsCTA: React.FC = () => {
           playsInline
           className="logistics-cta__video"
         >
-          <source src={barcoVideo} type="video/quicktime" />
-          <source src={barcoVideo} type="video/mp4" />
+          <source src={`${barcoVideo}#t=7`} type="video/quicktime" />
+          <source src={`${barcoVideo}#t=7`} type="video/mp4" />
         </video>
       </div>
       <div className="logistics-cta__overlay" />

@@ -148,7 +148,7 @@ const Services: React.FC = () => {
         <div className="services-layout">
           <div className="services-sidebar">
             <h1 className="services-main-title">
-              Tu estructura de comercio exterior <span className="text-highlight">en Asia.</span>
+              Tu estructura de comercio exterior  <span className="text-highlight">en Asia.</span>
             </h1>
             <nav className="services-nav">
               <ul>

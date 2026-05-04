@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 
@@ -46,38 +46,113 @@ const loopSectors = [...sectors, ...sectors, ...sectors];
 const Rubros: React.FC = () => {
   const [activeId, setActiveId] = useState(sectors[0].id);
   const activeSector = sectors.find(s => s.id === activeId) || sectors[0];
-  
+
   const trackRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Timeline | null>(null);
+  // Drag state
+  const isDragging = useRef(false);
+  const dragStart = useRef(0);
+  const dragAxis = useRef<'x' | 'y'>('x');
+  const currentOffset = useRef(0);
+  const isDesktop = () => window.innerWidth >= 1024;
 
   useLayoutEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
-    // Calculate total height of ONE set of items
-    const totalHeight = (track.scrollHeight / 3);
+    const buildAnimation = () => {
+      animationRef.current?.kill();
+      currentOffset.current = 0;
 
-    animationRef.current = gsap.timeline({
-      repeat: -1,
-      defaults: { ease: 'none' }
-    }).to(track, {
-      y: -totalHeight,
-      duration: 30, // Adjust speed as needed
-    });
+      if (isDesktop()) {
+        dragAxis.current = 'y';
+        const totalHeight = track.scrollHeight / 3;
+        gsap.set(track, { y: 0 });
+        animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
+          .to(track, { y: -totalHeight, duration: 45 }); // slower
+      } else {
+        dragAxis.current = 'x';
+        const totalWidth = track.scrollWidth / 3;
+        gsap.set(track, { x: 0 });
+        animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
+          .to(track, { x: -totalWidth, duration: 40 }); // slower
+      }
+    };
+
+    buildAnimation();
+
+    const handleResize = () => buildAnimation();
+    window.addEventListener('resize', handleResize);
 
     return () => {
       animationRef.current?.kill();
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  const handleMouseEnter = () => animationRef.current?.pause();
-  const handleMouseLeave = () => animationRef.current?.play();
+  const handlePointerEnter = () => {
+    if (!isDragging.current) animationRef.current?.pause();
+  };
+  const handlePointerLeave = () => {
+    if (!isDragging.current) animationRef.current?.play();
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    isDragging.current = true;
+    dragStart.current = dragAxis.current === 'x' ? e.clientX : e.clientY;
+    animationRef.current?.pause();
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    const track = trackRef.current;
+    if (!track) return;
+
+    const delta = dragAxis.current === 'x'
+      ? e.clientX - dragStart.current
+      : e.clientY - dragStart.current;
+
+    const newOffset = currentOffset.current + delta;
+    gsap.set(track, dragAxis.current === 'x' ? { x: newOffset } : { y: newOffset });
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const track = trackRef.current;
+    if (!track) return;
+
+    const delta = dragAxis.current === 'x'
+      ? e.clientX - dragStart.current
+      : e.clientY - dragStart.current;
+
+    currentOffset.current += delta;
+
+    // Sync GSAP timeline progress to match current visual position
+    const anim = animationRef.current;
+    if (anim) {
+      const prop = dragAxis.current;
+      const currentPos = parseFloat(gsap.getProperty(track, prop) as string);
+      const totalSize = prop === 'x'
+        ? track.scrollWidth / 3
+        : track.scrollHeight / 3;
+
+      // Normalize position: wrap into [0, -totalSize]
+      let normalized = currentPos % -totalSize;
+      if (normalized > 0) normalized -= totalSize;
+
+      gsap.set(track, prop === 'x' ? { x: normalized } : { y: normalized });
+      currentOffset.current = normalized;
+
+      const progress = Math.abs(normalized / totalSize);
+      anim.progress(progress).play();
+    }
+  };
 
   // Auto-cycle the preview image
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
-      // Only cycle if NOT hovering (using a simple check or just always cycle)
-      // To keep it simple and respect the GSAP pause, we can check if animation is playing
       if (animationRef.current && !animationRef.current.paused()) {
         setActiveId((prevId) => {
           const currentIndex = sectors.findIndex(s => s.id === prevId);
@@ -85,7 +160,7 @@ const Rubros: React.FC = () => {
           return sectors[nextIndex].id;
         });
       }
-    }, 5000); // Change every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -96,6 +171,7 @@ const Rubros: React.FC = () => {
         <div className="container">
           <div className="rubros-layout">
 
+            {/* Text – always first */}
             <div className="rubros-text">
               <motion.h1
                 className="rubros-title"
@@ -117,12 +193,17 @@ const Rubros: React.FC = () => {
               </motion.p>
             </div>
 
+            {/* Carousel */}
             <div className="rubros-carousel">
-              <div 
+              <div
                 ref={trackRef}
                 className="rubros-carousel__track"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={handlePointerEnter}
+                onMouseLeave={handlePointerLeave}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={handlePointerUp}
               >
                 {loopSectors.map((sector, index) => (
                   <div
@@ -139,6 +220,7 @@ const Rubros: React.FC = () => {
               </div>
             </div>
 
+            {/* Preview */}
             <div className="rubros-preview">
               <AnimatePresence mode="wait">
                 <motion.div

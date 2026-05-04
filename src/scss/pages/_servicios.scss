@@ -25,10 +25,11 @@
   flex-direction: column;
   gap: 24px;
 
+
   @include respond-to('desktop') {
     display: grid;
     grid-template-columns: 260px 1fr 1fr;
-    gap: 60px;
+    gap: 40px;
     align-items: start;
   }
 }
@@ -196,7 +197,8 @@
   .description-content {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 1rem;
+
 
     @include respond-to('desktop') {
       gap: 18px;
@@ -205,9 +207,14 @@
     p {
       font-family: $font-body;
       font-size: 0.95rem;
-      line-height: 1.55;
+      line-height: 1.30;
       color: $medium-gray;
       margin: 0;
+
+      @media (mix-width: 1024px) and (max-wdith: 1220px) {
+        gap: 10px;
+      }
+
 
       @include respond-to('tablet') {
         font-size: 1rem;
@@ -215,7 +222,7 @@
 
       @include respond-to('desktop') {
         font-size: 1rem;
-        line-height: 1.55;
+        line-height: 1.30;
       }
     }
   }

@@ -9,11 +9,18 @@ $navbar-height: 80px;
   left: 0;
   width: 100%;
   height: $navbar-height;
-  background: rgba($pure-white, 0.97);
+  background: rgba($pure-white, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 1000;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+
+  &--hidden {
+    transform: translateY(-100%);
+  }
 
   .container {
     height: 100%;
@@ -56,7 +63,9 @@ $navbar-height: 80px;
     top: $navbar-height;
     left: 0;
     width: 100%;
-    background: $pure-white;
+    background: rgba($pure-white, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 0 20px;
     max-height: 0;
     overflow: hidden;
@@ -65,10 +74,12 @@ $navbar-height: 80px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     // Needed so the grid column doesn't apply in mobile
     grid-column: unset;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
 
     &.is-open {
       max-height: 400px;
-      padding: 24px 20px 32px;
+      padding: 24px 20px 10px 32px;
     }
 
     @media (min-width: 1024px) {
@@ -88,14 +99,20 @@ $navbar-height: 80px;
 
     a {
       font-family: $font-body;
-      font-weight: 500;
-      font-size: 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
       color: $dark-carbon;
       text-transform: capitalize;
       letter-spacing: 0.04em;
       padding: 12px 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       transition: color 0.25s ease;
+
+
+
+      &:last-child {
+        border-bottom: none;
+      }
 
       @media (min-width: 1024px) {
         font-size: 0.8rem;
@@ -154,55 +171,19 @@ $navbar-height: 80px;
     background: none;
     border: none;
     cursor: pointer;
-    position: relative;
+    color: $dark-carbon;
+    transition: color 0.2s ease;
 
     @media (min-width: 1024px) {
       display: none;
     }
 
-    .hamburger {
+    svg {
       display: block;
-      width: 22px;
-      height: 2px;
-      background: $dark-carbon;
-      border-radius: 2px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: background 0.2s;
+    }
 
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        width: 22px;
-        height: 2px;
-        background: $dark-carbon;
-        left: 0;
-        border-radius: 2px;
-        transition: transform 0.3s ease;
-      }
-
-      &::before {
-        top: -7px;
-      }
-
-      &::after {
-        top: 7px;
-      }
-
-      &.is-active {
-        background: transparent;
-
-        &::before {
-          transform: translateY(7px) rotate(45deg);
-        }
-
-        &::after {
-          transform: translateY(-7px) rotate(-45deg);
-        }
-      }
+    &:hover {
+      color: $primary-red;
     }
   }
 }

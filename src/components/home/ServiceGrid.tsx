@@ -11,25 +11,26 @@ const services = [
     id: 'agentes-de-compras',
     img: service3,
     title: 'Agentes de compras',
-    desc: 'Ubicamos los mejores precios y fábricas de China, validamos sus licencias de negocios y certificados.',
+    desc: 'Gestionamos tu negociación y pago en origen con la seguridad de nuestra oficina binacional.',
   },
   {
     id: 'busqueda-de-proveedores',
     img: service4,
     title: 'Búsqueda de proveedores',
-    desc: 'Encontrar proveedores calificados requiere una eficaz y bien estructurada estrategia.',
+    desc: 'Identificamos fábricas que cumplen con tus estándares de costo y capacidad técnica.',
   },
   {
     id: 'validacion-de-fabricantes-online',
     img: service1,
     title: 'Validación de fabricantes online',
-    desc: 'Evite estafas y revendedores validando la legitimidad de las fábricas antes de comprometerse.',
+
+    desc: 'Auditamos legal y técnicamente a proveedores online para evitar fraudes y estafas.'
   },
   {
     id: 'control-de-calidad',
     img: service2,
     title: 'Control de calidad',
-    desc: 'Inspecciones profesionales titulados en normas ISO y CE para garantizar lo deseado.',
+    desc: 'Inspeccionamos cada unidad en la fábrica antes de consolidar.',
   },
 ];
 

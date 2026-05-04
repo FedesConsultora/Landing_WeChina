@@ -81,7 +81,7 @@
   font-weight: 700;
   font-size: 2.6rem;
   line-height: 1.05;
-  color: $dark-carbon;
+  color: $neutral-gray;
   margin: 0 0 18px;
 
   @include respond-to('tablet') {
@@ -162,8 +162,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .clients-cards__container {

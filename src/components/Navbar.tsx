@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import logo from '../assets/img/logo.png';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isHidden, setIsHidden] = React.useState(false);
+  const lastScrollY = useRef(0);
   const close = () => setIsOpen(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const diff = currentY - lastScrollY.current;
+
+      // Hide when scrolling down fast (more than 8px) and not near top
+      if (diff > 8 && currentY > 120) {
+        setIsHidden(true);
+        setIsOpen(false); // Close mobile menu if open
+      }
+      // Show when scrolling up
+      if (diff < -8) {
+        setIsHidden(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="main-header">
+    <header className={`main-header${isHidden ? ' main-header--hidden' : ''}`}>
       <div className="container">
 
         {/* Column 1: Logo */}
@@ -37,7 +61,18 @@ const Navbar: React.FC = () => {
             onClick={() => setIsOpen(prev => !prev)}
             aria-label="Abrir menú"
           >
-            <span className={`hamburger${isOpen ? ' is-active' : ''}`} />
+            {isOpen ? (
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="2" y1="2" x2="20" y2="20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="20" y1="2" x2="2" y2="20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="2" y1="5" x2="20" y2="5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="2" y1="11" x2="20" y2="11" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="2" y1="17" x2="20" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            )}
           </button>
         </div>
 

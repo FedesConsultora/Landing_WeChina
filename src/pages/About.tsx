@@ -16,7 +16,7 @@ const About: React.FC = () => {
         />
         <div className="video-overlay"></div>
       </div>
-      
+
       <div className="container about-container">
         <div className="about-content">
           <div className="about-text-column">

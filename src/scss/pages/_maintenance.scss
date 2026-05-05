@@ -1,0 +1,293 @@
+@use "../abstracts/variables" as vars;
+@use "../abstracts/mixins" as mix;
+
+.maintenance {
+  box-sizing: border-box;
+  background-color: vars.$pure-white;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  color: vars.$neutral-gray;
+  font-family: vars.$font-body;
+  position: relative;
+  overflow: hidden; // NO SCROLL
+  width: 100%;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      align-items: stretch;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; // CENTERED BY DEFAULT (MOBILE/TABLET)
+    text-align: center; // CENTERED BY DEFAULT (MOBILE/TABLET)
+    padding: 2.5rem 1.5rem;
+    z-index: 5;
+    position: relative;
+    min-height: 0;
+
+    @media (min-width: 1024px) {
+      align-items: flex-start; // LEFT ALIGNED ON DESKTOP
+      text-align: left; // LEFT ALIGNED ON DESKTOP
+      padding: 2rem clamp(1rem, 3vw, 5rem);
+      flex: 1; 
+    }
+
+    @media (min-width: 1200px) {
+      flex: 0.85; 
+      padding: 3rem clamp(2rem, 5vw, 6rem);
+    }
+  }
+
+  &__logo {
+    margin-bottom: 2.5rem;
+    
+    @media (min-width: 1024px) {
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 1400px) {
+      margin-bottom: 3.5rem;
+    }
+
+    img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+
+      @media (min-width: 1024px) {
+        height: 45px;
+      }
+
+      @media (min-width: 1400px) {
+        height: 55px;
+      }
+    }
+  }
+
+  &__title {
+    font-family: vars.$font-headings;
+    font-size: clamp(2rem, 6vw, 4rem); 
+    line-height: 1.05;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+    color: vars.$neutral-gray;
+    animation: fadeInDown 0.8s ease-out;
+
+    @media (min-width: 1024px) {
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 1400px) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__highlight {
+    color: vars.$primary-red;
+  }
+
+  &__description {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: vars.$medium-gray;
+    margin-bottom: 3rem;
+    max-width: 550px;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+
+    @media (min-width: 1024px) {
+      font-size: 1.05rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 1400px) {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; // CENTERED BY DEFAULT
+    gap: 1.2rem;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+
+    @media (min-width: 1024px) {
+      justify-content: flex-start; // LEFT ALIGNED ON DESKTOP
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: 1400px) {
+      gap: 1.2rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  &__btn {
+    display: inline-block;
+    background-color: vars.$primary-red;
+    color: vars.$pure-white;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: vars.$transition-smooth;
+    box-shadow: 0 10px 25px rgba(vars.$primary-red, 0.2);
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+
+    @media (min-width: 1400px) {
+      padding: 16px 42px;
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background-color: vars.$primary-red-dark;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(vars.$primary-red, 0.3);
+    }
+
+    &--secondary {
+      background-color: transparent;
+      border: 2px solid vars.$neutral-gray;
+      color: vars.$neutral-gray;
+      box-shadow: none;
+
+      &:hover {
+        background-color: vars.$neutral-gray;
+        color: vars.$pure-white;
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  &__social {
+    display: flex;
+    justify-content: center; // CENTERED BY DEFAULT
+    gap: 1.5rem;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+
+    @media (min-width: 1024px) {
+      justify-content: flex-start; // LEFT ALIGNED ON DESKTOP
+    }
+
+    &-link {
+      img {
+        width: 24px;
+        height: 24px;
+        filter: grayscale(1) opacity(0.7);
+        transition: vars.$transition-smooth;
+
+        @media (min-width: 1400px) {
+          width: 26px;
+          height: 26px;
+        }
+
+        &:hover {
+          filter: grayscale(0) opacity(1);
+          transform: scale(1.15);
+        }
+      }
+    }
+  }
+
+  &__image {
+    flex: 1;
+    display: none; 
+    animation: fadeInRight 1s ease-out;
+    background-color: #000;
+    overflow: hidden;
+
+    @media (min-width: 1024px) {
+      display: flex;
+      height: 100vh;
+      flex: 1; 
+    }
+
+    @media (min-width: 1200px) {
+      flex: 1.15; 
+    }
+  }
+
+  &__video-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  &__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 0;
+    width: 100%;
+    text-align: center; // CENTERED BY DEFAULT
+    font-size: 0.8rem;
+    color: vars.$medium-gray;
+    z-index: 10;
+
+    @media (min-width: 1024px) {
+      width: auto;
+      text-align: left;
+      bottom: 2rem;
+      left: clamp(1rem, 3vw, 5rem);
+      font-size: 0.85rem;
+    }
+
+    @media (min-width: 1400px) {
+      bottom: 2.5rem;
+      left: clamp(2rem, 5vw, 6rem);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}

@@ -79,12 +79,12 @@
 
   &__content {
     max-width: 520px;
-    text-align: center;
-    margin: 0 auto;
+    text-align: left;
+    margin: auto;
 
     @media (min-width: 1024px) {
       text-align: left;
-      margin-left: 50px;
+      margin-left: 2.3rem;
     }
   }
 

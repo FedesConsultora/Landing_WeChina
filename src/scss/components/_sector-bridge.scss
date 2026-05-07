@@ -39,9 +39,9 @@
 
   &__desc {
     font-family: $font-body;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: $medium-gray;
-    line-height: 1.7;
+    line-height: 1.3;
     max-width: 300px;
 
     @media (min-width: 1024px) {

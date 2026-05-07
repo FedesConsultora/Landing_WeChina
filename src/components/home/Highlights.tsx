@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, type Transition } from 'framer-motion';
 import argentinaMap from '../../assets/img/hero/arg-map.png';
+import chinaMap from '../../assets/img/hero/china-map.webp';
 
 const transition = (delay = 0): Transition => ({
   duration: 0.7,
@@ -20,6 +21,9 @@ const Highlights: React.FC = () => {
     <section className="highlights">
       <div className='img-container'>
         <img src={argentinaMap} alt="argentina-map" />
+      </div>
+      <div className='highlights__china-map'>
+        <img src={chinaMap} alt="china-map" />
       </div>
       <div className="container">
         <motion.div className="highlights__layout"  {...fadeUp(0)}>

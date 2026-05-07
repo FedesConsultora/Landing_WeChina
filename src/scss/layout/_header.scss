@@ -109,18 +109,20 @@ $navbar-height: 80px;
       letter-spacing: 0.04em;
       padding: 12px 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      transition: color 0.25s ease;
-      background: transparent;
       display: flex;
       align-items: center;
-      gap: 10px;
+      transition: color 0.25s ease;
+      background: transparent;
 
       .nav-icon {
-        width: 16px;
+        width: 0;
         height: 16px;
         object-fit: contain;
         filter: brightness(0) saturate(100%) invert(30%) sepia(84%) saturate(2361%) hue-rotate(341deg) brightness(91%) contrast(100%);
-        transition: transform 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        margin-right: 0;
+        transition: width 0.3s ease, opacity 0.3s ease, margin-right 0.3s ease, transform 0.3s ease;
       }
 
       &:last-child {
@@ -134,11 +136,18 @@ $navbar-height: 80px;
         letter-spacing: 0.05em;
       }
 
-      &:hover,
+      &:hover {
+        color: $primary-red;
+      }
+
       &.active {
         color: $primary-red;
 
         .nav-icon {
+          width: 16px;
+          margin-right: 10px;
+          opacity: 1;
+          visibility: visible;
           transform: scale(1.1);
         }
       }

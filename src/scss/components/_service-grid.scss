@@ -13,7 +13,7 @@
     padding-bottom: 100px;
   }
 
-  background: $soft-white;
+  background: #ffffff;
 
   // ── Header: eyebrow + title alineados horizontalmente ──────
   &__header {
@@ -53,6 +53,7 @@
     max-width: 100%;
     text-align: left;
     margin-top: 12px;
+    line-height: 1.3;
 
     @media (min-width: 1024px) {
       max-width: 380px;
@@ -79,7 +80,8 @@
     }
 
     // Direct children (motion.divs) handle the grid spans
-    & > * {
+    &>* {
+
       // Fila 1 y primera de fila 2: las 3 primeras cards — grandes
       &:nth-child(1),
       &:nth-child(2),

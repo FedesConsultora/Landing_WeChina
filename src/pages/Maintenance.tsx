@@ -25,7 +25,7 @@ const Maintenance: React.FC = () => {
 
           <div className="maintenance__actions">
             <a href="mailto:info@wechina.com" className="maintenance__btn">
-              Contáctanos
+              Contactanos
             </a>
             <a
               href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n"

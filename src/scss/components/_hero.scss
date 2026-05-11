@@ -248,6 +248,7 @@
     color: $pure-white;
     display: block;
     line-height: 1.2;
+    font-variant-numeric: tabular-nums; // Prevent layout shift during animation
   }
 
   &__label {

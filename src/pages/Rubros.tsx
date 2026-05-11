@@ -21,26 +21,19 @@ import img15 from '../assets/img/rubros/rubros (15).webp';
 import img16 from '../assets/img/rubros/rubros (16).webp';
 import img17 from '../assets/img/rubros/rubros (17).webp';
 import img18 from '../assets/img/rubros/rubros (18).webp';
+import imgCalzado from '../assets/img/rubros/rubros -calzado.png';
+import imgCarton from '../assets/img/rubros/rubros -carton (1).png';
+import imgPapel from '../assets/img/rubros/rubros -papel.png';
 
 const sectors = [
-  { id: 1, label: 'Calzados', img: img7 },
-  { id: 2, label: 'Moda', img: img18 },
-  { id: 3, label: 'Seguridad', img: img17 },
-  { id: 4, label: 'Maquinaria', img: img1 },
-  { id: 5, label: 'Repuestos de auto', img: img2 },
-  { id: 6, label: 'Equipos y productos para supermercado', img: img3 },
-  { id: 7, label: 'Materiales de construcción', img: img4 },
-  { id: 8, label: 'Ferretería', img: img5 },
-  { id: 9, label: 'Iluminación', img: img8 },
-  { id: 10, label: 'Repuestos y accesorios para motos', img: img6 },
-  { id: 11, label: 'Metalúrgica', img: img9 },
-  { id: 12, label: 'Joyería', img: img10 },
-  { id: 13, label: 'Marroquinería', img: img11 },
-  { id: 14, label: 'Cotillón', img: img12 },
-  { id: 15, label: 'Peluquería', img: img13 },
-  { id: 16, label: 'Textil', img: img14 },
-  { id: 17, label: 'Farmacias', img: img15 },
-  { id: 18, label: 'Merchandising', img: img16 },
+  { id: 1, label: 'Industrias calzado y marroquinería', img: imgCalzado },
+  { id: 2, label: 'Industria textil e indumentaria', img: img14 },
+  { id: 3, label: 'Industria papelera', img: imgPapel },
+  { id: 4, label: 'Industria del cartón corrugado', img: imgCarton },
+  { id: 5, label: 'Industria de materiales de construcción', img: img4 },
+  { id: 6, label: 'Desarrollos de proyectos industriales', img: img17 },
+  { id: 7, label: 'Industria de alimentos', img: img3 },
+  { id: 8, label: 'Maquinarias', img: img1 },
 ];
 
 // Triplicate the list for seamless looping
@@ -57,6 +50,9 @@ const Rubros: React.FC = () => {
   const dragStart = useRef(0);
   const dragAxis = useRef<'x' | 'y'>('x');
   const currentOffset = useRef(0);
+  const dragDistance = useRef(0);
+  const dragTarget = useRef<HTMLElement | null>(null);
+  const isHovering = useRef(false);
   const isDesktop = () => window.innerWidth >= 1024;
 
   useLayoutEffect(() => {
@@ -97,18 +93,16 @@ const Rubros: React.FC = () => {
   const resumeTimeoutRef = useRef<number | null>(null);
 
   const handlePointerEnter = () => {
+    isHovering.current = true;
     if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
     animationRef.current?.pause();
   };
 
   const handlePointerLeave = () => {
+    isHovering.current = false;
     if (!isDragging.current) {
-      // Wait a bit before resuming on leave too, or resume immediately? 
-      // User said "que espere un poco para volver a moverse"
       if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      resumeTimeoutRef.current = window.setTimeout(() => {
-        animationRef.current?.play();
-      }, 2000);
+      animationRef.current?.play();
     }
   };
 
@@ -116,6 +110,8 @@ const Rubros: React.FC = () => {
     if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
     isDragging.current = true;
     dragStart.current = dragAxis.current === 'x' ? e.clientX : e.clientY;
+    dragDistance.current = 0;
+    dragTarget.current = e.target as HTMLElement;
     
     animationRef.current?.pause();
     
@@ -131,6 +127,7 @@ const Rubros: React.FC = () => {
       ? e.clientX - dragStart.current
       : e.clientY - dragStart.current;
 
+    dragDistance.current = Math.abs(delta);
     const newOffset = currentOffset.current + delta;
     gsap.set(track, dragAxis.current === 'x' ? { x: newOffset } : { y: newOffset });
   };
@@ -148,7 +145,15 @@ const Rubros: React.FC = () => {
 
     currentOffset.current += delta;
 
-    // Sync GSAP timeline
+    if (dragDistance.current < 10) {
+      const element = document.elementFromPoint(e.clientX, e.clientY);
+      const card = element?.closest('.rubro-card');
+      const sectorId = card?.getAttribute('data-sector-id');
+      if (sectorId) {
+        setActiveId(Number(sectorId));
+      }
+    }
+
     const anim = animationRef.current;
     if (anim) {
       const prop = dragAxis.current;
@@ -166,20 +171,18 @@ const Rubros: React.FC = () => {
       const progress = Math.abs(normalized / totalSize);
       anim.progress(progress);
       
-      // WAIT before playing
+      // Resume only if NOT hovering
       if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      resumeTimeoutRef.current = window.setTimeout(() => {
+      if (!isHovering.current) {
         anim.play();
-      }, 2000);
+      }
     }
   };
-
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   // Auto-cycle the preview image
   useEffect(() => {
     const interval = setInterval(() => {
-      if (animationRef.current && !animationRef.current.paused() && !isLightboxOpen) {
+      if (animationRef.current && !animationRef.current.paused()) {
         setActiveId((prevId) => {
           const currentIndex = sectors.findIndex(s => s.id === prevId);
           const nextIndex = (currentIndex + 1) % sectors.length;
@@ -189,7 +192,7 @@ const Rubros: React.FC = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [isLightboxOpen]);
+  }, []);
 
   return (
     <div className="rubros-page">
@@ -233,8 +236,8 @@ const Rubros: React.FC = () => {
                 {loopSectors.map((sector, index) => (
                   <div
                     key={`${sector.id}-${index}`}
+                    data-sector-id={sector.id}
                     className={`rubro-card ${activeId === sector.id ? 'is-active' : ''}`}
-                    onClick={() => setActiveId(sector.id)}
                   >
                     <div className="rubro-card__img">
                       <img src={sector.img} alt={sector.label} draggable="false" />
@@ -246,7 +249,7 @@ const Rubros: React.FC = () => {
             </div>
 
             {/* Preview */}
-            <div className="rubros-preview" onClick={() => setIsLightboxOpen(true)}>
+            <div className="rubros-preview">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeId}
@@ -259,7 +262,6 @@ const Rubros: React.FC = () => {
                   <img src={activeSector.img} alt={activeSector.label} />
                   <div className="preview-label">
                     <h3>{activeSector.label}</h3>
-                    <span className="expand-hint">Click para ampliar</span>
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -267,33 +269,6 @@ const Rubros: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {isLightboxOpen && (
-          <motion.div 
-            className="rubros-lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsLightboxOpen(false)}
-          >
-            <motion.div 
-              className="lightbox-content"
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button className="close-lightbox" onClick={() => setIsLightboxOpen(false)} aria-label="Cerrar">×</button>
-              <img src={activeSector.img} alt={activeSector.label} />
-              <div className="lightbox-caption">
-                <h2>{activeSector.label}</h2>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

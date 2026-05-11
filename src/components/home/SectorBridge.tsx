@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import rubro1 from '../../assets/img/rubros/logos/rubro-1.webp';
 import rubro2 from '../../assets/img/rubros/logos/rubro-2.webp';
 import rubro3 from '../../assets/img/rubros/logos/rubro-3.webp';
-import rubro4 from '../../assets/img/rubros/logos/rubro-4.webp';
+import rubro4 from '../../assets/img/rubros/rubros -calzado.png';
 
 import iconCar from '../../assets/img/rubros/logos/car.png';
 import iconSafety from '../../assets/img/rubros/logos/Safety Hat.png';
@@ -13,10 +13,10 @@ import iconBoots from '../../assets/img/rubros/logos/Winter Boots.png';
 import iconDress from '../../assets/img/rubros/logos/Little Black Dress.png';
 
 const sectors = [
-  { img: rubro1, icon: iconCar, label: 'Repuestos de autos' },
-  { img: rubro2, icon: iconSafety, label: 'Seguridad industrial' },
-  { img: rubro4, icon: iconBoots, label: 'Calzado' },
-  { img: rubro3, icon: iconDress, label: 'Moda' },
+  { img: rubro1, icon: iconCar, label: 'Maquinarias' },
+  { img: rubro2, icon: iconSafety, label: 'Industria de materiales de construcción' },
+  { img: rubro4, icon: iconBoots, label: 'Industrias calzado y marroquinería' },
+  { img: rubro3, icon: iconDress, label: 'Industria textil e indumentaria' },
 ];
 
 const variants = {
@@ -84,9 +84,8 @@ const SectorBridge: React.FC = () => {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            No somos generalistas. Contamos con equipos especializados en calzado
-            e indumentaria, y una unidad exclusiva para el mercado de óptica en
-            Indonesia.
+            No somos generalistas. Contamos con equipos especializados en industrias de calzado, 
+            textil, papelera y desarrollos industriales estratégicos.
           </motion.p>
         </div>
 

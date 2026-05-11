@@ -92,7 +92,7 @@ const Rubros: React.FC = () => {
 
   const resumeTimeoutRef = useRef<number | null>(null);
 
-  const handlePointerEnter = () => {
+  const pauseAnimation = (duration = 0.4) => {
     if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
     resumeTimeoutRef.current = window.setTimeout(() => {
       if (animationRef.current) {
@@ -109,12 +109,7 @@ const Rubros: React.FC = () => {
   const handlePointerLeave = () => {
     isHovering.current = false;
     if (!isDragging.current) {
-      // Wait a bit before resuming on leave too, or resume immediately? 
-      // User said "que espere un poco para volver a moverse"
-      if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      resumeTimeoutRef.current = window.setTimeout(() => {
-        animationRef.current?.play();
-      }, 2000);
+      resumeAnimation(100, 0.6); // Instant resume
     }
   };
 
@@ -197,7 +192,10 @@ const Rubros: React.FC = () => {
   // Auto-cycle the preview image
   useEffect(() => {
     const interval = setInterval(() => {
-      if (animationRef.current && !animationRef.current.paused() && !isLightboxOpen) {
+      const anim = animationRef.current;
+      const isActuallyMoving = anim && anim.timeScale() > 0 && !anim.paused();
+
+      if (isActuallyMoving && !isLightboxOpen) {
         setActiveId((prevId) => {
           const currentIndex = sectors.findIndex(s => s.id === prevId);
           const nextIndex = (currentIndex + 1) % sectors.length;
@@ -253,7 +251,12 @@ const Rubros: React.FC = () => {
                     key={`${sector.id}-${index}`}
                     data-sector-id={sector.id}
                     className={`rubro-card ${activeId === sector.id ? 'is-active' : ''}`}
-                    onClick={() => setActiveId(sector.id)}
+                    whileTap={{ scale: 0.95 }}
+                    onTap={() => {
+                      setActiveId(sector.id);
+                      pauseAnimation(0.8);
+                      resumeAnimation(5000, 1.5);
+                    }}
                   >
                     <div className="rubro-card__img">
                       <img src={sector.img} alt={sector.label} draggable="false" />
@@ -266,7 +269,7 @@ const Rubros: React.FC = () => {
 
             {/* Preview */}
             <div className="rubros-preview" onClick={() => setIsLightboxOpen(true)}>
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.div
                   key={activeId}
                   className="preview-frame"

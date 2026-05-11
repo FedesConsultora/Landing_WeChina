@@ -179,8 +179,8 @@
     }
 
     &.is-active {
-      border: 3.5px solid $primary-red;
-      box-shadow: 0 10px 25px rgba($primary-red, 0.2);
+      border: 1.5px solid $primary-red;
+      box-shadow: 0 6px 16px rgba($primary-red, 0.15);
       transform: scale(1.02);
 
       @media (min-width: 1024px) {

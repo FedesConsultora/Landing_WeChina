@@ -92,24 +92,17 @@ const Rubros: React.FC = () => {
 
   const resumeTimeoutRef = useRef<number | null>(null);
 
-  const pauseAnimation = (duration = 0.4) => {
-    if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-    resumeTimeoutRef.current = window.setTimeout(() => {
-      if (animationRef.current) {
-        animationRef.current.play();
-        gsap.to(animationRef.current, { timeScale: 1, duration, ease: "power2.inOut", overwrite: true });
-      }
-    }, delay);
-  };
-
   const handlePointerEnter = () => {
-    pauseAnimation(0.3);
+    isHovering.current = true;
+    if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
+    animationRef.current?.pause();
   };
 
   const handlePointerLeave = () => {
     isHovering.current = false;
     if (!isDragging.current) {
-      resumeAnimation(100, 0.6); // Instant resume
+      if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
+      animationRef.current?.play();
     }
   };
 
@@ -184,7 +177,9 @@ const Rubros: React.FC = () => {
       // WAIT before playing
       if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
       resumeTimeoutRef.current = window.setTimeout(() => {
-        anim.play();
+        if (!isHovering.current) {
+          anim.play();
+        }
       }, 2000);
     }
   };
@@ -195,7 +190,7 @@ const Rubros: React.FC = () => {
       const anim = animationRef.current;
       const isActuallyMoving = anim && anim.timeScale() > 0 && !anim.paused();
 
-      if (isActuallyMoving && !isLightboxOpen) {
+      if (isActuallyMoving) {
         setActiveId((prevId) => {
           const currentIndex = sectors.findIndex(s => s.id === prevId);
           const nextIndex = (currentIndex + 1) % sectors.length;
@@ -252,11 +247,7 @@ const Rubros: React.FC = () => {
                     data-sector-id={sector.id}
                     className={`rubro-card ${activeId === sector.id ? 'is-active' : ''}`}
                     whileTap={{ scale: 0.95 }}
-                    onTap={() => {
-                      setActiveId(sector.id);
-                      pauseAnimation(0.8);
-                      resumeAnimation(5000, 1.5);
-                    }}
+                    onTap={() => setActiveId(sector.id)}
                   >
                     <div className="rubro-card__img">
                       <img src={sector.img} alt={sector.label} draggable="false" />
@@ -268,7 +259,7 @@ const Rubros: React.FC = () => {
             </div>
 
             {/* Preview */}
-            <div className="rubros-preview" onClick={() => setIsLightboxOpen(true)}>
+            <div className="rubros-preview">
               <AnimatePresence>
                 <motion.div
                   key={activeId}

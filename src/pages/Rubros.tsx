@@ -69,13 +69,13 @@ const Rubros: React.FC = () => {
         const totalHeight = track.scrollHeight / 3;
         gsap.set(track, { y: 0 });
         animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
-          .to(track, { y: -totalHeight, duration: 45 }); // slower
+          .to(track, { y: -totalHeight, duration: 22 }); // Even faster
       } else {
         dragAxis.current = 'x';
         const totalWidth = track.scrollWidth / 3;
         gsap.set(track, { x: 0 });
         animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
-          .to(track, { x: -totalWidth, duration: 40 }); // slower
+          .to(track, { x: -totalWidth, duration: 18 }); // Even faster
       }
     };
 
@@ -93,16 +93,28 @@ const Rubros: React.FC = () => {
   const resumeTimeoutRef = useRef<number | null>(null);
 
   const handlePointerEnter = () => {
-    isHovering.current = true;
     if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-    animationRef.current?.pause();
+    resumeTimeoutRef.current = window.setTimeout(() => {
+      if (animationRef.current) {
+        animationRef.current.play();
+        gsap.to(animationRef.current, { timeScale: 1, duration, ease: "power2.inOut", overwrite: true });
+      }
+    }, delay);
+  };
+
+  const handlePointerEnter = () => {
+    pauseAnimation(0.3);
   };
 
   const handlePointerLeave = () => {
     isHovering.current = false;
     if (!isDragging.current) {
+      // Wait a bit before resuming on leave too, or resume immediately? 
+      // User said "que espere un poco para volver a moverse"
       if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      animationRef.current?.play();
+      resumeTimeoutRef.current = window.setTimeout(() => {
+        animationRef.current?.play();
+      }, 2000);
     }
   };
 
@@ -112,10 +124,13 @@ const Rubros: React.FC = () => {
     dragStart.current = dragAxis.current === 'x' ? e.clientX : e.clientY;
     dragDistance.current = 0;
     dragTarget.current = e.target as HTMLElement;
-    
-    animationRef.current?.pause();
-    
-    e.currentTarget.setPointerCapture(e.pointerId);
+
+    if (animationRef.current) {
+      gsap.set(animationRef.current, { timeScale: 0 });
+    }
+
+    // Removing setPointerCapture to avoid blocking child clicks
+    // e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -135,7 +150,7 @@ const Rubros: React.FC = () => {
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return;
     isDragging.current = false;
-    
+
     const track = trackRef.current;
     if (!track) return;
 
@@ -170,19 +185,19 @@ const Rubros: React.FC = () => {
 
       const progress = Math.abs(normalized / totalSize);
       anim.progress(progress);
-      
-      // Resume only if NOT hovering
+
+      // WAIT before playing
       if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      if (!isHovering.current) {
+      resumeTimeoutRef.current = window.setTimeout(() => {
         anim.play();
-      }
+      }, 2000);
     }
   };
 
   // Auto-cycle the preview image
   useEffect(() => {
     const interval = setInterval(() => {
-      if (animationRef.current && !animationRef.current.paused()) {
+      if (animationRef.current && !animationRef.current.paused() && !isLightboxOpen) {
         setActiveId((prevId) => {
           const currentIndex = sectors.findIndex(s => s.id === prevId);
           const nextIndex = (currentIndex + 1) % sectors.length;
@@ -234,30 +249,34 @@ const Rubros: React.FC = () => {
                 onPointerCancel={handlePointerUp}
               >
                 {loopSectors.map((sector, index) => (
-                  <div
+                  <motion.div
                     key={`${sector.id}-${index}`}
                     data-sector-id={sector.id}
                     className={`rubro-card ${activeId === sector.id ? 'is-active' : ''}`}
+                    onClick={() => setActiveId(sector.id)}
                   >
                     <div className="rubro-card__img">
                       <img src={sector.img} alt={sector.label} draggable="false" />
                     </div>
                     <span className="rubro-card__label">{sector.label}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
             {/* Preview */}
-            <div className="rubros-preview">
+            <div className="rubros-preview" onClick={() => setIsLightboxOpen(true)}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeId}
                   className="preview-frame"
-                  initial={{ opacity: 0, scale: 0.98, x: 20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 1.02, x: -20 }}
-                  transition={{ duration: 0.5 }}
+                  initial={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeOut"
+                  }}
                 >
                   <img src={activeSector.img} alt={activeSector.label} />
                   <div className="preview-label">

@@ -21,10 +21,13 @@ const Highlights: React.FC = () => {
     <section className="highlights">
       <div className='img-container'>
         <img src={argentinaMap} alt="argentina-map" />
+        <div className="office-dot argentina-dot" />
       </div>
       <div className='highlights__china-map'>
         <img src={chinaMap} alt="china-map" />
+        <div className="office-dot china-dot" />
       </div>
+
       <div className="container">
         <motion.div className="highlights__layout"  {...fadeUp(0)}>
           <motion.div className="highlights__main">

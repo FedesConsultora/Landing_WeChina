@@ -2,33 +2,85 @@ import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Placeholder images from existing assets (to be replaced later)
-import img1 from '../assets/img/servicios/service-1.webp';
-import img2 from '../assets/img/servicios/service-2.webp';
-import img3 from '../assets/img/servicios/service-3.webp';
-import img4 from '../assets/img/servicios/service-4.webp';
+// Real client images (to be placed in src/assets/img/clientes/ by the user)
+import client1 from '../assets/img/clientes/client-1.webp';
+import client2 from '../assets/img/clientes/client-2.webp';
+import client3 from '../assets/img/clientes/client-3.webp';
+import client4 from '../assets/img/clientes/client-4.webp';
+import client5 from '../assets/img/clientes/client-5.webp';
+import client6 from '../assets/img/clientes/client-6.webp';
+import client7 from '../assets/img/clientes/client-7.webp';
+import client8 from '../assets/img/clientes/client-8.webp';
+import client9 from '../assets/img/clientes/client-9.webp';
+import client10 from '../assets/img/clientes/client-10.webp';
+import client11 from '../assets/img/clientes/client-11.webp';
+import client12 from '../assets/img/clientes/client-12.webp';
+import client13 from '../assets/img/clientes/client-13.webp';
+import client14 from '../assets/img/clientes/client-14.webp';
+import client15 from '../assets/img/clientes/client-15.webp';
+import client16 from '../assets/img/clientes/client-16.webp';
+import client17 from '../assets/img/clientes/client-17.webp';
+import client18 from '../assets/img/clientes/client-18.webp';
+import client19 from '../assets/img/clientes/client-19.webp';
+import client20 from '../assets/img/clientes/client-20.webp';
+import client21 from '../assets/img/clientes/client-21.webp';
+import client22 from '../assets/img/clientes/client-22.webp';
+import client23 from '../assets/img/clientes/client-23.webp';
+import client24 from '../assets/img/clientes/client-24.webp';
+import client25 from '../assets/img/clientes/client-25.webp';
+import client26 from '../assets/img/clientes/client-26.webp';
+import client27 from '../assets/img/clientes/client-27.webp';
+import client28 from '../assets/img/clientes/client-28.webp';
+import client29 from '../assets/img/clientes/client-29.webp';
+import client30 from '../assets/img/clientes/client-30.webp';
+import client31 from '../assets/img/clientes/client-31.webp';
+import client32 from '../assets/img/clientes/client-32.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 12 cards across 3 rows of 4 — each row moves in opposite direction
 const cards = [
-  { id: 1, img: img1, label: 'Inspección en Fábrica' },
-  { id: 2, img: img2, label: 'Control de Calidad' },
-  { id: 3, img: img3, label: 'Agentes de Compras' },
-  { id: 4, img: img4, label: 'Logística Marítima' },
-  { id: 5, img: img1, label: 'Gestión de Proveedores' },
-  { id: 6, img: img2, label: 'Auditoría ISO' },
-  { id: 7, img: img3, label: 'Consolidación de Cargas' },
-  { id: 8, img: img4, label: 'Comercio Exterior' },
-  { id: 9, img: img1, label: 'Marcas Propias' },
-  { id: 10, img: img2, label: 'Feria de Cantón' },
-  { id: 11, img: img3, label: 'Inspección Pre-Embarque' },
-  { id: 12, img: img4, label: 'Contratos de Compra' },
+  // Row 1 (11)
+  { id: 1, img: client1, label: 'Peter Fox' },
+  { id: 2, img: client2, label: 'Tracy' },
+  { id: 3, img: client3, label: 'Mas-Kotas' },
+  { id: 4, img: client4, label: 'Mimo & Co' },
+  { id: 5, img: client5, label: 'Xerox' },
+  { id: 6, img: client6, label: 'Disney' },
+  { id: 7, img: client7, label: 'Goosy Kids' },
+  { id: 8, img: client8, label: 'Viamo' },
+  { id: 9, img: client9, label: 'Suelas Leal' },
+  { id: 10, img: client10, label: 'Sucre' },
+  { id: 11, img: client11, label: 'Sky Blue' },
+  
+  // Row 2 (11)
+  { id: 12, img: client12, label: 'Kailer' },
+  { id: 13, img: client13, label: 'Maykel Footwear' },
+  { id: 14, img: client14, label: 'Tapper Adhesivos' },
+  { id: 15, img: client15, label: 'Evaplas' },
+  { id: 16, img: client16, label: 'Couce' },
+  { id: 17, img: client17, label: 'BlueKids' },
+  { id: 18, img: client18, label: 'SeaWalk' },
+  { id: 19, img: client19, label: 'Rimland' },
+  { id: 20, img: client20, label: 'Pony' },
+  { id: 21, img: client21, label: 'La Martina' },
+  { id: 22, img: client22, label: 'Jaguar' },
+  
+  // Row 3 (10)
+  { id: 23, img: client23, label: 'Siempre Farmacias' },
+  { id: 24, img: client24, label: 'Brenda' },
+  { id: 25, img: client25, label: 'Bonzini Shoes' },
+  { id: 26, img: client26, label: 'Lady Paul\'s' },
+  { id: 27, img: client27, label: 'Plumita\'s' },
+  { id: 28, img: client28, label: 'Pira' },
+  { id: 29, img: client29, label: 'Yebra' },
+  { id: 30, img: client30, label: 'Heyday' },
+  { id: 31, img: client31, label: 'Envap' },
+  { id: 32, img: client32, label: 'Briganti' },
 ];
 
-const row1 = cards.slice(0, 4);
-const row2 = cards.slice(4, 8);
-const row3 = cards.slice(8, 12);
+const row1 = cards.slice(0, 11);
+const row2 = cards.slice(11, 22);
+const row3 = cards.slice(22, 32);
 
 const Clients: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = React.useState(0);
@@ -53,44 +105,54 @@ const Clients: React.FC = () => {
   }, [imagesLoaded, totalImages]);
 
   useLayoutEffect(() => {
-    if (isLoading) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      return;
-    }
-
     const section = sectionRef.current;
     const pinWrap = pinWrapRef.current;
     if (!section || !pinWrap) return;
 
-    // Refresh ScrollTrigger to ensure correct measurements after loading
-    ScrollTrigger.refresh();
-
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
+      // Entrance animation - matching Figma feel
+      gsap.fromTo('.clients-card', 
+        {
+          y: 30,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.03,
+          ease: 'power2.out',
+          delay: 0.2
+        }
+      );
 
-      mm.add('(min-width: 1024px)', () => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: '+=150%',
-            scrub: 1.5,
-            pin: pinWrap,
-            pinSpacing: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          }
+      if (!isLoading) {
+        ScrollTrigger.refresh();
+
+        const mm = gsap.matchMedia();
+        mm.add('(min-width: 1024px)', () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: 'top top',
+              end: '+=100%', // Shortened to reduce "stuck" feeling
+              scrub: 1, // Faster response
+              pin: pinWrap,
+              pinSpacing: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            }
+          });
+
+          tl.fromTo(rowRef1.current, { x: 0 }, { x: -1200, ease: 'none' }, 0)
+            .fromTo(rowRef2.current, { x: -1200 }, { x: 0, ease: 'none' }, 0)
+            .fromTo(rowRef3.current, { x: 0 }, { x: -1200, ease: 'none' }, 0);
         });
-
-        tl.fromTo(rowRef1.current, { x: 250 }, { x: -250, ease: 'none' }, 0)
-          .fromTo(rowRef2.current, { x: -250 }, { x: 250, ease: 'none' }, 0)
-          .fromTo(rowRef3.current, { x: 250 }, { x: -250, ease: 'none' }, 0);
-      });
+      }
     }, section);
 
     return () => {
       ctx.revert();
-      // Force kill all triggers related to this section
       ScrollTrigger.getAll().forEach(t => {
         if (t.trigger === section) t.kill();
       });
@@ -109,6 +171,7 @@ const Clients: React.FC = () => {
             src={card.img}
             alt={card.label}
             onLoad={handleImageLoad}
+            onError={handleImageLoad} // Handle missing images so it doesn't get stuck
           />
           <span className="clients-card__label">{card.label}</span>
         </div>
@@ -146,8 +209,7 @@ const Clients: React.FC = () => {
             </div>
           )}
 
-          {/* We render cards anyway but hide them with CSS until loaded, so images can trigger onLoad */}
-          <div className="clients-cards__container" style={{ visibility: isLoading ? 'hidden' : 'visible', opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
+          <div className="clients-cards__container">
             {renderRow(row1, rowRef1)}
             {renderRow(row2, rowRef2, 'clients-cards__row--offset')}
             {renderRow(row3, rowRef3)}

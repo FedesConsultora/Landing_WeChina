@@ -73,13 +73,13 @@ const Rubros: React.FC = () => {
         const totalHeight = track.scrollHeight / 3;
         gsap.set(track, { y: 0 });
         animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
-          .to(track, { y: -totalHeight, duration: 45 }); // slower
+          .to(track, { y: -totalHeight, duration: 22 }); // Even faster
       } else {
         dragAxis.current = 'x';
         const totalWidth = track.scrollWidth / 3;
         gsap.set(track, { x: 0 });
         animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
-          .to(track, { x: -totalWidth, duration: 40 }); // slower
+          .to(track, { x: -totalWidth, duration: 18 }); // Even faster
       }
     };
 
@@ -96,19 +96,30 @@ const Rubros: React.FC = () => {
 
   const resumeTimeoutRef = useRef<number | null>(null);
 
-  const handlePointerEnter = () => {
+  const pauseAnimation = (duration = 0.4) => {
     if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-    animationRef.current?.pause();
+    if (animationRef.current) {
+      gsap.to(animationRef.current, { timeScale: 0, duration, ease: "power2.out", overwrite: true });
+    }
+  };
+
+  const resumeAnimation = (delay = 0, duration = 0.8) => {
+    if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = window.setTimeout(() => {
+      if (animationRef.current) {
+        animationRef.current.play(); 
+        gsap.to(animationRef.current, { timeScale: 1, duration, ease: "power2.inOut", overwrite: true });
+      }
+    }, delay);
+  };
+
+  const handlePointerEnter = () => {
+    pauseAnimation(0.3);
   };
 
   const handlePointerLeave = () => {
     if (!isDragging.current) {
-      // Wait a bit before resuming on leave too, or resume immediately? 
-      // User said "que espere un poco para volver a moverse"
-      if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      resumeTimeoutRef.current = window.setTimeout(() => {
-        animationRef.current?.play();
-      }, 2000);
+      resumeAnimation(100, 0.6); // Instant resume
     }
   };
 
@@ -117,9 +128,12 @@ const Rubros: React.FC = () => {
     isDragging.current = true;
     dragStart.current = dragAxis.current === 'x' ? e.clientX : e.clientY;
     
-    animationRef.current?.pause();
+    if (animationRef.current) {
+      gsap.set(animationRef.current, { timeScale: 0 });
+    }
     
-    e.currentTarget.setPointerCapture(e.pointerId);
+    // Removing setPointerCapture to avoid blocking child clicks
+    // e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -166,11 +180,7 @@ const Rubros: React.FC = () => {
       const progress = Math.abs(normalized / totalSize);
       anim.progress(progress);
       
-      // WAIT before playing
-      if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      resumeTimeoutRef.current = window.setTimeout(() => {
-        anim.play();
-      }, 2000);
+      resumeAnimation(2000, 1.5);
     }
   };
 
@@ -179,7 +189,10 @@ const Rubros: React.FC = () => {
   // Auto-cycle the preview image
   useEffect(() => {
     const interval = setInterval(() => {
-      if (animationRef.current && !animationRef.current.paused() && !isLightboxOpen) {
+      const anim = animationRef.current;
+      const isActuallyMoving = anim && anim.timeScale() > 0 && !anim.paused();
+
+      if (isActuallyMoving && !isLightboxOpen) {
         setActiveId((prevId) => {
           const currentIndex = sectors.findIndex(s => s.id === prevId);
           const nextIndex = (currentIndex + 1) % sectors.length;
@@ -231,30 +244,38 @@ const Rubros: React.FC = () => {
                 onPointerCancel={handlePointerUp}
               >
                 {loopSectors.map((sector, index) => (
-                  <div
+                  <motion.div
                     key={`${sector.id}-${index}`}
                     className={`rubro-card ${activeId === sector.id ? 'is-active' : ''}`}
-                    onClick={() => setActiveId(sector.id)}
+                    whileTap={{ scale: 0.95 }}
+                    onTap={() => {
+                      setActiveId(sector.id);
+                      pauseAnimation(0.8);
+                      resumeAnimation(5000, 1.5);
+                    }}
                   >
                     <div className="rubro-card__img">
                       <img src={sector.img} alt={sector.label} draggable="false" />
                     </div>
                     <span className="rubro-card__label">{sector.label}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
             {/* Preview */}
             <div className="rubros-preview" onClick={() => setIsLightboxOpen(true)}>
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.div
                   key={activeId}
                   className="preview-frame"
-                  initial={{ opacity: 0, scale: 0.98, x: 20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 1.02, x: -20 }}
-                  transition={{ duration: 0.5 }}
+                  initial={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+                  transition={{ 
+                    duration: 0.4, 
+                    ease: "easeOut"
+                  }}
                 >
                   <img src={activeSector.img} alt={activeSector.label} />
                   <div className="preview-label">

@@ -11,7 +11,27 @@ const zh = {
     services: '服务',
     sectors: '行业',
     cta: '咨询专家',
-    menuLabel: '打开菜单',
+    menuLabel: '菜单',
+  },
+
+  // ── Careers (About Page) ──
+  careers: {
+    title: '你想加入Wechina团队吗？',
+    subtitle: '我们正在寻找希望在国际贸易中与我们共同成长的才华横溢的人。',
+    form: {
+      firstName: '名字',
+      lastName: '姓氏',
+      email: '电子邮件',
+      phone: '电话',
+      address: '居住地址',
+      experience: '您两个最重要的工作经历摘要',
+      experiencePlaceholder: '简要告诉我们您的职责和成就...',
+      references: '推荐人（姓名、姓氏、公司和电话）',
+      referencesPlaceholder: '提到两个可以向我们推荐您的人...',
+      cv: '上传简历 (PDF/Word)',
+      submit: '发送申请',
+      success: '申请发送成功！',
+    }
   },
 
   // ── Hero ──

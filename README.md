@@ -1,6 +1,6 @@
-# 🇨🇳 Landing WeChina
+# 🇨🇳 Landing Wechina
 
-Landing page premium para **WeChina**, una consultora de logística y comercio exterior especializada en el mercado asiático. Construida con un enfoque en performance, estética moderna y estándares actuales.
+Landing page premium para **Wechina**, una consultora de logística y comercio exterior especializada en el mercado asiático. Construida con un enfoque en performance, estética moderna y estándares actuales.
 
 ## 🚀 Tecnologías
 
@@ -11,7 +11,7 @@ Landing page premium para **WeChina**, una consultora de logística y comercio e
 ## 🎨 Principios de Diseño
 
 El proyecto sigue una estética **Industrial Premium**:
-- **Colores:** Rojo WeChina (#da251c), Carbono Profundo y Blanco Suave.
+- **Colores:** Rojo Wechina (#da251c), Carbono Profundo y Blanco Suave.
 - **Tipografía:** Outfit (Títulos) e Inter (Cuerpo) vía Google Fonts.
 - **Interactividad:** Transiciones suaves, headers con glassmorphism y grillas responsivas.
 

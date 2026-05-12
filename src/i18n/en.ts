@@ -11,7 +11,27 @@ const en = {
     services: 'Services',
     sectors: 'Sectors',
     cta: 'Talk to an expert',
-    menuLabel: 'Open menu',
+    menuLabel: 'Menu',
+  },
+
+  // ── Careers (About Page) ──
+  careers: {
+    title: 'Do you want to be part of the Wechina team?',
+    subtitle: 'We are looking for talents who want to grow with us in international trade.',
+    form: {
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'Email',
+      phone: 'Phone',
+      address: 'Home Address',
+      experience: 'Summary of your two most relevant work experiences',
+      experiencePlaceholder: 'Tell us briefly about your roles and achievements...',
+      references: 'References (Name, Surname, Company, and Phone)',
+      referencesPlaceholder: 'Mention two people who can talk to us about you...',
+      cv: 'Upload CV (PDF/Word)',
+      submit: 'Send Application',
+      success: 'Application sent successfully!',
+    }
   },
 
   // ── Hero ──

@@ -10,8 +10,29 @@ const es = {
     about: 'Nosotros',
     services: 'Servicios',
     sectors: 'Rubros',
-    cta: 'Hablá con un experto',
-    menuLabel: 'Abrir menú',
+    cta: 'Hable con un experto',
+    menuLabel: 'Menu',
+  },
+
+  // ── Careers (About Page) ──
+  careers: {
+    title: '¿Querés formar parte del equipo Wechina?',
+    subtitle: 'Buscamos talentos que quieran crecer junto a nosotros en el comercio internacional.',
+    form: {
+      firstName: 'Nombre',
+      lastName: 'Apellido',
+      email: 'Email',
+      phone: 'Teléfono',
+      address: 'Dirección de residencia',
+      experience: 'Resumen de tus dos experiencias laborales más relevantes',
+      experiencePlaceholder: 'Contanos brevemente sobre tus roles y responsabilidades...',
+      references: 'Referencias (Nombre, Apellido, Empresa y Teléfono)',
+      referencesPlaceholder: 'Mencioná dos personas que puedan hablarnos sobre vos...',
+      cv: 'Subir CV (PDF/Word)',
+      fileTooBig: 'El archivo es muy pesado (máximo 500Kb). Por favor, comprímalo o suba una versión más liviana.',
+      submit: 'Enviar Postulación',
+      success: '¡Postulación enviada con éxito!',
+    }
   },
 
   // ── Hero ──

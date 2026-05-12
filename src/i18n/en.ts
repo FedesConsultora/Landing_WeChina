@@ -29,6 +29,7 @@ const en = {
       references: 'References (Name, Surname, Company, and Phone)',
       referencesPlaceholder: 'Mention two people who can talk to us about you...',
       cv: 'Upload CV (PDF/Word)',
+      fileTooBig: 'The file is too large (max 500Kb). Please compress it or upload a lighter version.',
       submit: 'Send Application',
       success: 'Application sent successfully!',
     }

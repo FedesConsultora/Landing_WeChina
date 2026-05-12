@@ -29,7 +29,7 @@ const es = {
       references: 'Referencias (Nombre, Apellido, Empresa y Teléfono)',
       referencesPlaceholder: 'Mencioná dos personas que puedan hablarnos sobre vos...',
       cv: 'Subir CV (PDF/Word)',
-      fileTooBig: 'El archivo es muy pesado (máximo 500Kb). Por favor, comprímalo o suba una versión más liviana.',
+      fileTooBig: 'El archivo es muy pesado (máximo 5MB). Por favor, comprímalo o suba una versión más liviana.',
       submit: 'Enviar Postulación',
       success: '¡Postulación enviada con éxito!',
     }

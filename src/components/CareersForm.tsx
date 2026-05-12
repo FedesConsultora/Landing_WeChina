@@ -72,7 +72,7 @@ const CareersForm: React.FC = () => {
     const SERVICE_ID = 'service_vyoabbh'; 
     const TEMPLATE_ID = 'template_15fdjsd'; 
     const PUBLIC_KEY = '1cPAuly2SnGuUMv4g';
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbza_rnNzeGBTUk2a3dW_HBCOc8cWw6IUriTF5geO_LfvmSsImvIvYjZEsMjb5If_fJB/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9bCPZt1rQJIaA4ftnao9_2pTpewtAhZT_9CGO3wZ7UY3JRUX5eFfCyPgMn6mzHmc/exec';
 
     try {
       let cvUrl = "No cargado";

@@ -29,6 +29,7 @@ const zh = {
       references: '推荐人（姓名、姓氏、公司和电话）',
       referencesPlaceholder: '提到两个可以向我们推荐您的人...',
       cv: '上传简历 (PDF/Word)',
+      fileTooBig: '文件太大（最大 5MB）。请压缩或上传较小的版本。',
       submit: '发送申请',
       success: '申请发送成功！',
     }

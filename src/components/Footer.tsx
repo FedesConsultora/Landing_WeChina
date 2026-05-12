@@ -3,8 +3,23 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/img/logo-1.png';
 import igIcon from '../assets/img/ig-logo.png';
 import fbIcon from '../assets/img/fb-logo.png';
+import { useLanguage } from '../context/LanguageContext';
+
+const serviceIds = [
+  'agentes-de-compras',
+  'busqueda-de-proveedores',
+  'control-de-calidad',
+  'fletes-maritimos-y-aereos',
+  'validacion-de-fabricantes-online',
+  'manejo-de-muestras',
+  'almacenaje-y-consolidacion-de-cargas',
+  'viajes-de-negocios-a-china',
+  'creacion-de-marcas-propias',
+];
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="footer">
       {/* Main footer area */}
@@ -44,7 +59,7 @@ const Footer: React.FC = () => {
 
             {/* Right: Contact info */}
             <div className="footer__contact">
-              <h4 className="footer__contact-title">CONTACTANOS</h4>
+              <h4 className="footer__contact-title">{t.footer.contact}</h4>
               <div className="footer__contact-info">
                 <p>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="white" strokeWidth="2" /><circle cx="12" cy="10" r="3" stroke="white" strokeWidth="2" /></svg>
@@ -82,9 +97,9 @@ const Footer: React.FC = () => {
         <div className="container">
           <div className="footer__services-grid">
             <div className="footer__services-title-col">
-              <h4 className="footer__services-heading">SERVICIOS</h4>
+              <h4 className="footer__services-heading">{t.footer.servicesTitle}</h4>
               <Link to="/servicios" className="footer__services-more">
-                Conocé más <span>↗</span>
+                {t.footer.servicesMore} <span>↗</span>
               </Link>
             </div>
 
@@ -92,19 +107,19 @@ const Footer: React.FC = () => {
 
             <div className="footer__services-links-grid">
               <div className="footer__services-col">
-                <Link to="/servicios?service=agentes-de-compras">Agentes de compras</Link>
-                <Link to="/servicios?service=busqueda-de-proveedores">Búsqueda de proveedores</Link>
-                <Link to="/servicios?service=control-de-calidad">Control de calidad</Link>
+                {[0, 1, 2].map((i) => (
+                  <Link key={i} to={`/servicios?service=${serviceIds[i]}`}>{t.footer.serviceLinks[i]}</Link>
+                ))}
               </div>
               <div className="footer__services-col">
-                <Link to="/servicios?service=fletes-maritimos-y-aereos">Fletes marítimos y aéreos</Link>
-                <Link to="/servicios?service=validacion-de-fabricantes-online">Validación de fabricantes online</Link>
-                <Link to="/servicios?service=manejo-de-muestras">Manejo de muestras</Link>
+                {[3, 4, 5].map((i) => (
+                  <Link key={i} to={`/servicios?service=${serviceIds[i]}`}>{t.footer.serviceLinks[i]}</Link>
+                ))}
               </div>
               <div className="footer__services-col">
-                <Link to="/servicios?service=almacenaje-y-consolidacion-de-cargas">Almacenaje y consolidación de cargas</Link>
-                <Link to="/servicios?service=viajes-de-negocios-a-china">Viajes de negocios a China</Link>
-                <Link to="/servicios?service=creacion-de-marcas-propias">Creación de marcas propias</Link>
+                {[6, 7, 8].map((i) => (
+                  <Link key={i} to={`/servicios?service=${serviceIds[i]}`}>{t.footer.serviceLinks[i]}</Link>
+                ))}
               </div>
             </div>
           </div>
@@ -117,7 +132,7 @@ const Footer: React.FC = () => {
           <div className="footer__bottom-grid">
             <span className="footer__copy">© {new Date().getFullYear()} WeChina</span>
             <div className="footer__bottom-links">
-              <p>Desarrollado por {' '}
+              <p>{t.footer.developedBy} {' '}
                 <a href="https://fedes.ai/" target="_blank">Fedes Consultora</a>
               </p>
 

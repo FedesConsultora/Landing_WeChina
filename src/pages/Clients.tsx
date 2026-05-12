@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLanguage } from '../context/LanguageContext';
 
 // Real client images (to be placed in src/assets/img/clientes/ by the user)
 import client1 from '../assets/img/clientes/client-1.webp';
@@ -69,8 +70,8 @@ const cards = [
   { id: 23, img: client23, label: 'Siempre Farmacias' },
   { id: 24, img: client24, label: 'Brenda' },
   { id: 25, img: client25, label: 'Bonzini Shoes' },
-  { id: 26, img: client26, label: 'Lady Paul\'s' },
-  { id: 27, img: client27, label: 'Plumita\'s' },
+  { id: 26, img: client26, label: "Lady Paul's" },
+  { id: 27, img: client27, label: "Plumita's" },
   { id: 28, img: client28, label: 'Pira' },
   { id: 29, img: client29, label: 'Yebra' },
   { id: 30, img: client30, label: 'Heyday' },
@@ -83,6 +84,7 @@ const row2 = cards.slice(11, 22);
 const row3 = cards.slice(22, 32);
 
 const Clients: React.FC = () => {
+  const { t } = useLanguage();
   const [imagesLoaded, setImagesLoaded] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
   const totalImages = cards.length;
@@ -98,11 +100,11 @@ const Clients: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = 'WeChina - Clientes';
+    document.title = t.pageTitles.clients;
     if (imagesLoaded === totalImages) {
       setIsLoading(false);
     }
-  }, [imagesLoaded, totalImages]);
+  }, [imagesLoaded, totalImages, t]);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -135,8 +137,8 @@ const Clients: React.FC = () => {
             scrollTrigger: {
               trigger: section,
               start: 'top top',
-              end: '+=100%', // Shortened to reduce "stuck" feeling
-              scrub: 1, // Faster response
+              end: '+=100%',
+              scrub: 1,
               pin: pinWrap,
               pinSpacing: true,
               anticipatePin: 1,
@@ -171,7 +173,7 @@ const Clients: React.FC = () => {
             src={card.img}
             alt={card.label}
             onLoad={handleImageLoad}
-            onError={handleImageLoad} // Handle missing images so it doesn't get stuck
+            onError={handleImageLoad}
           />
           <span className="clients-card__label">{card.label}</span>
         </div>
@@ -186,17 +188,14 @@ const Clients: React.FC = () => {
         {/* ── Left: text ── */}
         <div className="clients-section__text">
           <h1 className="clients-section__heading">
-            <span className="text-red">Respaldo real</span>{' '}
-            para proyectos de largo plazo.
+            <span className="text-red">{t.clientsPage.headingRed}</span>{' '}
+            {t.clientsPage.headingRest}
           </h1>
           <p className="clients-section__body">
-            No solo gestionamos contenedores; diseñamos sistemas de comercio
-            exterior para empresas que buscan escalabilidad y previsibilidad.
-            La confianza de nuestros clientes se basa en nuestra capacidad de
-            ser su oficina técnica en origen.
+            {t.clientsPage.body}
           </p>
           <a href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="btn btn-primary clients-section__cta">
-            Hablá con un experto
+            {t.clientsPage.cta}
           </a>
         </div>
 
@@ -205,7 +204,6 @@ const Clients: React.FC = () => {
           {isLoading && (
             <div className="clients-loader">
               <div className="spinner"></div>
-
             </div>
           )}
 

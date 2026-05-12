@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import heroVideo from '../../assets/img/hero/HERO-home_1.mp4';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Counter: React.FC<{ value: string }> = ({ value }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -40,6 +41,8 @@ const Counter: React.FC<{ value: string }> = ({ value }) => {
 };
 
 const Hero: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="hero">
 
@@ -52,11 +55,11 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.9, ease: 'easeOut' as any }}
         >
           <h1>
-            Eliminá el miedo a importar,<br />
-            <span className="hero__highlight">con nosotros tu carga no <br /> queda varada</span>
+            {t.hero.title}<br />
+            <span className="hero__highlight">{t.hero.highlight}</span>
           </h1>
           <div className='hero__subtitle'>
-            <h3>Expertos allá, socios acá. 20 años eliminando los riesgos de tu inversión en Asia.</h3>
+            <h3>{t.hero.subtitle}</h3>
           </div>
         </motion.div>
       </div>
@@ -81,11 +84,7 @@ const Hero: React.FC = () => {
       <div className="hero__stats">
         <div className="container-grid">
           <div className="stats-grid">
-            {[
-              { value: '+20 AÑOS', label: 'trabajando para vos.' },
-              { value: '+1000 CONTENEDORES', label: 'entregados satisfactoriamente.' },
-              { value: '2 SEDES PROPIAS', label: 'en Argentina y China.' },
-            ].map((stat, i) => (
+            {t.hero.stats.map((stat, i) => (
               <motion.div
                 key={i}
                 className="stat-item"

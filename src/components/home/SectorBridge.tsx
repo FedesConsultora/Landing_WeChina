@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 import rubro1 from '../../assets/img/rubros/logos/rubro-1.webp';
 import rubro2 from '../../assets/img/rubros/logos/rubro-2.webp';
@@ -12,11 +13,11 @@ import iconSafety from '../../assets/img/rubros/logos/Safety Hat.png';
 import iconBoots from '../../assets/img/rubros/logos/Winter Boots.png';
 import iconDress from '../../assets/img/rubros/logos/Little Black Dress.png';
 
-const sectors = [
-  { img: rubro1, icon: iconCar, label: 'Maquinarias' },
-  { img: rubro2, icon: iconSafety, label: 'Industria de materiales de construcción' },
-  { img: rubro4, icon: iconBoots, label: 'Industrias calzado y marroquinería' },
-  { img: rubro3, icon: iconDress, label: 'Industria textil e indumentaria' },
+const sectorAssets = [
+  { img: rubro1, icon: iconCar },
+  { img: rubro2, icon: iconSafety },
+  { img: rubro4, icon: iconBoots },
+  { img: rubro3, icon: iconDress },
 ];
 
 const variants = {
@@ -35,20 +36,26 @@ const variants = {
 };
 
 const SectorBridge: React.FC = () => {
+  const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
+  const sectors = t.sectorBridge.sectors.map((label, i) => ({
+    ...sectorAssets[i],
+    label,
+  }));
+
   const nextSlide = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % sectors.length);
-  }, []);
+  }, [sectors.length]);
 
   const prevSlide = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + sectors.length) % sectors.length);
-  }, []);
+  }, [sectors.length]);
 
   useEffect(() => {
     if (isAutoPlaying) {
@@ -75,7 +82,7 @@ const SectorBridge: React.FC = () => {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="sector-bridge__title">TU PUENTE DIRECTO A FABRICANTES <br /> LÍDERES DE CADA SECTOR</h2>
+            <h2 className="sector-bridge__title">{t.sectorBridge.title}</h2>
           </motion.div>
           <motion.p
             className="sector-bridge__desc"
@@ -84,8 +91,7 @@ const SectorBridge: React.FC = () => {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            No somos generalistas. Contamos con equipos especializados en industrias de calzado, 
-            textil, papelera y desarrollos industriales estratégicos.
+            {t.sectorBridge.desc}
           </motion.p>
         </div>
 
@@ -153,7 +159,7 @@ const SectorBridge: React.FC = () => {
           </button>
         </div>
 
-        {/* DESKTOP GRID (Hidden on mobile via CSS) */}
+        {/* DESKTOP GRID */}
         <div className="sector-bridge__grid">
           {sectors.map((sector, i) => (
             <Link to="/rubros" key={i} style={{ textDecoration: 'none' }}>
@@ -189,7 +195,7 @@ const SectorBridge: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <Link to="/rubros" className="sector-bridge__link">
-            Ver todos los rubros
+            {t.sectorBridge.viewAll}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
           </Link>
         </motion.div>

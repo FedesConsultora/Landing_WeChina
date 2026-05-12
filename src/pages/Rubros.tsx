@@ -1,45 +1,32 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
+import { useLanguage } from '../context/LanguageContext';
 
 // Import images
 import img1 from '../assets/img/rubros/rubros (1).webp';
-import img2 from '../assets/img/rubros/rubros (2).webp';
 import img3 from '../assets/img/rubros/rubros (3).webp';
 import img4 from '../assets/img/rubros/rubros (4).webp';
-import img5 from '../assets/img/rubros/rubros (5).webp';
-import img6 from '../assets/img/rubros/rubros (6).webp';
-import img7 from '../assets/img/rubros/rubros (7).webp';
-import img8 from '../assets/img/rubros/rubros (8).webp';
-import img9 from '../assets/img/rubros/rubros (9).webp';
-import img10 from '../assets/img/rubros/rubros (10).webp';
-import img11 from '../assets/img/rubros/rubros (11).webp';
-import img12 from '../assets/img/rubros/rubros (12).webp';
-import img13 from '../assets/img/rubros/rubros (13).webp';
 import img14 from '../assets/img/rubros/rubros (14).webp';
-import img15 from '../assets/img/rubros/rubros (15).webp';
-import img16 from '../assets/img/rubros/rubros (16).webp';
 import img17 from '../assets/img/rubros/rubros (17).webp';
-import img18 from '../assets/img/rubros/rubros (18).webp';
 import imgCalzado from '../assets/img/rubros/rubros -calzado.png';
 import imgCarton from '../assets/img/rubros/rubros -carton (1).png';
 import imgPapel from '../assets/img/rubros/rubros -papel.png';
 
-const sectors = [
-  { id: 1, label: 'Industrias calzado y marroquinería', img: imgCalzado },
-  { id: 2, label: 'Industria textil e indumentaria', img: img14 },
-  { id: 3, label: 'Industria papelera', img: imgPapel },
-  { id: 4, label: 'Industria del cartón corrugado', img: imgCarton },
-  { id: 5, label: 'Industria de materiales de construcción', img: img4 },
-  { id: 6, label: 'Desarrollos de proyectos industriales', img: img17 },
-  { id: 7, label: 'Industria de alimentos', img: img3 },
-  { id: 8, label: 'Maquinarias', img: img1 },
-];
-
-// Triplicate the list for seamless looping
-const loopSectors = [...sectors, ...sectors, ...sectors];
+const sectorImages = [imgCalzado, img14, imgPapel, imgCarton, img4, img17, img3, img1];
 
 const Rubros: React.FC = () => {
+  const { t } = useLanguage();
+
+  const sectors = t.rubrosPage.sectors.map((label, i) => ({
+    id: i + 1,
+    label,
+    img: sectorImages[i],
+  }));
+
+  // Triplicate the list for seamless looping
+  const loopSectors = [...sectors, ...sectors, ...sectors];
+
   const [activeId, setActiveId] = useState(sectors[0].id);
   const activeSector = sectors.find(s => s.id === activeId) || sectors[0];
 
@@ -56,7 +43,7 @@ const Rubros: React.FC = () => {
   const isDesktop = () => window.innerWidth >= 1024;
 
   useLayoutEffect(() => {
-    document.title = 'WeChina - Rubros';
+    document.title = t.pageTitles.sectors;
     const track = trackRef.current;
     if (!track) return;
 
@@ -69,13 +56,13 @@ const Rubros: React.FC = () => {
         const totalHeight = track.scrollHeight / 3;
         gsap.set(track, { y: 0 });
         animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
-          .to(track, { y: -totalHeight, duration: 22 }); // Even faster
+          .to(track, { y: -totalHeight, duration: 22 });
       } else {
         dragAxis.current = 'x';
         const totalWidth = track.scrollWidth / 3;
         gsap.set(track, { x: 0 });
         animationRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'none' } })
-          .to(track, { x: -totalWidth, duration: 18 }); // Even faster
+          .to(track, { x: -totalWidth, duration: 18 });
       }
     };
 
@@ -88,7 +75,7 @@ const Rubros: React.FC = () => {
       animationRef.current?.kill();
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [t]);
 
   const resumeTimeoutRef = useRef<number | null>(null);
 
@@ -116,9 +103,6 @@ const Rubros: React.FC = () => {
     if (animationRef.current) {
       gsap.set(animationRef.current, { timeScale: 0 });
     }
-
-    // Removing setPointerCapture to avoid blocking child clicks
-    // e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -174,7 +158,6 @@ const Rubros: React.FC = () => {
       const progress = Math.abs(normalized / totalSize);
       anim.progress(progress);
 
-      // WAIT before playing
       if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
       resumeTimeoutRef.current = window.setTimeout(() => {
         if (!isHovering.current) {
@@ -200,14 +183,14 @@ const Rubros: React.FC = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [sectors]);
 
   return (
     <div className="rubros-page">
       <section className="rubros-hero">
         <div className="container">
           <div className="rubros-layout">
-            {/* Text – always first */}
+            {/* Text */}
             <div className="rubros-text">
               <motion.h1
                 className="rubros-title"
@@ -216,8 +199,7 @@ const Rubros: React.FC = () => {
                 transition={{ duration: 0.8 }}
               >
                 <br />
-                <span className="text-red">Conocemos la matriz</span> técnica <br />
-                de tu negocio.
+                <span className="text-red">{t.rubrosPage.titleRed}</span> {t.rubrosPage.titleRest}
               </motion.h1>
               <motion.p
                 className="rubros-desc"
@@ -225,7 +207,7 @@ const Rubros: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                No somos operadores generalistas. Dominamos la cadena de suministros de industrias específicas, garantizando que el producto que llega a tu depósito sea exactamente el que tu mercado exige.
+                {t.rubrosPage.desc}
               </motion.p>
             </div>
 

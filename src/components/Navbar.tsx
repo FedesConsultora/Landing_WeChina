@@ -2,8 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import logo from '../assets/img/logo.png';
 import logo2 from '../assets/img/logo-2.png';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar: React.FC = () => {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isHidden, setIsHidden] = React.useState(false);
   const lastScrollY = useRef(0);
@@ -44,35 +47,38 @@ const Navbar: React.FC = () => {
         <nav className={`main-header__nav${isOpen ? ' is-open' : ''}`}>
           <NavLink to="/" end onClick={close}>
             <img src={logo2} alt="" className="nav-icon" />
-            Inicio
+            {t.nav.home}
           </NavLink>
           <NavLink to="/nosotros" onClick={close}>
             <img src={logo2} alt="" className="nav-icon" />
-            Nosotros
+            {t.nav.about}
           </NavLink>
           <NavLink to="/servicios" onClick={close}>
             <img src={logo2} alt="" className="nav-icon" />
-            Servicios
+            {t.nav.services}
           </NavLink>
           <NavLink to="/rubros" onClick={close}>
             <img src={logo2} alt="" className="nav-icon" />
-            Rubros
+            {t.nav.sectors}
           </NavLink>
 
         </nav>
 
-        {/* Column 3: CTA on desktop / Hamburger on mobile */}
+        {/* Column 3: Lang + CTA on desktop / Hamburger on mobile */}
         <div className="main-header__actions">
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* CTA — hidden on mobile via CSS */}
           <a href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="main-header__cta-btn" onClick={close}>
-            Hablá con un experto
+            {t.nav.cta}
           </a>
 
           {/* Hamburger — hidden on desktop via CSS */}
           <button
             className="main-header__toggle"
             onClick={() => setIsOpen(prev => !prev)}
-            aria-label="Abrir menú"
+            aria-label={t.nav.menuLabel}
           >
             {isOpen ? (
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">

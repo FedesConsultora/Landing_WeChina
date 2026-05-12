@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import barcoVideo from '../../assets/img/barco.mov';
+import { useLanguage } from '../../context/LanguageContext';
 
 const LogisticsCTA: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="logistics-cta">
       <div className="logistics-cta__bg">
@@ -27,11 +30,11 @@ const LogisticsCTA: React.FC = () => {
           transition={{ duration: 0.8, ease: 'easeOut' as any }}
         >
           <h2>
-            Tus expertos en<br />
-            <span className="logistics-cta__highlight">otro continente</span>
+            {t.logisticsCTA.title}<br />
+            <span className="logistics-cta__highlight">{t.logisticsCTA.highlight}</span>
           </h2>
           <a href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="logistics-cta__btn">
-            Hablá con un experto
+            {t.logisticsCTA.cta}
           </a>
         </motion.div>
       </div>

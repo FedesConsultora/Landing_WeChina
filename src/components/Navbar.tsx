@@ -58,10 +58,7 @@ const Navbar: React.FC = () => {
             <img src={logo2} alt="" className="nav-icon" />
             Rubros
           </NavLink>
-          <NavLink to="/clientes" onClick={close}>
-            <img src={logo2} alt="" className="nav-icon" />
-            Clientes
-          </NavLink>
+
         </nav>
 
         {/* Column 3: CTA on desktop / Hamburger on mobile */}

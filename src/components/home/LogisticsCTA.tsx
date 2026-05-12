@@ -24,7 +24,7 @@ const LogisticsCTA: React.FC = () => {
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.8, ease: 'easeOut' as any }}
         >
           <h2>
             Tus expertos en<br />

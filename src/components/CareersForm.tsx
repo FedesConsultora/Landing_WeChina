@@ -42,7 +42,7 @@ const CareersForm: React.FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       // Nuevo límite: 5MB (5242880 bytes)
       if (file.size > 5242880) {
         alert(t.careers.form.fileTooBig);
@@ -69,10 +69,12 @@ const CareersForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    const SERVICE_ID = 'service_vyoabbh'; 
-    const TEMPLATE_ID = 'template_15fdjsd'; 
-    const PUBLIC_KEY = '1cPAuly2SnGuUMv4g';
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9bCPZt1rQJIaA4ftnao9_2pTpewtAhZT_9CGO3wZ7UY3JRUX5eFfCyPgMn6mzHmc/exec';
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const TEMPLATE_CONFIRM_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_CONFIRM_ID;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    const NOTIFY_EMAIL = import.meta.env.VITE_NOTIFY_EMAIL;
+    const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
     try {
       let cvUrl = "No cargado";
@@ -92,30 +94,44 @@ const CareersForm: React.FC = () => {
         cv: undefined // Quitamos el objeto File original
       };
 
-      // Usamos fetch normal (no-cors para Apps Script)
-      // Pero para obtener la respuesta necesitamos que sea una petición válida
-      // Apps Script con POST suele ser tricky con CORS, pero lo intentaremos:
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify(sheetPayload)
-      });
-      
-      const result = await response.json();
-      cvUrl = result.cvUrl || cvUrl;
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify(sheetPayload),
+          redirect: 'follow',
+        });
+        const result = await response.json();
+        cvUrl = result.cvUrl || cvUrl;
+      } catch (sheetError) {
+        console.error('Google Sheets/Drive error:', sheetError);
+        // Continuamos con los emails aunque falle Sheets
+      }
 
-      // 3. Enviamos a EmailJS incluyendo el LINK en lugar del archivo pesado
+      // 3. Parámetros compartidos para ambos emails
       const emailParams = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        to_email: NOTIFY_EMAIL,
         phone: formData.phone,
         address: formData.address,
         experience: formData.experience,
         references: formData.references,
-        cvUrl: cvUrl // Usamos el link generado en Drive
+        cvUrl: cvUrl,
       };
 
+      // 4. Email de notificación a la empresa
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, emailParams, PUBLIC_KEY);
+
+      // 5. Email de confirmación al postulante
+      const confirmParams = {
+        to_name: formData.firstName,
+        to_email: formData.email,
+        email: formData.email,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      };
+      await emailjs.send(SERVICE_ID, TEMPLATE_CONFIRM_ID, confirmParams, PUBLIC_KEY);
 
       setIsSubmitted(true);
       setIsDirty(false);
@@ -130,7 +146,7 @@ const CareersForm: React.FC = () => {
   return (
     <section className="careers-form-section">
       <div className="container">
-        <motion.div 
+        <motion.div
           className="careers-header"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -144,7 +160,7 @@ const CareersForm: React.FC = () => {
         <div className="careers-form-container">
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
-              <motion.form 
+              <motion.form
                 ref={formRef}
                 key="form"
                 className="careers-form"
@@ -196,7 +212,7 @@ const CareersForm: React.FC = () => {
                   <div className="file-input-wrapper">
                     <input type="file" name="cv" required accept=".pdf,.doc,.docx" onChange={handleFileChange} />
                     <div className="file-custom">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                       <span>{formData.cv ? formData.cv.name : t.careers.form.cv}</span>
                     </div>
                   </div>
@@ -207,7 +223,7 @@ const CareersForm: React.FC = () => {
                 </button>
               </motion.form>
             ) : (
-              <motion.div 
+              <motion.div
                 key="success"
                 className="careers-success"
                 initial={{ opacity: 0, scale: 0.8 }}

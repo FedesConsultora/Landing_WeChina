@@ -107,7 +107,7 @@ const en = {
   // ── About ──
   about: {
     pageTitle: 'WeChina - About Us',
-    title: 'Deep market insight and bold business vision —',
+    title: 'Deep market insight and bold business vision',
     titleHighlight: "that's WeChina.",
     p1: "In-depth business knowledge opens doors to new opportunities. That's why we share and streamline industrial, logistics, legal, administrative, and fiscal processes — drawing on 15+ years of hands-on experience — for those who buy, manufacture, or do business with China.",
     p2: 'We are the strategic partner — at both commercial and logistics level — that every entrepreneur, company, and industry needs: delivering professional, high-performance service across the Chinese market.',

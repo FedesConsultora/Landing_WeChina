@@ -11,6 +11,7 @@ const en = {
     services: 'Services',
     sectors: 'Sectors',
     cta: 'Talk to an expert',
+    join: 'Join Wechina',
     menuLabel: 'Menu',
   },
 

@@ -5,7 +5,11 @@ import logo2 from '../assets/img/logo-2.png';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '../context/LanguageContext';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenCareers: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onOpenCareers }) => {
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isHidden, setIsHidden] = React.useState(false);
@@ -35,7 +39,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <header className={`main-header${isHidden ? ' main-header--hidden' : ''}`}>
+    <header className={`main-header${isHidden ? ' main-header--hidden' : ''}${isOpen ? ' main-header--open' : ''}`}>
       <div className="container">
 
         {/* Column 1: Logo */}
@@ -45,29 +49,57 @@ const Navbar: React.FC = () => {
 
         {/* Column 2: Nav — centered on desktop, dropdown on mobile */}
         <nav className={`main-header__nav${isOpen ? ' is-open' : ''}`}>
-          <NavLink to="/" end onClick={close}>
-            <img src={logo2} alt="" className="nav-icon" />
-            {t.nav.home}
-          </NavLink>
-          <NavLink to="/nosotros" onClick={close}>
-            <img src={logo2} alt="" className="nav-icon" />
-            {t.nav.about}
-          </NavLink>
-          <NavLink to="/servicios" onClick={close}>
-            <img src={logo2} alt="" className="nav-icon" />
-            {t.nav.services}
-          </NavLink>
-          <NavLink to="/rubros" onClick={close}>
-            <img src={logo2} alt="" className="nav-icon" />
-            {t.nav.sectors}
-          </NavLink>
+          <div className="main-header__nav-links">
+            <NavLink to="/" end onClick={close}>
+              <img src={logo2} alt="" className="nav-icon" />
+              {t.nav.home}
+            </NavLink>
+            <NavLink to="/nosotros" onClick={close}>
+              <img src={logo2} alt="" className="nav-icon" />
+              {t.nav.about}
+            </NavLink>
+            <NavLink to="/servicios" onClick={close}>
+              <img src={logo2} alt="" className="nav-icon" />
+              {t.nav.services}
+            </NavLink>
+            <NavLink to="/rubros" onClick={close}>
+              <img src={logo2} alt="" className="nav-icon" />
+              {t.nav.sectors}
+            </NavLink>
+          </div>
 
+          {/* Mobile CTA Container */}
+          <div className="main-header__mobile-ctas">
+            <button 
+              className="main-header__mobile-join-btn" 
+              onClick={() => { close(); onOpenCareers(); }}
+            >
+              {t.nav.join}
+            </button>
+            <a 
+              href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="main-header__mobile-cta-btn"
+              onClick={close}
+            >
+              {t.nav.cta}
+            </a>
+          </div>
         </nav>
 
         {/* Column 3: Lang + CTA on desktop / Hamburger on mobile */}
         <div className="main-header__actions">
           {/* Language Switcher */}
           <LanguageSwitcher />
+
+          {/* "Unite a Wechina" Desktop Button */}
+          <button 
+            className="main-header__join-btn" 
+            onClick={() => { close(); onOpenCareers(); }}
+          >
+            {t.nav.join}
+          </button>
 
           {/* CTA — hidden on mobile via CSS */}
           <a href="https://wa.me/541130897009?text=%C2%A1Hola!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="main-header__cta-btn" onClick={close}>

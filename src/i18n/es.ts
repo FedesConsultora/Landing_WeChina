@@ -10,7 +10,8 @@ const es = {
     about: 'Nosotros',
     services: 'Servicios',
     sectors: 'Rubros',
-    cta: 'Hable con un experto',
+    cta: 'Hablá con un experto',
+    join: 'Unite a Wechina',
     menuLabel: 'Menu',
   },
 

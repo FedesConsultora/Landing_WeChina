@@ -22,6 +22,11 @@ $navbar-height: 80px;
     transform: translateY(-100%);
   }
 
+  &--open {
+    background: $pure-white !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
   .container {
     height: 100%;
     display: grid;
@@ -31,8 +36,8 @@ $navbar-height: 80px;
     gap: 16px;
 
     @media (min-width: 1024px) {
-      // Desktop: logo | centered nav | cta
-      grid-template-columns: 200px 1fr 200px;
+      // Desktop: logo | centered nav | actions
+      grid-template-columns: 180px 1fr auto;
       gap: 24px;
     }
   }
@@ -63,12 +68,10 @@ $navbar-height: 80px;
     top: $navbar-height;
     left: 0;
     width: 100%;
-    background: rgba($pure-white, 0.97);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: $pure-white;
     padding: 0 20px;
     max-height: 0;
-    overflow: hidden;
+    overflow-y: auto;
     transition: max-height 0.35s ease, padding 0.2s ease;
     z-index: 999;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -78,8 +81,8 @@ $navbar-height: 80px;
     border-bottom-right-radius: 6px;
 
     &.is-open {
-      max-height: 400px;
-      padding: 24px 20px 10px 32px;
+      max-height: calc(100vh - 80px);
+      padding: 24px;
     }
 
     @media (min-width: 1024px) {
@@ -88,19 +91,37 @@ $navbar-height: 80px;
       max-height: none;
       overflow: visible;
       padding: 0;
-      gap: 28px;
       background: transparent;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
 
       box-shadow: none;
       transition: none;
-      // Center links in the middle column
       justify-content: center;
       align-items: center;
     }
 
-    a {
+    // Nav Links wrapper for horizontal desktop alignment
+    &-links {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+
+      @media (min-width: 1024px) {
+        flex-direction: row;
+        gap: 28px;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+        max-width: none;
+        margin: 0;
+      }
+    }
+
+    // Only nav links (not CTA buttons) get separator + capitalize styles
+    &-links a {
       font-family: $font-body;
       font-weight: 600;
       font-size: 1.1rem;
@@ -163,26 +184,127 @@ $navbar-height: 80px;
     justify-self: end;
   }
 
-  // CTA button — hidden on mobile
+  // Desktop "Unite a Wechina" Button
+  &__join-btn {
+    display: none;
+
+    @media (min-width: 1024px) {
+      display: inline-block;
+      background: transparent;
+      color: $dark-carbon;
+      border: 1.5px solid $primary-red;
+      font-family: $font-body;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 10px 22px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      transition: $transition-smooth;
+      cursor: pointer;
+
+      &:hover {
+        background: $primary-red;
+        color: $pure-white;
+        box-shadow: 0 4px 15px rgba($primary-red, 0.25);
+        transform: translateY(-1.5px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // CTA button — hidden on mobile/tablet
   &__cta-btn {
     display: none;
 
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       display: inline-block;
       background: $primary-red;
       color: $pure-white;
+      border: 1.5px solid $primary-red;
       font-family: $font-body;
       font-weight: 600;
       font-size: 0.82rem;
-      padding: 11px 24px;
+      padding: 10px 24px;
       border-radius: 50px;
       letter-spacing: 0.06em;
       white-space: nowrap;
       transition: $transition-smooth;
 
       &:hover {
-        background: $primary-red-dark;
+        background: transparent;
+        color: $primary-red;
+        border-color: $primary-red;
+        box-shadow: 0 4px 15px rgba($primary-red, 0.2);
+        transform: translateY(-1.5px);
       }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // Mobile CTA layout
+  &__mobile-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px auto 0 auto;
+    padding: 20px 0 10px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 440px;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
+  }
+
+  &__mobile-join-btn {
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    color: $primary-red;
+    border: 1.5px solid $primary-red;
+    font-family: $font-body;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 10px 20px;
+    border-radius: 50px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover, &:focus, &:active {
+      background: $primary-red;
+      color: $pure-white;
+    }
+  }
+
+  &__mobile-cta-btn {
+    width: 100%;
+    text-align: center;
+    background: $primary-red;
+    color: $pure-white;
+    border: 1.5px solid $primary-red;
+    font-family: $font-body;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 10px 20px;
+    border-radius: 50px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-block;
+
+    &:hover, &:focus, &:active {
+      background: $primary-red-dark;
+      border-color: $primary-red-dark;
+      color: $pure-white;
     }
   }
 

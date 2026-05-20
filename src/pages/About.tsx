@@ -1,6 +1,5 @@
 import React from 'react';
 import SectionWrapper from '../components/SectionWrapper';
-import CareersForm from '../components/CareersForm';
 import aboutVideo from '../assets/img/nosotros/HERO-aboutus_1.mp4';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -40,8 +39,6 @@ const About: React.FC = () => {
           </div>
         </div>
       </SectionWrapper>
-
-      <CareersForm />
     </div>
   );
 };

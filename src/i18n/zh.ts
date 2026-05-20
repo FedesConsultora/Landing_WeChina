@@ -11,6 +11,7 @@ const zh = {
     services: '服务',
     sectors: '行业',
     cta: '咨询专家',
+    join: '加入Wechina',
     menuLabel: '菜单',
   },
 
